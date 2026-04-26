@@ -270,6 +270,10 @@ a:hover {
   scroll-margin-top: 0.5rem;
 }
 
+#contact {
+  scroll-margin-top: 0.5rem;
+}
+
 /* --- Typography --- */
 .headline-ornate {
   font-family: var(--font-display);
@@ -535,6 +539,30 @@ a:hover {
   margin: 0.5rem 0 0;
   line-height: 1.5;
   font-weight: 300;
+}
+
+/* --- Contact section --- */
+.contact-block {
+  text-align: center;
+}
+
+.contact-block .headline-caps {
+  margin-top: 0;
+}
+
+.contact-block__intro {
+  margin: 0 auto 1rem;
+  text-align: center;
+}
+
+.contact-line {
+  margin: 0.15rem 0;
+  color: #f0f0f0;
+}
+
+.contact-line a {
+  color: #fff;
+  font-weight: 400;
 }
 
 /* --- Show list (light section) --- */

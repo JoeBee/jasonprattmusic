@@ -16,10 +16,12 @@
       return;
     }
     const h = window.location.hash.replace(/^#/, "");
-    const id = h === "live" ? "live" : "home";
+    const id = h === "live" ? "live" : h === "contact" ? "contact" : "home";
     navLinks.forEach(function (a) {
       const href = a.getAttribute("href") || "";
       if (id === "live" && href === "#live") {
+        a.setAttribute("aria-current", "true");
+      } else if (id === "contact" && href === "#contact") {
         a.setAttribute("aria-current", "true");
       } else if (id === "home" && href === "#home") {
         a.setAttribute("aria-current", "true");
