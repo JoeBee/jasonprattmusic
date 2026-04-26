@@ -17,10 +17,20 @@
     }
     const h = window.location.hash.replace(/^#/, "");
     const id =
-      h === "live" ? "live" : h === "contact" ? "contact" : h === "tour" ? "tour" : "home";
+      h === "live"
+        ? "live"
+        : h === "audio-samples"
+          ? "audio-samples"
+          : h === "contact"
+            ? "contact"
+            : h === "tour"
+              ? "tour"
+              : "home";
     navLinks.forEach(function (a) {
       const href = a.getAttribute("href") || "";
       if (id === "live" && href === "#live") {
+        a.setAttribute("aria-current", "true");
+      } else if (id === "audio-samples" && href === "#audio-samples") {
         a.setAttribute("aria-current", "true");
       } else if (id === "contact" && href === "#contact") {
         a.setAttribute("aria-current", "true");
@@ -59,20 +69,32 @@
   initExternalLinksInNewTab();
 
   if (navToggle && nav) {
-    navToggle.addEventListener("click", function () {
-      const open = !nav.classList.contains("is-open");
+    function setNavOpen(open) {
       nav.classList.toggle("is-open", open);
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    }
+    navToggle.addEventListener("click", function () {
+      setNavOpen(!nav.classList.contains("is-open"));
     });
   }
 
   navLinks.forEach(function (a) {
     a.addEventListener("click", function () {
-      if (nav) {
+      if (nav && nav.classList.contains("is-open") && navToggle) {
         nav.classList.remove("is-open");
-        if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Open menu");
       }
     });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape" || !nav || !nav.classList.contains("is-open") || !navToggle) return;
+    nav.classList.remove("is-open");
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Open menu");
+    navToggle.focus();
   });
 
   window.addEventListener("hashchange", setCurrentNav);
@@ -365,7 +387,27 @@
     sync();
   })();
 
-  /** Audio sample list (data/audio-files.json); in-page play with animated note on the active track. */
+  (function initCoverArtCollapsible() {
+    const btn = document.getElementById("cover-art-toggle");
+    const panel = document.getElementById("cover-art-panel");
+    if (!btn || !panel) return;
+    function sync() {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      if (open) {
+        panel.removeAttribute("hidden");
+      } else {
+        panel.setAttribute("hidden", "");
+      }
+    }
+    btn.addEventListener("click", function () {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      sync();
+    });
+    sync();
+  })();
+
+  /** Audio sample list (data/audio-files.json); in-page play with dancing notes to the right when playing. */
   (function initAudioSamples() {
     const listEl = document.getElementById("audio-list");
     const errEl = document.getElementById("audio-list-err");
@@ -384,6 +426,19 @@
         .replace(/\.mp3$/i, "")
         .replace(/_/g, " ")
         .trim();
+    }
+
+    /** Splits "Artist - Title" for two-line display; otherwise single line. */
+    function parseTrackFromStripped(stripped) {
+      const i = stripped.indexOf(" - ");
+      if (i > 0) {
+        const artist = stripped.slice(0, i).trim();
+        const title = stripped.slice(i + 3).trim();
+        if (artist && title) {
+          return { title: title, artist: artist };
+        }
+      }
+      return { single: stripped };
     }
 
     function clearButtonPlayingState(btn) {
@@ -435,21 +490,38 @@
           btn.type = "button";
           btn.className = "audio-list__btn";
           const displayTitle = titleFromFilename(name);
+          const meta = parseTrackFromStripped(displayTitle);
           btn.setAttribute("data-filename", name);
           btn.setAttribute("aria-label", "Play " + displayTitle);
           btn.setAttribute("aria-pressed", "false");
-          const note = document.createElement("span");
-          note.className = "audio-list__note";
-          note.setAttribute("aria-hidden", "true");
-          const noteChar = document.createElement("span");
-          noteChar.className = "audio-list__note-char";
-          noteChar.textContent = "\u266a";
-          note.appendChild(noteChar);
-          const label = document.createElement("span");
-          label.className = "audio-list__label";
-          label.textContent = displayTitle;
-          btn.appendChild(note);
-          btn.appendChild(label);
+          const textBlock = document.createElement("span");
+          textBlock.className = "audio-list__text-block";
+          if (meta.title && meta.artist) {
+            const tEl = document.createElement("span");
+            tEl.className = "audio-list__track";
+            tEl.textContent = meta.title;
+            const aEl = document.createElement("span");
+            aEl.className = "audio-list__artist";
+            aEl.textContent = meta.artist;
+            textBlock.appendChild(tEl);
+            textBlock.appendChild(aEl);
+          } else {
+            const tEl = document.createElement("span");
+            tEl.className = "audio-list__track audio-list__track--only";
+            tEl.textContent = meta.single;
+            textBlock.appendChild(tEl);
+          }
+          const dance = document.createElement("span");
+          dance.className = "audio-list__dancing-notes";
+          dance.setAttribute("aria-hidden", "true");
+          ["\u266a", "\u266b", "\u2669"].forEach(function (ch) {
+            const c = document.createElement("span");
+            c.className = "audio-list__dance-char";
+            c.textContent = ch;
+            dance.appendChild(c);
+          });
+          btn.appendChild(textBlock);
+          btn.appendChild(dance);
           btn.addEventListener("click", function () {
             if (errEl) {
               errEl.hidden = true;

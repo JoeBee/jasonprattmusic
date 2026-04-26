@@ -26,11 +26,14 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 0.5rem;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   font-family: var(--font-body);
   font-weight: 300;
   font-size: 1.05rem;
@@ -43,6 +46,16 @@ body {
   background-repeat: repeat, repeat-y;
   background-attachment: fixed;
   background-position: center;
+  /* Breathing room + notches; avoids horizontal overflow on small viewports */
+  padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+  padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+}
+
+/* Fixed backgrounds are janky on many phones and can break overflow; scroll is reliable */
+@media (max-width: 900px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 a {
@@ -53,6 +66,12 @@ a {
 
 a:hover {
   opacity: 0.9;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
 .sr-only {
@@ -139,6 +158,7 @@ a:hover {
   /* Taller than the crop so parallax translate has room without exposing gaps */
   height: 128%;
   min-height: 200px;
+  max-width: none;
   object-fit: cover;
   object-position: center center;
   display: block;
@@ -168,12 +188,14 @@ a:hover {
   justify-content: center;
   position: relative;
   min-height: 3.25rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .nav-toggle {
   display: none;
   position: absolute;
-  right: 0;
+  right: max(0, env(safe-area-inset-right, 0px));
   top: 50%;
   transform: translateY(-50%);
   background: #212121;
@@ -181,9 +203,12 @@ a:hover {
   color: #fff;
   font-family: var(--font-display);
   font-size: 0.85rem;
-  padding: 0.4rem 0.75rem;
+  padding: 0.5rem 0.9rem;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
   cursor: pointer;
   border-radius: 2px;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
 }
 
 .main-nav ul {
@@ -204,6 +229,7 @@ a:hover {
   text-decoration: none;
   padding: var(--nav-pad);
   display: inline-block;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
 }
 
 .main-nav__link[aria-current="true"] {
@@ -216,21 +242,35 @@ a:hover {
     display: block;
   }
 
+  .nav-bar .site-wrap {
+    min-height: 3.5rem;
+    padding-right: 5.5rem;
+  }
+
   .main-nav {
     max-height: 0;
     overflow: hidden;
     width: 100%;
-    transition: max-height 0.25s ease;
+    transition: max-height 0.3s ease;
   }
 
   .main-nav.is-open {
-    max-height: 200px;
+    /* Enough for several stacked links; avoids clipping on small screens */
+    max-height: min(70vh, 24rem);
   }
 
   .main-nav ul {
     flex-direction: column;
     align-items: center;
     padding: 0.25rem 0 1rem;
+    gap: 0;
+  }
+
+  .main-nav__link {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -249,6 +289,69 @@ a:hover {
   margin: 0.75rem 0 0;
   font-size: 1rem;
   font-weight: 300;
+}
+
+.musical-divider-wrap {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  /* Sit above the following .band-section--dark: both use position: relative; #live
+     can paint on top and its scrim can cover the bottom edge of the divider. */
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.musical-divider {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.musical-divider__img {
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+  position: relative;
+  z-index: 0;
+  object-fit: contain;
+}
+
+/* No extra section padding below when the music divider is in this block */
+.band-section--on-photo:has(.musical-divider-wrap) {
+  padding-bottom: 0;
+}
+
+.band-section--on-photo .quote-block:has(+ .musical-divider-wrap) {
+  margin-bottom: 0;
+}
+
+/* #live follows the intro section (the divider is inside the intro, not a sibling) */
+.band-section--on-photo + #live.band-section--dark {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  position: relative;
+  z-index: 0;
+}
+
+.band-section--on-photo + #live > .site-wrap {
+  padding-top: 2.5rem;
 }
 
 /* Light scrim so page-bg color stays visible; text uses shadow for contrast on busy art */
@@ -270,7 +373,8 @@ a:hover {
 .band-section--dark .contact-line,
 .band-section--dark .video-row--message,
 .band-section--dark .audio-list__btn,
-.band-section--dark .audio-list__label {
+.band-section--dark .audio-list__track,
+.band-section--dark .audio-list__artist {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
@@ -283,7 +387,20 @@ a:hover {
   padding: 2.5rem 0 3.5rem;
 }
 
+@media (max-width: 480px) {
+  .band-section,
+  .band-section--dark,
+  .band-section--light {
+    padding-top: 1.75rem;
+    padding-bottom: 2.25rem;
+  }
+}
+
 #live {
+  scroll-margin-top: 0.5rem;
+}
+
+#audio-samples {
   scroll-margin-top: 0.5rem;
 }
 
@@ -298,12 +415,15 @@ a:hover {
 /* --- Typography --- */
 .headline-ornate {
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 3vw, 1.4rem);
+  font-size: clamp(1.05rem, 4.2vw, 1.4rem);
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.3;
   margin: 0.5rem 0 0.25rem;
   color: #fff;
   letter-spacing: 0.02em;
+  padding: 0 0.25rem;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .kicker--center {
@@ -333,7 +453,8 @@ a:hover {
   gap: 0.45rem 0.5rem;
   max-width: 100%;
   margin: 0;
-  padding: 0.2rem 0.35rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.5rem;
   font: inherit;
   text-transform: inherit;
   letter-spacing: inherit;
@@ -495,6 +616,7 @@ a:hover {
   gap: 0.75rem;
   width: 100%;
   text-align: left;
+  min-height: 2.75rem;
   padding: 0.65rem 0.9rem;
   font: inherit;
   font-size: 0.98rem;
@@ -505,6 +627,7 @@ a:hover {
   cursor: pointer;
   border-radius: 0;
   transition: background 0.15s ease;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.08);
 }
 
 .audio-list__btn:hover,
@@ -518,57 +641,99 @@ a:hover {
   background: rgba(90, 40, 120, 0.25);
 }
 
-.audio-list__note {
-  flex: 0 0 auto;
+.audio-list__text-block {
+  flex: 1 1 auto;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
-  width: 1.5rem;
-  color: rgba(255, 255, 255, 0.4);
+  min-width: 0;
+  gap: 0.2rem;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.audio-list__track {
+  font-size: 0.98rem;
+  font-weight: 400;
+  color: #f5f0ff;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+.audio-list__track--only {
+  font-weight: 300;
+  color: #f0f0f0;
+}
+
+.audio-list__artist {
+  font-size: 0.85em;
+  font-weight: 300;
+  color: rgba(230, 220, 255, 0.75);
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+.audio-list__dancing-notes {
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  align-self: center;
+  gap: 0.15em;
+  margin-left: 0.25rem;
+  color: #f0c8ff;
+  font-size: 1.1rem;
   line-height: 1;
-  transition: color 0.2s ease;
-  font-size: 1.15rem;
 }
 
-.audio-list__note-char {
-  display: block;
-  transform-origin: 50% 80%;
+.audio-list__btn.is-playing .audio-list__dancing-notes {
+  display: inline-flex;
 }
 
-.audio-list__btn.is-playing .audio-list__note {
-  color: #e8b4ff;
+.audio-list__dance-char {
+  display: inline-block;
+  transform-origin: 50% 100%;
 }
 
-.audio-list__btn.is-playing .audio-list__note-char {
-  animation: audio-note-bounce 0.55s ease-in-out infinite;
+.audio-list__btn.is-playing .audio-list__dance-char {
+  animation: audio-note-dance 0.5s ease-in-out infinite;
+}
+
+.audio-list__dance-char:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.audio-list__dance-char:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.audio-list__dance-char:nth-child(3) {
+  animation-delay: 0.2s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .audio-list__btn.is-playing .audio-list__note-char {
+  .audio-list__btn.is-playing .audio-list__dance-char {
     animation: none;
-  }
-
-  .audio-list__btn.is-playing .audio-list__note {
-    color: #f2d0ff;
   }
 }
 
-@keyframes audio-note-bounce {
+@keyframes audio-note-dance {
   0%,
   100% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0) rotate(-6deg) scale(1);
+  }
+
+  25% {
+    transform: translateY(-4px) rotate(4deg) scale(1.1);
   }
 
   50% {
-    transform: translateY(-3px) scale(1.08);
+    transform: translateY(-1px) rotate(8deg) scale(1.05);
   }
-}
 
-.audio-list__label {
-  flex: 1 1 auto;
-  min-width: 0;
-  line-height: 1.4;
-  word-wrap: break-word;
+  75% {
+    transform: translateY(-5px) rotate(-3deg) scale(1.12);
+  }
 }
 
 .audio-list__item--message {
@@ -925,6 +1090,8 @@ a:hover {
 .contact-line a {
   color: #fff;
   font-weight: 400;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* --- Show list (light section) --- */
@@ -1037,6 +1204,15 @@ a:hover {
   }
 }
 
+@media (max-width: 480px) {
+  .pitch-card .btn-g {
+    display: block;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}
+
 .pitch-card {
   border: 1px solid #ddd;
   padding: 1.25rem;
@@ -1057,16 +1233,49 @@ a:hover {
 .site-footer {
   text-align: center;
   padding: 2rem 1rem 2.5rem;
+  padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
   color: #c8c8c8;
   font-size: 0.9rem;
   font-weight: 300;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.28);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  overflow-wrap: break-word;
 }
 
 .site-footer a {
   color: #ccc;
+}
+
+.site-footer__line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem 0.65rem;
+  margin: 0;
+}
+
+.site-footer__notes {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.2em;
+  color: #b8a0b4;
+  font-size: 1.15em;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.site-footer__notes span {
+  opacity: 0.88;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.site-footer__sep {
+  color: #888;
+  font-weight: 400;
+  user-select: none;
 }
 
 /* --- Links in dark section --- */

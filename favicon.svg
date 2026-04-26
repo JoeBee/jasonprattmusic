@@ -1,14 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#261316"/>
-      <stop offset="100%" stop-color="#100f13"/>
-    </linearGradient>
-    <linearGradient id="bolt" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ff6a7c"/>
-      <stop offset="100%" stop-color="#d7263d"/>
+    <linearGradient id="favbg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7c3aed" />
+      <stop offset="0.35" stop-color="#db2777" />
+      <stop offset="0.7" stop-color="#f97316" />
+      <stop offset="1" stop-color="#0ea5e9" />
     </linearGradient>
   </defs>
-  <rect x="1" y="1" width="30" height="30" rx="7" fill="url(#bg)" stroke="#f7e7eb" stroke-width="1.2"/>
-  <path fill="url(#bolt)" d="M19 3h-6l-3 9h4l-5 15 11-12h-5l2-5h3l-1-7z" stroke="#fff5f7" stroke-width="1.1" stroke-linejoin="round"/>
+  <rect width="32" height="32" rx="7" fill="url(#favbg)" />
+  <text
+    x="16"
+    y="17"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-size="28"
+    font-family="Georgia, 'Times New Roman', 'Noto Music', serif"
+    font-weight="700"
+    fill="#fffcf5"
+  >♪</text>
 </svg>

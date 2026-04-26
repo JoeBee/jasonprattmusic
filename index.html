@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
   <meta name="description" content="Your band name — live shows, music, and booking." />
   <title>Your Band — Official Site</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -57,6 +58,7 @@
           <ul>
             <li><a class="main-nav__link" href="#home" aria-current="true">Home</a></li>
             <li><a class="main-nav__link" href="#live">LIVE</a></li>
+            <li><a class="main-nav__link" href="#audio-samples">Audio</a></li>
             <li><a class="main-nav__link" href="#tour" title="Upcoming live dates">Dates</a></li>
             <li><a class="main-nav__link" href="#contact">Contact</a></li>
             <li><a class="main-nav__link" href="pitch.html">Pitch Deck</a></li>
@@ -69,35 +71,38 @@
   <main>
     <section class="band-section band-section--on-photo" aria-labelledby="headline-1">
       <div class="site-wrap site-wrap--narrow">
-        <h2 class="headline-ornate" id="headline-1">⟡ High-Energy Live Soul & Groove for Festivals, Clubs, and Private
-          Events. ⟡</h2>
-        <p class="kicker kicker--center"><em><strong>New single “Working Title” — out now (replace copy)</strong></em>
+        <h2 class="headline-ornate" id="headline-1">♪ High-Energy Live Soul & Groove for Festivals, Clubs, and Private
+          Events. ♫</h2>
+      </div>
+      <br>
+      <blockquote class="quote-block" id="live-block">
+        <p>Blending the raw energy of live instrumentation with
+          polished electronic production, Jason Pratt delivers a floor-filling sound that bridges the gap between
+          classic soul and modern groove. Known for infectious stage presence and a tight, professional delivery, we
+          create an atmosphere that keeps audiences engaged from the first note to the last.
         </p>
+      </blockquote>
+      <div class="musical-divider-wrap">
+        <div class="musical-divider" role="presentation" aria-hidden="true">
+          <img class="musical-divider__img" src="assets/musical-divider.png" alt="" />
+        </div>
       </div>
     </section>
 
+
+
     <section class="band-section band-section--dark" id="live" aria-labelledby="live-block">
       <div class="site-wrap">
-        <blockquote class="quote-block" id="live-block">
-          <p>Blending the raw energy of live instrumentation with
-            polished electronic production, Jason Pratt delivers a floor-filling sound that bridges the gap between
-            classic soul and modern groove. Known for infectious stage presence and a tight, professional delivery, we
-            create an atmosphere that keeps audiences engaged from the first note to the last.
-          </p>
-        </blockquote>
-
-
-
         <section class="live-videos" id="live-videos" aria-labelledby="live-videos-heading">
           <h2 class="headline-caps headline-caps--collapsible" id="live-videos-heading">
-            <button type="button" class="headline-caps__toggle" id="live-videos-toggle" aria-expanded="true"
+            <button type="button" class="headline-caps__toggle" id="live-videos-toggle" aria-expanded="false"
               aria-controls="video-links">
               <span class="headline-caps__text">Live performance videos</span>
               <span class="headline-caps__icon" aria-hidden="true">▼</span>
             </button>
           </h2>
           <div class="video-layout" id="video-links" role="region" aria-labelledby="live-videos-heading"
-            aria-live="polite">
+            aria-live="polite" hidden>
             <div class="video-focus" id="video-focus" hidden></div>
             <div class="video-thumbs" id="video-thumbs"></div>
           </div>
@@ -105,14 +110,14 @@
 
         <section class="audio-samples" id="audio-samples" aria-labelledby="audio-samples-heading">
           <h2 class="headline-caps headline-caps--collapsible" id="audio-samples-heading">
-            <button type="button" class="headline-caps__toggle" id="audio-samples-toggle" aria-expanded="true"
+            <button type="button" class="headline-caps__toggle" id="audio-samples-toggle" aria-expanded="false"
               aria-controls="audio-samples-panel">
               <span class="headline-caps__text">Audio samples</span>
               <span class="headline-caps__icon" aria-hidden="true">▼</span>
             </button>
           </h2>
           <div class="audio-samples__panel" id="audio-samples-panel" role="region"
-            aria-labelledby="audio-samples-heading" aria-live="polite">
+            aria-labelledby="audio-samples-heading" aria-live="polite" hidden>
             <p class="body-text audio-list__intro">Select a track to play.</p>
             <ul class="audio-list" id="audio-list" aria-label="Track list">
             </ul>
@@ -120,18 +125,29 @@
           </div>
         </section>
 
-        <h2 class="headline-caps">Cover art</h2>
-        <div class="gallery gallery--portrait" role="list">
-          <a class="gallery__item" href="assets/cover-art-1.png" role="listitem" target="_blank" rel="noopener">
-            <img src="assets/cover-art-1.png" width="350" height="467" alt="Sample cover art 1" loading="lazy" />
-          </a>
-          <a class="gallery__item" href="assets/cover-art-2.png" role="listitem" target="_blank" rel="noopener">
-            <img src="assets/cover-art-2.png" width="350" height="467" alt="Sample cover art 2" loading="lazy" />
-          </a>
-          <a class="gallery__item" href="assets/cover-art-3.png" role="listitem" target="_blank" rel="noopener">
-            <img src="assets/cover-art-3.png" width="350" height="467" alt="Sample cover art 3" loading="lazy" />
-          </a>
-        </div>
+        <section class="cover-art" id="cover-art" aria-labelledby="cover-art-heading">
+          <h2 class="headline-caps headline-caps--collapsible" id="cover-art-heading">
+            <button type="button" class="headline-caps__toggle" id="cover-art-toggle" aria-expanded="false"
+              aria-controls="cover-art-panel">
+              <span class="headline-caps__text">Cover art</span>
+              <span class="headline-caps__icon" aria-hidden="true">▼</span>
+            </button>
+          </h2>
+          <div class="cover-art__panel" id="cover-art-panel" role="region" aria-labelledby="cover-art-heading"
+            aria-live="polite" hidden>
+            <div class="gallery gallery--portrait" role="list" aria-label="Cover art">
+              <a class="gallery__item" href="assets/cover-art-1.png" role="listitem" target="_blank" rel="noopener">
+                <img src="assets/cover-art-1.png" width="350" height="467" alt="Sample cover art 1" loading="lazy" />
+              </a>
+              <a class="gallery__item" href="assets/cover-art-2.png" role="listitem" target="_blank" rel="noopener">
+                <img src="assets/cover-art-2.png" width="350" height="467" alt="Sample cover art 2" loading="lazy" />
+              </a>
+              <a class="gallery__item" href="assets/cover-art-3.png" role="listitem" target="_blank" rel="noopener">
+                <img src="assets/cover-art-3.png" width="350" height="467" alt="Sample cover art 3" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </section>
 
       </div>
     </section>
@@ -163,7 +179,13 @@
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> Your Band. Replace with your name. <a href="#home">Back to top</a></p>
+    <p class="site-footer__line">
+      <span class="site-footer__notes" aria-hidden="true"><span>♩</span><span>♪</span><span>♫</span></span>
+      <span>© <span id="year"></span> Jason Pratt Music</span>
+      <span class="site-footer__notes" aria-hidden="true"><span>♪</span><span>♬</span><span>♩</span></span>
+      <span class="site-footer__sep" aria-hidden="true">·</span>
+      <a href="#home">Back to top</a>
+    </p>
   </footer>
 
   <script src="js/main.js" defer></script>
