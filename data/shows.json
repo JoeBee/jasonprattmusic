@@ -1,26 +1,26 @@
 [
   {
-    "date": "2026-08-12",
     "displayDate": "Aug 12, 2026",
     "venue": "Venue name",
     "city": "City",
-    "ctaLabel": "Tickets",
-    "ctaUrl": "#"
+    "comments": "All ages, doors 7 p.m."
   },
   {
-    "date": "2026-09-03",
     "displayDate": "Sep 3, 2026",
     "venue": "Festival or hall",
     "city": "City",
-    "ctaLabel": "RSVP",
-    "ctaUrl": "#"
+    "comments": "Festival set — time TBA"
   },
   {
-    "date": "2026-10-03",
-    "displayDate": "Sep 3, 2026",
+    "displayDate": "Oct 3, 2026",
     "venue": "TEST Festival or hall",
     "city": "City",
-    "ctaLabel": "RSVP",
-    "ctaUrl": "#"
+    "comments": "comments here 333"
+  },
+  {
+    "displayDate": "Dec 25, 2029",
+    "venue": "TEST 222 Festival or hall",
+    "city": "City",
+    "comments": "Internal note: confirm load-in time"
   }
 ]

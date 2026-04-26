@@ -101,10 +101,10 @@
 
         const date = document.createElement("time");
         date.className = "show-list__date";
-        date.dateTime = show.date || "";
-        date.textContent = show.displayDate || show.date || "TBD";
+        date.textContent = show.displayDate || "TBD";
 
         const details = document.createElement("div");
+        details.className = "show-list__details";
         const venue = document.createElement("span");
         venue.className = "show-list__venue";
         venue.textContent = show.venue || "Venue TBA";
@@ -117,14 +117,16 @@
         details.appendChild(document.createTextNode(" — "));
         details.appendChild(meta);
 
-        const cta = document.createElement("a");
-        cta.className = "btn-g btn-g--dark";
-        cta.href = show.ctaUrl || "#";
-        cta.textContent = show.ctaLabel || "Details";
+        const commentsText = (show.comments && String(show.comments).trim()) || "";
+        if (commentsText) {
+          const comments = document.createElement("p");
+          comments.className = "show-list__comments";
+          comments.textContent = commentsText;
+          details.appendChild(comments);
+        }
 
         row.appendChild(date);
         row.appendChild(details);
-        row.appendChild(cta);
         showList.appendChild(row);
       });
     } catch (_) {
@@ -133,6 +135,228 @@
   }
 
   loadShows();
+
+  /** @returns {string|null} */
+  function getYoutubeEmbedUrl(urlString) {
+    if (!urlString || typeof urlString !== "string") return null;
+    try {
+      const u = new URL(urlString.trim());
+      const host = u.hostname.replace(/^www\./, "");
+      if (host === "youtu.be") {
+        const id = u.pathname.split("/").filter(Boolean)[0];
+        return id ? "https://www.youtube.com/embed/" + encodeURIComponent(id) : null;
+      }
+      if (host === "youtube.com" || host === "m.youtube.com") {
+        if (u.pathname.indexOf("/embed/") === 0) {
+          const id = u.pathname.split("/embed/")[1].split("/")[0];
+          return id ? "https://www.youtube.com/embed/" + encodeURIComponent(id) : null;
+        }
+        if (u.pathname.indexOf("/shorts/") === 0) {
+          const id = u.pathname.split("/shorts/")[1].split("/")[0];
+          return id ? "https://www.youtube.com/embed/" + encodeURIComponent(id) : null;
+        }
+        const v = u.searchParams.get("v");
+        return v ? "https://www.youtube.com/embed/" + encodeURIComponent(v) : null;
+      }
+    } catch (_) {
+      return null;
+    }
+    return null;
+  }
+
+  /** @param {string} embedBase */
+  function getYoutubeIdFromEmbedUrl(embedBase) {
+    if (!embedBase) return null;
+    const m = /\/embed\/([^/?#]+)/.exec(embedBase);
+    if (!m) return null;
+    try {
+      return decodeURIComponent(m[1]);
+    } catch (_) {
+      return m[1];
+    }
+  }
+
+  /** Stops the large YouTube player and clears any selected thumb. Default until loadVideoLinks sets the real handler. */
+  let liveVideosStopPlayback = function () {
+    const el = document.getElementById("video-focus");
+    if (el) {
+      el.innerHTML = "";
+      el.setAttribute("hidden", "");
+    }
+    const th = document.getElementById("video-thumbs");
+    if (th) {
+      th.querySelectorAll(".video-thumb[aria-pressed='true']").forEach(function (b) {
+        b.setAttribute("aria-pressed", "false");
+      });
+    }
+  };
+
+  /**
+   * Live performance videos: small thumbnails in a row; click plays one large embed (others never load iframes).
+   */
+  async function loadVideoLinks() {
+    const layout = document.getElementById("video-links");
+    const focus = document.getElementById("video-focus");
+    const thumbs = document.getElementById("video-thumbs");
+    if (!layout || !focus || !thumbs) return;
+
+    try {
+      const response = await fetch("data/links.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Failed to load video links.");
+      const items = await response.json();
+
+      if (!Array.isArray(items) || items.length === 0) {
+        focus.setAttribute("hidden", "");
+        focus.innerHTML = "";
+        thumbs.innerHTML = '<p class="video-row--message">No videos posted yet.</p>';
+        return;
+      }
+
+      thumbs.innerHTML = "";
+      focus.setAttribute("hidden", "");
+      focus.innerHTML = "";
+
+      let activeThumb = null;
+
+      function clearPlayer() {
+        focus.innerHTML = "";
+        focus.setAttribute("hidden", "");
+        if (activeThumb) {
+          activeThumb.setAttribute("aria-pressed", "false");
+          activeThumb = null;
+        }
+      }
+
+      liveVideosStopPlayback = clearPlayer;
+
+      function openEmbedded(embedBase, label) {
+        const sep = embedBase.indexOf("?") > -1 ? "&" : "?";
+        const src = embedBase + sep + "autoplay=1&rel=0";
+        const wrap = document.createElement("div");
+        wrap.className = "embed-block embed-block--video embed-block--focus";
+        wrap.setAttribute("role", "region");
+        wrap.setAttribute("aria-label", label);
+
+        const iframe = document.createElement("iframe");
+        iframe.setAttribute("src", src);
+        iframe.setAttribute("title", label);
+        iframe.setAttribute(
+          "allow",
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        );
+        iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+        iframe.setAttribute("allowfullscreen", "");
+        wrap.appendChild(iframe);
+        focus.innerHTML = "";
+        focus.appendChild(wrap);
+        focus.removeAttribute("hidden");
+        const smoothScroll = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        focus.scrollIntoView({ block: "nearest", behavior: smoothScroll ? "smooth" : "auto" });
+      }
+
+      items.forEach(function (item) {
+        const url = (item && item.url && String(item.url).trim()) || "";
+        const commentsText = (item && item.comments && String(item.comments).trim()) || "";
+        const embedBase = getYoutubeEmbedUrl(url);
+        const shortLabel = commentsText || "Video";
+
+        const block = document.createElement("article");
+        block.className = "video-item";
+
+        if (embedBase) {
+          const yid = getYoutubeIdFromEmbedUrl(embedBase);
+          const btn = document.createElement("button");
+          btn.className = "video-thumb";
+          btn.type = "button";
+          btn.setAttribute("aria-pressed", "false");
+          btn.setAttribute("aria-label", "Play: " + shortLabel);
+
+          const img = document.createElement("img");
+          img.className = "video-thumb__img";
+          img.alt = "";
+          img.decoding = "async";
+          img.loading = "lazy";
+          if (yid) {
+            img.src = "https://i.ytimg.com/vi/" + encodeURIComponent(yid) + "/hqdefault.jpg";
+            img.width = 320;
+            img.height = 180;
+          }
+
+          const play = document.createElement("span");
+          play.className = "video-thumb__play";
+          play.setAttribute("aria-hidden", "true");
+
+          btn.appendChild(img);
+          btn.appendChild(play);
+          block.appendChild(btn);
+
+          btn.addEventListener("click", function () {
+            if (activeThumb === btn) {
+              clearPlayer();
+              return;
+            }
+            if (activeThumb) {
+              activeThumb.setAttribute("aria-pressed", "false");
+            }
+            activeThumb = btn;
+            activeThumb.setAttribute("aria-pressed", "true");
+            openEmbedded(embedBase, shortLabel);
+          });
+        } else if (url) {
+          const p = document.createElement("p");
+          p.className = "video-item__fallback";
+          const a = document.createElement("a");
+          a.href = url;
+          a.textContent = "Open";
+          p.appendChild(a);
+          block.appendChild(p);
+        } else {
+          const err = document.createElement("p");
+          err.className = "video-row--message";
+          err.textContent = "Missing URL.";
+          block.appendChild(err);
+        }
+
+        if (commentsText) {
+          const cap = document.createElement("p");
+          cap.className = "video-item__comment";
+          cap.textContent = commentsText;
+          block.appendChild(cap);
+        }
+
+        thumbs.appendChild(block);
+      });
+
+      initExternalLinksInNewTab();
+    } catch (_) {
+      focus.setAttribute("hidden", "");
+      focus.innerHTML = "";
+      thumbs.innerHTML = '<p class="video-row--message">Could not load videos right now.</p>';
+    }
+  }
+
+  loadVideoLinks();
+
+  (function initLiveVideosCollapsible() {
+    const btn = document.getElementById("live-videos-toggle");
+    const panel = document.getElementById("video-links");
+    if (!btn || !panel) return;
+    function sync() {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      if (open) {
+        panel.removeAttribute("hidden");
+      } else {
+        liveVideosStopPlayback();
+        panel.setAttribute("hidden", "");
+      }
+    }
+    btn.addEventListener("click", function () {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      sync();
+    });
+    sync();
+  })();
 
   /* Hero banner: moves slower than the page (parallax), disabled when reduced motion is preferred */
   const heroImg = document.querySelector(".page-hero__img");

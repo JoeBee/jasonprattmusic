@@ -36,13 +36,6 @@
                 d="M9 0a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 4.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6zM14.2 1.6a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z" />
             </svg></a>
         </li>
-        <li>
-          <a class="social-bar__link" href="#" title="SoundCloud" aria-label="SoundCloud"><svg class="icon-s"
-              viewBox="0 0 18 9" aria-hidden="true">
-              <path
-                d="M4.7 1.8c.1 0 .2 0 .2.1l1 4.1-.1 2A.2.2 0 0 1 5.5 8a.2.2 0 0 1-.1-.1L5 4l.1-2.1a.2.2 0 0 1 .2-.1zm3.2-.6a.2.2 0 0 1 .2.2L8 4.8l-.1 1.9a.2.2 0 0 1-.2.2.2.2 0 0 1-.2-.2L7.1 4.7 7.2 1.4a.2.2 0 0 1 .2-.2h.4zm6.2 0a3.8 3.8 0 0 1 0 7.3H8.1a.1.1 0 0 1-.1-.1V.6L8 0h6.1z" />
-            </svg></a>
-        </li>
       </ul>
     </div>
 
@@ -75,58 +68,39 @@
   <main>
     <section class="band-section band-section--on-photo" aria-labelledby="headline-1">
       <div class="site-wrap site-wrap--narrow">
-        <h2 class="headline-ornate" id="headline-1">⟡ Groove-driven. Soul-powered. Placeholder tagline. ⟡</h2>
+        <h2 class="headline-ornate" id="headline-1">⟡ High-Energy Live Soul & Groove for Festivals, Clubs, and Private
+          Events. ⟡</h2>
         <p class="kicker kicker--center"><em><strong>New single “Working Title” — out now (replace copy)</strong></em>
         </p>
-      </div>
-    </section>
-
-    <section class="band-section band-section--on-photo" aria-label="Player embeds">
-      <div class="site-wrap">
-        <div class="embed-block embed-block--soundcloud" role="region" aria-label="SoundCloud embed placeholder">
-          <p class="embed-block__label">Drop a SoundCloud or streaming embed in place of this box.</p>
-        </div>
       </div>
     </section>
 
     <section class="band-section band-section--dark" id="live" aria-labelledby="live-block">
       <div class="site-wrap">
         <blockquote class="quote-block" id="live-block">
-          <p>
-            <span class="quote-mark" aria-hidden="true">“</span>Placeholder short bio or press pull-quote. Replace
-            with a sentence about your project’s blend of live instruments and electronic production, stage energy,
-            and the communities you play for.
-            <span class="quote-mark quote-mark--end" aria-hidden="true">”</span>
+          <p>Blending the raw energy of live instrumentation with
+            polished electronic production, Jason Pratt delivers a floor-filling sound that bridges the gap between
+            classic soul and modern groove. Known for infectious stage presence and a tight, professional delivery, we
+            create an atmosphere that keeps audiences engaged from the first note to the last.
           </p>
         </blockquote>
 
-        <!-- <div class="mailing-block">
-          <h3 class="subheading">Join the community</h3>
-          <p>Free track or perk when you sign up (wire your list provider here).</p>
-          <form class="mailing-form" action="#" method="post" onsubmit="return false">
-            <label class="sr-only" for="email-join">Email</label>
-            <input id="email-join" class="mailing-form__input" type="email" name="email" placeholder="Your email" />
-            <button class="btn-g" type="submit">Sign up</button>
-          </form>
-        </div> -->
 
-        <div class="embed-block embed-block--spotify" role="region" aria-label="Spotify embed placeholder">
-          <p class="embed-block__label">Spotify (or other) embed — replace with your player iframe.</p>
-        </div>
 
-        <h2 class="headline-caps">Live performance videos</h2>
-        <div class="video-row">
-          <div class="embed-block embed-block--video" role="region" aria-label="Instagram Reel">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVCGA8kj1qE/"
-              data-instgrm-version="14" style="background:#FFF; border:0; margin:0; max-width:540px; width:100%;">
-            </blockquote>
+        <section class="live-videos" id="live-videos" aria-labelledby="live-videos-heading">
+          <h2 class="headline-caps headline-caps--collapsible" id="live-videos-heading">
+            <button type="button" class="headline-caps__toggle" id="live-videos-toggle" aria-expanded="true"
+              aria-controls="video-links">
+              <span class="headline-caps__text">Live performance videos</span>
+              <span class="headline-caps__icon" aria-hidden="true">▼</span>
+            </button>
+          </h2>
+          <div class="video-layout" id="video-links" role="region" aria-labelledby="live-videos-heading"
+            aria-live="polite">
+            <div class="video-focus" id="video-focus" hidden></div>
+            <div class="video-thumbs" id="video-thumbs"></div>
           </div>
-          <div class="embed-block embed-block--video" role="region" aria-label="Instagram Post">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DMT1_S8Sj0O/"
-              data-instgrm-version="14" style="background:#FFF; border:0; margin:0; max-width:540px; width:100%;">
-            </blockquote>
-          </div>
-        </div>
+        </section>
 
         <blockquote class="quote-block quote-block--tight">
           <p>
@@ -135,9 +109,6 @@
           </p>
         </blockquote>
 
-        <div class="embed-block embed-block--soundcloud" role="region" aria-label="Second audio embed">
-          <p class="embed-block__label">Second SoundCloud (or other) track — optional.</p>
-        </div>
 
         <h2 class="headline-caps">Cover art</h2>
         <div class="gallery gallery--portrait" role="list">
@@ -152,29 +123,12 @@
           </a>
         </div>
 
-        <h2 class="headline-caps">Press photos</h2>
-        <div class="gallery gallery--press" role="list">
-          <a class="gallery__item" href="assets/press-1.jpg" role="listitem" target="_blank" rel="noopener"><img
-              src="assets/press-1.jpg" width="400" height="500" alt="Press photo placeholder 1" loading="lazy" /></a>
-          <a class="gallery__item" href="assets/press-2.jpg" role="listitem" target="_blank" rel="noopener"><img
-              src="assets/press-2.jpg" width="400" height="500" alt="Press photo placeholder 2" loading="lazy" /></a>
-          <a class="gallery__item" href="assets/press-3.jpg" role="listitem" target="_blank" rel="noopener"><img
-              src="assets/press-3.jpg" width="400" height="500" alt="Press photo placeholder 3" loading="lazy" /></a>
-          <a class="gallery__item" href="assets/press-4.jpg" role="listitem" target="_blank" rel="noopener"><img
-              src="assets/press-4.jpg" width="400" height="500" alt="Press photo placeholder 4" loading="lazy" /></a>
-        </div>
-
-        <h2 class="subheading subheading--supported">Supported / played with (placeholder names)</h2>
-        <p class="body-text supported-line">
-          Act A &middot; Act B &middot; Act C &middot; Act D &middot; Act E (replace with real billing partners)
-        </p>
       </div>
     </section>
 
     <section class="band-section band-section--light" aria-labelledby="tour">
       <div class="site-wrap">
         <h2 class="section-heading section-heading--dark" id="tour">Upcoming live dates</h2>
-        <p class="body-text body-text--on-light">Optional tour block. Remove if you only list shows elsewhere.</p>
         <ul class="show-list" id="show-list" aria-live="polite"></ul>
       </div>
     </section>
@@ -202,7 +156,6 @@
     <p>© <span id="year"></span> Your Band. Replace with your name. <a href="#home">Back to top</a></p>
   </footer>
 
-  <script async src="https://www.instagram.com/embed.js"></script>
   <script src="js/main.js" defer></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
