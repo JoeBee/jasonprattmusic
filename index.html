@@ -57,6 +57,7 @@
           <ul>
             <li><a class="main-nav__link" href="#home" aria-current="true">Home</a></li>
             <li><a class="main-nav__link" href="#live">LIVE</a></li>
+            <li><a class="main-nav__link" href="#tour" title="Upcoming live dates">Dates</a></li>
             <li><a class="main-nav__link" href="#contact">Contact</a></li>
             <li><a class="main-nav__link" href="pitch.html">Pitch Deck</a></li>
           </ul>
@@ -102,13 +103,22 @@
           </div>
         </section>
 
-        <blockquote class="quote-block quote-block--tight">
-          <p>
-            <span class="quote-mark" aria-hidden="true">“</span>Another placeholder review. Swap in a real quote
-            (publication, blog, or radio) when you have permission.
-          </p>
-        </blockquote>
-
+        <section class="audio-samples" id="audio-samples" aria-labelledby="audio-samples-heading">
+          <h2 class="headline-caps headline-caps--collapsible" id="audio-samples-heading">
+            <button type="button" class="headline-caps__toggle" id="audio-samples-toggle" aria-expanded="true"
+              aria-controls="audio-samples-panel">
+              <span class="headline-caps__text">Audio samples</span>
+              <span class="headline-caps__icon" aria-hidden="true">▼</span>
+            </button>
+          </h2>
+          <div class="audio-samples__panel" id="audio-samples-panel" role="region"
+            aria-labelledby="audio-samples-heading" aria-live="polite">
+            <p class="body-text audio-list__intro">Select a track to play.</p>
+            <ul class="audio-list" id="audio-list" aria-label="Track list">
+            </ul>
+            <p class="audio-list__err body-text" id="audio-list-err" hidden></p>
+          </div>
+        </section>
 
         <h2 class="headline-caps">Cover art</h2>
         <div class="gallery gallery--portrait" role="list">

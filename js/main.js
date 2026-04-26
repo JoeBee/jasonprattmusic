@@ -16,12 +16,15 @@
       return;
     }
     const h = window.location.hash.replace(/^#/, "");
-    const id = h === "live" ? "live" : h === "contact" ? "contact" : "home";
+    const id =
+      h === "live" ? "live" : h === "contact" ? "contact" : h === "tour" ? "tour" : "home";
     navLinks.forEach(function (a) {
       const href = a.getAttribute("href") || "";
       if (id === "live" && href === "#live") {
         a.setAttribute("aria-current", "true");
       } else if (id === "contact" && href === "#contact") {
+        a.setAttribute("aria-current", "true");
+      } else if (id === "tour" && href === "#tour") {
         a.setAttribute("aria-current", "true");
       } else if (id === "home" && href === "#home") {
         a.setAttribute("aria-current", "true");
@@ -358,12 +361,176 @@
     sync();
   })();
 
+  /** Audio sample list (data/audio-files.json); in-page play with animated note on the active track. */
+  (function initAudioSamples() {
+    const listEl = document.getElementById("audio-list");
+    const errEl = document.getElementById("audio-list-err");
+    if (!listEl) return;
+
+    const player = new Audio();
+    player.preload = "metadata";
+    let activeBtn = null;
+
+    function srcForFile(filename) {
+      return "assets/audio-files/" + encodeURIComponent(filename);
+    }
+
+    function titleFromFilename(name) {
+      return name
+        .replace(/\.mp3$/i, "")
+        .replace(/_/g, " ")
+        .trim();
+    }
+
+    function clearButtonPlayingState(btn) {
+      if (!btn) return;
+      btn.classList.remove("is-playing");
+      btn.setAttribute("aria-pressed", "false");
+    }
+
+    function setButtonPlayingState(btn) {
+      btn.classList.add("is-playing");
+      btn.setAttribute("aria-pressed", "true");
+    }
+
+    function resolveUrl(path) {
+      return new URL(path, window.location.href).href;
+    }
+
+    player.addEventListener("ended", function () {
+      clearButtonPlayingState(activeBtn);
+      activeBtn = null;
+    });
+
+    async function load() {
+      if (errEl) {
+        errEl.hidden = true;
+        errEl.textContent = "";
+      }
+      try {
+        const res = await fetch("data/audio-files.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("load failed");
+        const files = await res.json();
+        if (!Array.isArray(files) || files.length === 0) {
+          listEl.innerHTML =
+            '<li class="audio-list__item audio-list__item--message" role="presentation"><p class="body-text audio-list__empty-text">No audio files listed.</p></li>';
+          return;
+        }
+        listEl.innerHTML = "";
+        files.forEach(function (filename) {
+          if (typeof filename !== "string" || !filename.trim()) return;
+          const name = filename.trim();
+          const li = document.createElement("li");
+          li.className = "audio-list__item";
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "audio-list__btn";
+          const displayTitle = titleFromFilename(name);
+          btn.setAttribute("data-filename", name);
+          btn.setAttribute("aria-label", "Play " + displayTitle);
+          btn.setAttribute("aria-pressed", "false");
+          const note = document.createElement("span");
+          note.className = "audio-list__note";
+          note.setAttribute("aria-hidden", "true");
+          const noteChar = document.createElement("span");
+          noteChar.className = "audio-list__note-char";
+          noteChar.textContent = "\u266a";
+          note.appendChild(noteChar);
+          const label = document.createElement("span");
+          label.className = "audio-list__label";
+          label.textContent = displayTitle;
+          btn.appendChild(note);
+          btn.appendChild(label);
+          btn.addEventListener("click", function () {
+            if (errEl) {
+              errEl.hidden = true;
+              errEl.textContent = "";
+            }
+            const want = resolveUrl(srcForFile(name));
+            if (activeBtn === btn) {
+              if (player.paused) {
+                player
+                  .play()
+                  .then(function () {
+                    setButtonPlayingState(btn);
+                  })
+                  .catch(function () {
+                    if (errEl) {
+                      errEl.hidden = false;
+                      errEl.textContent = "Could not play this track.";
+                    }
+                  });
+              } else {
+                player.pause();
+                clearButtonPlayingState(btn);
+              }
+              return;
+            }
+            clearButtonPlayingState(activeBtn);
+            activeBtn = btn;
+            if (player.src !== want) {
+              player.src = want;
+            }
+            player
+              .play()
+              .then(function () {
+                setButtonPlayingState(btn);
+              })
+              .catch(function () {
+                if (errEl) {
+                  errEl.hidden = false;
+                  errEl.textContent = "Could not play this track.";
+                }
+                clearButtonPlayingState(btn);
+                activeBtn = null;
+                try {
+                  player.removeAttribute("src");
+                } catch (_) {}
+              });
+          });
+          li.appendChild(btn);
+          listEl.appendChild(li);
+        });
+      } catch (_) {
+        listEl.innerHTML = "";
+        if (errEl) {
+          errEl.hidden = false;
+          errEl.textContent = "Could not load the audio list.";
+        }
+      }
+    }
+
+    load();
+
+    (function initAudioSamplesCollapsible() {
+      const btn = document.getElementById("audio-samples-toggle");
+      const panel = document.getElementById("audio-samples-panel");
+      if (!btn || !panel) return;
+      function sync() {
+        const open = btn.getAttribute("aria-expanded") === "true";
+        if (open) {
+          panel.removeAttribute("hidden");
+        } else {
+          player.pause();
+          clearButtonPlayingState(activeBtn);
+          panel.setAttribute("hidden", "");
+        }
+      }
+      btn.addEventListener("click", function () {
+        const open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", open ? "false" : "true");
+        sync();
+      });
+      sync();
+    })();
+  })();
+
   /* Hero banner: moves slower than the page (parallax), disabled when reduced motion is preferred */
   const heroImg = document.querySelector(".page-hero__img");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (heroImg) {
     let heroParallaxTicking = false;
-    const heroParallaxRate = 0.38;
+    const heroParallaxRate = 0.52;
 
     function updateHeroParallax() {
       heroParallaxTicking = false;
