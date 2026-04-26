@@ -1,0 +1,26 @@
+[
+  {
+    "date": "2026-08-12",
+    "displayDate": "Aug 12, 2026",
+    "venue": "Venue name",
+    "city": "City",
+    "ctaLabel": "Tickets",
+    "ctaUrl": "#"
+  },
+  {
+    "date": "2026-09-03",
+    "displayDate": "Sep 3, 2026",
+    "venue": "Festival or hall",
+    "city": "City",
+    "ctaLabel": "RSVP",
+    "ctaUrl": "#"
+  },
+  {
+    "date": "2026-10-03",
+    "displayDate": "Sep 3, 2026",
+    "venue": "TEST Festival or hall",
+    "city": "City",
+    "ctaLabel": "RSVP",
+    "ctaUrl": "#"
+  }
+]
