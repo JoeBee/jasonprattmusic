@@ -179,6 +179,9 @@
     }
   }
 
+  /** Stops in-page audio samples when video playback starts. Set by initAudioSamples. */
+  let audioSamplesStopPlayback = function () {};
+
   /** Stops the large YouTube player and clears any selected thumb. Default until loadVideoLinks sets the real handler. */
   let liveVideosStopPlayback = function () {
     const el = document.getElementById("video-focus");
@@ -303,6 +306,7 @@
             }
             activeThumb = btn;
             activeThumb.setAttribute("aria-pressed", "true");
+            audioSamplesStopPlayback();
             openEmbedded(embedBase, shortLabel);
           });
         } else if (url) {
@@ -393,6 +397,11 @@
       btn.setAttribute("aria-pressed", "true");
     }
 
+    audioSamplesStopPlayback = function () {
+      player.pause();
+      clearButtonPlayingState(activeBtn);
+    };
+
     function resolveUrl(path) {
       return new URL(path, window.location.href).href;
     }
@@ -449,6 +458,7 @@
             const want = resolveUrl(srcForFile(name));
             if (activeBtn === btn) {
               if (player.paused) {
+                liveVideosStopPlayback();
                 player
                   .play()
                   .then(function () {
@@ -466,6 +476,7 @@
               }
               return;
             }
+            liveVideosStopPlayback();
             clearButtonPlayingState(activeBtn);
             activeBtn = btn;
             if (player.src !== want) {
