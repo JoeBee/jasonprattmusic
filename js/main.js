@@ -474,16 +474,24 @@
       try {
         const res = await fetch("data/audio-files.json", { cache: "no-store" });
         if (!res.ok) throw new Error("load failed");
-        const files = await res.json();
-        if (!Array.isArray(files) || files.length === 0) {
+        const raw = await res.json();
+        if (!Array.isArray(raw) || raw.length === 0) {
           listEl.innerHTML =
             '<li class="audio-list__item audio-list__item--message" role="presentation"><p class="body-text audio-list__empty-text">No audio files listed.</p></li>';
           return;
         }
+        const files = raw
+          .filter(function (filename) {
+            return typeof filename === "string" && filename.trim();
+          })
+          .map(function (f) {
+            return f.trim();
+          })
+          .sort(function (a, b) {
+            return titleFromFilename(a).localeCompare(titleFromFilename(b), undefined, { sensitivity: "base" });
+          });
         listEl.innerHTML = "";
-        files.forEach(function (filename) {
-          if (typeof filename !== "string" || !filename.trim()) return;
-          const name = filename.trim();
+        files.forEach(function (name) {
           const li = document.createElement("li");
           li.className = "audio-list__item";
           const btn = document.createElement("button");
