@@ -139,7 +139,6 @@
         meta.textContent = show.city || "Location TBA";
 
         details.appendChild(venue);
-        details.appendChild(document.createTextNode(" — "));
         details.appendChild(meta);
 
         const commentsText = (show.comments && String(show.comments).trim()) || "";
