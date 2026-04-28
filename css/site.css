@@ -1072,6 +1072,19 @@ img.musical-divider__img {
   aspect-ratio: 350 / 467;
 }
 
+@media (max-width: 699px) {
+  .cover-art .gallery--portrait {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .cover-art .gallery--portrait .gallery__item {
+    flex: 0 0 calc((100% - 1.5rem) / 4);
+    min-width: 0;
+  }
+}
+
 .gallery--press {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

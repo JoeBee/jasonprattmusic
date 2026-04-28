@@ -78,3 +78,6 @@ Desktop.ini
 .idea/
 *.swp
 *.swo
+
+# Local backup extras
+BKU_EXTRAS/
