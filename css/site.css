@@ -196,6 +196,16 @@ video {
   backdrop-filter: blur(2px) saturate(0.9);
 }
 
+.page-hero__copy-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-hero__copy-more {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page-hero__img {
     height: 100%;
@@ -1378,6 +1388,33 @@ img.musical-divider__img {
     font-size: clamp(0.76rem, 3.05vw, 0.9rem);
     line-height: 1.45;
     padding: 0.55rem 0.6rem;
+  }
+
+  .page-hero__copy--collapsible {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .page-hero__copy-toggle:checked+.page-hero__copy--collapsible {
+    display: block;
+    overflow: visible;
+  }
+
+  .page-hero__copy-more {
+    display: inline-block;
+    margin: 0.35rem 0.35rem 0.05rem;
+    color: #fff;
+    font-size: 0.82rem;
+    letter-spacing: 0.01em;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    cursor: pointer;
+  }
+
+  .page-hero__copy-toggle:checked~.page-hero__copy-more {
+    display: none;
   }
 
   .page-hero__img {
