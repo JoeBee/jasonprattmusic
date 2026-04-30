@@ -771,6 +771,18 @@ img[src$="cover-art-4.png"] {
   color: #111;
 }
 
+/* Collapsed "Upcoming live dates": halve the vertical whitespace around the heading.
+   Has no effect on the expanded layout — only applies while #tour-toggle is collapsed. */
+#tour:has(#tour-toggle[aria-expanded="false"]) {
+  padding-top: 1.25rem;
+  padding-bottom: 1.5rem;
+}
+
+#tour:has(#tour-toggle[aria-expanded="false"]) .headline-caps {
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
 /* Tour dates: cover-art-4 height tracks the show-list height dynamically.
    --list-h is set by js/main.js via a ResizeObserver on #show-list.
    The thumb width is derived from that height using the 350:467 aspect ratio,
@@ -1268,9 +1280,9 @@ img[src$="cover-art-4.png"] {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  /* Total height of the 2 thumbnail rows + row gap = cover-art-2 column height (350×467) */
+  /* Desktop only: thumbnail rows are twice as tall as the matching cover-art column (350×467 baseline). */
   #video-links .video-thumbs {
-    --live-cover-h: calc(var(--expand-cover-art-w, clamp(8rem, 20vw, 11rem)) * 467 / 350);
+    --live-cover-h: calc(var(--expand-cover-art-w, clamp(8rem, 20vw, 11rem)) * 467 / 350 * 2);
     height: var(--live-cover-h);
     grid-template-rows: repeat(2, minmax(0, 1fr));
     align-items: stretch;
