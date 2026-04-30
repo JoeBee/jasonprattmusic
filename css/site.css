@@ -1413,14 +1413,14 @@ img.musical-divider__img {
   }
 
   .page-hero__copy--collapsible {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    display: block;
+    max-height: calc(1.45em * 3);
     overflow: hidden;
   }
 
   .page-hero__copy-toggle:checked+.page-hero__copy--collapsible {
     display: block;
+    max-height: none;
     overflow: visible;
   }
 
