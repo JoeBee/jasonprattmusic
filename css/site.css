@@ -95,6 +95,8 @@ video {
 
 .site-wrap--header {
   padding: 0.6rem 0 0.25rem;
+  position: relative;
+  min-height: 2.25rem;
 }
 
 .site-wrap--narrow {
@@ -109,10 +111,15 @@ video {
 .social-bar {
   list-style: none;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 1.1rem;
   margin: 0;
-  padding: 0.25rem 0 0.5rem;
+  padding: 0;
+  position: absolute;
+  right: max(0.75rem, env(safe-area-inset-right, 0px));
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
 }
 
 .social-bar__link {
@@ -218,22 +225,14 @@ video {
   }
 }
 
-/* --- Nav under hero --- */
+/* --- Header nav --- */
 .nav-bar {
-  background: #000;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  position: relative;
-  z-index: 2;
-}
-
-.nav-bar .site-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  min-height: 3.25rem;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+  z-index: 2;
+  width: 100%;
 }
 
 .nav-toggle {
@@ -260,9 +259,9 @@ video {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.15rem 1.5rem;
+  gap: 0.15rem 1rem;
   margin: 0;
-  padding: 0.5rem 0 0.9rem;
+  padding: 0;
 }
 
 .main-nav__link {
@@ -282,8 +281,20 @@ video {
 }
 
 @media (max-width: 700px) {
+  .site-wrap--header {
+    display: block;
+    min-height: 0;
+  }
+
   .nav-bar {
     display: none;
+  }
+
+  .social-bar {
+    position: static;
+    transform: none;
+    justify-content: center;
+    padding: 0.25rem 0 0.5rem;
   }
 
   .nav-toggle {
@@ -292,11 +303,6 @@ video {
     right: max(0.25rem, env(safe-area-inset-right, 0px));
     transform: none;
     z-index: 3;
-  }
-
-  .nav-bar .site-wrap {
-    min-height: 0;
-    padding-right: 0.25rem;
   }
 
   .main-nav {
@@ -1499,10 +1505,6 @@ img.musical-divider__img {
 
   .site-wrap {
     padding-left: max(0.6rem, env(safe-area-inset-left, 0px));
-    padding-right: max(0.6rem, env(safe-area-inset-right, 0px));
-  }
-
-  .nav-bar .site-wrap {
     padding-right: max(0.6rem, env(safe-area-inset-right, 0px));
   }
 
