@@ -181,26 +181,98 @@ video {
   right: 0;
   bottom: 0;
   z-index: 1;
-  padding: clamp(0.75rem, 2.4vw, 1.4rem);
+  padding: clamp(1rem, 2.6vw, 1.75rem) clamp(0.75rem, 2.4vw, 1.4rem) clamp(0.85rem, 2.2vw, 1.4rem);
   line-height: 1.55;
   background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.62) 55%, rgba(0, 0, 0, 0) 100%);
+    linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.7) 55%, rgba(0, 0, 0, 0) 100%);
 }
 
+/* Editorial bio panel: warm cream copy on a darkened card with a thin gilt border
+   that echoes the gold-mat treatment used on the cover-art frames. */
 .page-hero__copy {
+  position: relative;
   max-width: 1120px;
   margin: 0 auto;
-  color: #fff;
-  font-size: clamp(0.84rem, 1.55vw, 1.02rem);
+  color: #f3ead4;
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.7;
+  letter-spacing: 0.012em;
+  text-align: justify;
+  hyphens: auto;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+  background:
+    linear-gradient(180deg, rgba(20, 14, 6, 0.55), rgba(8, 5, 2, 0.7));
+  border: 1px solid rgba(201, 165, 90, 0.42);
+  border-radius: 0.4rem;
+  padding: clamp(1rem, 2.2vw, 1.6rem) clamp(1.1rem, 2.6vw, 2rem);
+  backdrop-filter: blur(3px) saturate(0.9);
+  -webkit-backdrop-filter: blur(3px) saturate(0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 220, 0.18),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.45),
+    0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Floating musical-note ornament above the panel */
+.page-hero__copy::before {
+  content: "\266B";
+  position: absolute;
+  top: -1.55em;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(231, 200, 138, 0.95);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+}
+
+/* Ornate gilt drop-cap "J" — uses Aclonica to give it a hand-crafted poster feel. */
+.page-hero__copy::first-letter {
+  font-family: var(--font-title);
+  float: left;
+  font-size: 3.4em;
+  line-height: 0.92;
+  padding: 0.04em 0.16em 0 0;
+  margin: 0.05em 0.05em 0 0;
+  color: #e7c88a;
   font-weight: 400;
-  letter-spacing: 0.01em;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
-  /* Slight blur/contrast panel keeps text legible on colorful regions. */
-  background: rgba(0, 0, 0, 0.36);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 0.35rem;
-  padding: clamp(0.65rem, 1.8vw, 1rem);
-  backdrop-filter: blur(2px) saturate(0.9);
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.85),
+    0 0 14px rgba(201, 165, 90, 0.35);
+}
+
+/* Artist-name signature (the "ason Pratt" after the drop-cap "J") */
+.page-hero__copy-name {
+  font-family: var(--font-title);
+  color: #e7c88a;
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+}
+
+/* Highlighted credentials & milestones */
+.page-hero__copy-mark {
+  color: #f3e0b3;
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  background-image: linear-gradient(transparent 78%, rgba(201, 165, 90, 0.45) 78%, rgba(201, 165, 90, 0.45) 96%, transparent 96%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 0 0.06em;
+}
+
+/* Closing tagline gets an italic display-font flourish */
+.page-hero__copy-tagline {
+  font-family: var(--font-display);
+  font-style: normal;
+  color: #f0d99c;
+  font-size: 1.05em;
+  letter-spacing: 0.04em;
+  white-space: normal;
 }
 
 .page-hero__copy-toggle {
@@ -588,7 +660,7 @@ img.musical-divider__img {
   background: transparent;
 }
 
-/* Portrait cover-art assets: gilt mat + beveled inner frame */
+/* Portrait cover-art assets: gilt mat + beveled inner frame + pronounced drop shadow */
 img[src$="cover-art-1.png"],
 img[src$="cover-art-2.png"],
 img[src$="cover-art-3.png"],
@@ -600,7 +672,9 @@ img[src$="cover-art-4.png"] {
     inset 0 0 0 5px rgba(18, 15, 12, 0.98),
     0 0 0 1px rgba(0, 0, 0, 0.72),
     0 0 0 2px rgba(184, 145, 70, 0.28),
-    0 16px 40px rgba(0, 0, 0, 0.52);
+    0 6px 14px rgba(0, 0, 0, 0.55),
+    0 22px 56px rgba(0, 0, 0, 0.78),
+    0 40px 90px rgba(0, 0, 0, 0.6);
 }
 
 .band-section--light img[src$="cover-art-1.png"],
@@ -613,7 +687,9 @@ img[src$="cover-art-4.png"] {
     inset 0 0 0 5px rgba(252, 250, 246, 0.96),
     0 0 0 1px rgba(72, 58, 36, 0.18),
     0 0 0 2px rgba(201, 165, 90, 0.38),
-    0 14px 36px rgba(0, 0, 0, 0.16);
+    0 6px 14px rgba(0, 0, 0, 0.28),
+    0 20px 48px rgba(0, 0, 0, 0.42),
+    0 36px 80px rgba(0, 0, 0, 0.32);
 }
 
 .gallery--portrait .gallery__item:has(img[src*="cover-art-"]) {
@@ -1638,51 +1714,83 @@ img[src$="cover-art-4.png"] {
 
   .page-hero__copy-wrap {
     position: static;
-    padding: 0.5rem;
+    padding: 0.65rem 0.5rem 0.85rem;
     background: transparent;
+    text-align: center;
   }
 
+  /* Mobile: framed bio card with a gilt left accent that ties to the cover-art frames. */
   .page-hero__copy {
-    font-size: clamp(0.76rem, 3.05vw, 0.9rem);
-    line-height: 1.45;
-    padding: 0.55rem 0.6rem;
+    text-align: left;
+    column-count: 1;
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+    line-height: 1.55;
+    padding: 0.85rem 0.9rem 0.9rem 1rem;
+    background: linear-gradient(180deg, rgba(20, 14, 6, 0.7), rgba(8, 5, 2, 0.78));
+    border: 1px solid rgba(201, 165, 90, 0.28);
+    border-left: 3px solid rgba(201, 165, 90, 0.7);
+    border-radius: 0.3rem;
+    hyphens: none;
   }
 
+  /* The desktop floating note is too large for the slim mobile card; nudge it down and shrink. */
+  .page-hero__copy::before {
+    font-size: 1.05rem;
+    top: -0.7em;
+  }
+
+  .page-hero__copy::first-letter {
+    font-size: 2.6em;
+    padding: 0.02em 0.14em 0 0;
+    margin: 0.02em 0.04em 0 0;
+  }
+
+  .page-hero__copy-tagline {
+    font-size: 1em;
+    letter-spacing: 0.03em;
+  }
+
+  /* Collapsed preview ~4 lines, with a gentle fade so users sense there's more. */
   .page-hero__copy--collapsible {
     display: block;
-    max-height: calc(1.45em * 3);
+    max-height: calc(1.55em * 4);
     overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 65%, rgba(0, 0, 0, 0.2) 100%);
+    mask-image: linear-gradient(to bottom, #000 65%, rgba(0, 0, 0, 0.2) 100%);
   }
 
   .page-hero__copy-toggle:checked+.page-hero__copy--collapsible {
     display: block;
     max-height: none;
     overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  /* Pill-style "more / less" buttons in the display font, gilt-outlined to match the card. */
+  .page-hero__copy-more,
+  .page-hero__copy-less {
+    margin: 0.55rem auto 0.1rem;
+    padding: 0.32rem 0.95rem;
+    color: #f3ead4;
+    background: rgba(20, 14, 6, 0.7);
+    border: 1px solid rgba(201, 165, 90, 0.55);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
   }
 
   .page-hero__copy-more {
     display: inline-block;
-    margin: 0.35rem 0.35rem 0.05rem;
-    color: #fff;
-    font-size: 0.82rem;
-    letter-spacing: 0.01em;
-    text-decoration: underline;
-    text-underline-offset: 0.12em;
-    cursor: pointer;
   }
 
   .page-hero__copy-toggle:checked~.page-hero__copy-more {
     display: none;
-  }
-
-  .page-hero__copy-less {
-    margin: 0.35rem 0.35rem 0.05rem;
-    color: #fff;
-    font-size: 0.82rem;
-    letter-spacing: 0.01em;
-    text-decoration: underline;
-    text-underline-offset: 0.12em;
-    cursor: pointer;
   }
 
   .page-hero__copy-toggle:checked~.page-hero__copy-less {
