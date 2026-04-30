@@ -206,6 +206,10 @@ video {
   display: none;
 }
 
+.page-hero__copy-less {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page-hero__img {
     height: 100%;
@@ -279,7 +283,7 @@ video {
 
 @media (max-width: 700px) {
   .nav-toggle {
-    display: block;
+    display: none;
     top: 0.4rem;
     right: max(0.25rem, env(safe-area-inset-right, 0px));
     transform: none;
@@ -287,20 +291,19 @@ video {
   }
 
   .nav-bar .site-wrap {
-    min-height: 3.5rem;
-    padding-right: 5.5rem;
+    min-height: 0;
+    padding-right: 0.25rem;
   }
 
   .main-nav {
-    max-height: 0;
-    overflow: hidden;
+    max-height: none;
+    overflow: visible;
     width: 100%;
-    transition: max-height 0.3s ease;
+    transition: none;
   }
 
   .main-nav.is-open {
-    /* Enough for several stacked links; avoids clipping on small screens */
-    max-height: min(70vh, 24rem);
+    max-height: none;
   }
 
   .main-nav ul {
@@ -1381,7 +1384,9 @@ img.musical-divider__img {
   }
 
   .page-hero__copy-wrap {
+    position: static;
     padding: 0.5rem;
+    background: transparent;
   }
 
   .page-hero__copy {
@@ -1415,6 +1420,20 @@ img.musical-divider__img {
 
   .page-hero__copy-toggle:checked~.page-hero__copy-more {
     display: none;
+  }
+
+  .page-hero__copy-less {
+    margin: 0.35rem 0.35rem 0.05rem;
+    color: #fff;
+    font-size: 0.82rem;
+    letter-spacing: 0.01em;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    cursor: pointer;
+  }
+
+  .page-hero__copy-toggle:checked~.page-hero__copy-less {
+    display: inline-block;
   }
 
   .page-hero__img {
@@ -1473,7 +1492,7 @@ img.musical-divider__img {
   }
 
   .nav-bar .site-wrap {
-    padding-right: 5.1rem;
+    padding-right: max(0.6rem, env(safe-area-inset-right, 0px));
   }
 
   .nav-toggle {
