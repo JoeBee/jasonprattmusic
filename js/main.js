@@ -44,6 +44,47 @@
     });
   }
 
+  /** Main content accordions: only one open at a time; closers assigned in each init. */
+  const mainAccordionClose = {
+    live: null,
+    "audio-samples": null,
+    tour: null,
+  };
+
+  function collapseMainAccordionsExcept(keep) {
+    if (mainAccordionClose.live && keep !== "live") mainAccordionClose.live();
+    if (mainAccordionClose["audio-samples"] && keep !== "audio-samples") {
+      mainAccordionClose["audio-samples"]();
+    }
+    if (mainAccordionClose.tour && keep !== "tour") mainAccordionClose.tour();
+  }
+
+  /** Open collapsible content when navigating via main nav hashes (in-page anchors). */
+  function openCollapsiblePanel(keepKey, toggleId, panelId) {
+    const btn = document.getElementById(toggleId);
+    const panel = document.getElementById(panelId);
+    if (!btn || !panel) return;
+    collapseMainAccordionsExcept(keepKey);
+    btn.setAttribute("aria-expanded", "true");
+    panel.removeAttribute("hidden");
+  }
+
+  function openSectionForNavFragment(fragment) {
+    if (!fragment || onPitch) return;
+    if (fragment === "live") {
+      openCollapsiblePanel("live", "live-videos-toggle", "video-links");
+    } else if (fragment === "audio-samples") {
+      openCollapsiblePanel("audio-samples", "audio-samples-toggle", "audio-samples-panel");
+    } else if (fragment === "tour") {
+      openCollapsiblePanel("tour", "tour-toggle", "tour-panel");
+    }
+  }
+
+  function syncHashCollapsibles() {
+    const h = window.location.hash.replace(/^#/, "");
+    openSectionForNavFragment(h);
+  }
+
   /** Off-site http(s) links open in a new browsing context with safe rel defaults */
   function initExternalLinksInNewTab() {
     const host = window.location.host;
@@ -81,6 +122,10 @@
 
   navLinks.forEach(function (a) {
     a.addEventListener("click", function () {
+      const href = a.getAttribute("href") || "";
+      if (href.charAt(0) === "#") {
+        openSectionForNavFragment(href.slice(1));
+      }
       if (nav && nav.classList.contains("is-open") && navToggle) {
         nav.classList.remove("is-open");
         navToggle.setAttribute("aria-expanded", "false");
@@ -97,8 +142,14 @@
     navToggle.focus();
   });
 
-  window.addEventListener("hashchange", setCurrentNav);
-  window.addEventListener("load", setCurrentNav);
+  function onHashOrLoadNav() {
+    setCurrentNav();
+    syncHashCollapsibles();
+  }
+
+  window.addEventListener("hashchange", onHashOrLoadNav);
+  window.addEventListener("load", onHashOrLoadNav);
+  onHashOrLoadNav();
 
   /**
    * Populate upcoming shows from a JSON file.
@@ -158,7 +209,39 @@
     }
   }
 
-  loadShows();
+  /**
+   * Keep the tour-dates cover art the same height as the show-list column.
+   * Writes the measured list height to --list-h on the row container; the
+   * matching CSS derives the thumb's width from that height (350:467 ratio),
+   * so the image's rendered height tracks the list dynamically.
+   */
+  function initTourCoverHeightSync() {
+    const list = document.getElementById("show-list");
+    const row = document.querySelector("#tour-panel .expand-panel-row--thumb-left");
+    if (!list || !row) return;
+
+    function apply() {
+      const h = list.getBoundingClientRect().height;
+      if (h > 0) row.style.setProperty("--list-h", h + "px");
+    }
+
+    apply();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(apply);
+      ro.observe(list);
+    }
+    window.addEventListener("resize", apply);
+
+    const tourBtn = document.getElementById("tour-toggle");
+    if (tourBtn) {
+      tourBtn.addEventListener("click", function () {
+        requestAnimationFrame(apply);
+      });
+    }
+  }
+
+  loadShows().then(initTourCoverHeightSync);
 
   /** @returns {string|null} */
   function getYoutubeEmbedUrl(urlString) {
@@ -369,6 +452,14 @@
     const btn = document.getElementById("live-videos-toggle");
     const panel = document.getElementById("video-links");
     if (!btn || !panel) return;
+
+    mainAccordionClose.live = function () {
+      if (btn.getAttribute("aria-expanded") !== "true") return;
+      btn.setAttribute("aria-expanded", "false");
+      liveVideosStopPlayback();
+      panel.setAttribute("hidden", "");
+    };
+
     function sync() {
       const open = btn.getAttribute("aria-expanded") === "true";
       if (open) {
@@ -379,8 +470,13 @@
       }
     }
     btn.addEventListener("click", function () {
-      const open = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      const wasOpen = btn.getAttribute("aria-expanded") === "true";
+      if (!wasOpen) {
+        collapseMainAccordionsExcept("live");
+        btn.setAttribute("aria-expanded", "true");
+      } else {
+        btn.setAttribute("aria-expanded", "false");
+      }
       sync();
     });
     sync();
@@ -596,6 +692,15 @@
       const btn = document.getElementById("audio-samples-toggle");
       const panel = document.getElementById("audio-samples-panel");
       if (!btn || !panel) return;
+
+      mainAccordionClose["audio-samples"] = function () {
+        if (btn.getAttribute("aria-expanded") !== "true") return;
+        btn.setAttribute("aria-expanded", "false");
+        player.pause();
+        clearButtonPlayingState(activeBtn);
+        panel.setAttribute("hidden", "");
+      };
+
       function sync() {
         const open = btn.getAttribute("aria-expanded") === "true";
         if (open) {
@@ -607,8 +712,13 @@
         }
       }
       btn.addEventListener("click", function () {
-        const open = btn.getAttribute("aria-expanded") === "true";
-        btn.setAttribute("aria-expanded", open ? "false" : "true");
+        const wasOpen = btn.getAttribute("aria-expanded") === "true";
+        if (!wasOpen) {
+          collapseMainAccordionsExcept("audio-samples");
+          btn.setAttribute("aria-expanded", "true");
+        } else {
+          btn.setAttribute("aria-expanded", "false");
+        }
         sync();
       });
       sync();
@@ -619,6 +729,13 @@
     const btn = document.getElementById("tour-toggle");
     const panel = document.getElementById("tour-panel");
     if (!btn || !panel) return;
+
+    mainAccordionClose.tour = function () {
+      if (btn.getAttribute("aria-expanded") !== "true") return;
+      btn.setAttribute("aria-expanded", "false");
+      panel.setAttribute("hidden", "");
+    };
+
     function sync() {
       const open = btn.getAttribute("aria-expanded") === "true";
       if (open) {
@@ -628,8 +745,13 @@
       }
     }
     btn.addEventListener("click", function () {
-      const open = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      const wasOpen = btn.getAttribute("aria-expanded") === "true";
+      if (!wasOpen) {
+        collapseMainAccordionsExcept("tour");
+        btn.setAttribute("aria-expanded", "true");
+      } else {
+        btn.setAttribute("aria-expanded", "false");
+      }
       sync();
     });
     sync();

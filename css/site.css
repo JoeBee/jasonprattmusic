@@ -671,7 +671,10 @@ img[src$="cover-art-4.png"] {
   color: #111;
 }
 
-/* Tour dates: cover-art-4 height matches the event-list column (350:467); list uses remaining width */
+/* Tour dates: cover-art-4 height tracks the show-list height dynamically.
+   --list-h is set by js/main.js via a ResizeObserver on #show-list.
+   The thumb width is derived from that height using the 350:467 aspect ratio,
+   so the image's rendered height (via aspect-ratio on the <img>) equals --list-h. */
 #tour-panel .expand-panel-row__content {
   flex: 1 1 0;
   min-width: 0;
@@ -679,30 +682,26 @@ img[src$="cover-art-4.png"] {
 
 @media (min-width: 640px) {
   #tour-panel .expand-panel-row--thumb-left {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     gap: 1rem 1.25rem;
-    min-height: 0;
   }
 
   #tour-panel .expand-panel-row--thumb-left .expand-panel-row__thumb {
-    width: auto;
-    max-width: none;
-    height: 100%;
-    min-height: 0;
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-start;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: calc(var(--list-h, 28rem) * 350 / 467);
+    max-width: 45%;
+    height: auto;
   }
 
   #tour-panel .expand-panel-row--thumb-left .expand-panel-row__thumb img {
-    width: auto;
-    height: 100%;
+    width: 100%;
+    height: auto;
     max-width: none;
     aspect-ratio: 350 / 467;
-    object-fit: contain;
-    object-position: left center;
+    object-fit: cover;
   }
 }
 
