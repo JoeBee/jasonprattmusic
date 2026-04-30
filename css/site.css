@@ -587,16 +587,65 @@ img.musical-divider__img {
   .expand-panel-row--thumb-right {
     flex-direction: row;
     align-items: flex-start;
+    /* Same width as cover-art images (350×467); used to size live video grid height on desktop */
+    --expand-cover-art-w: clamp(8rem, 20vw, 11rem);
   }
 
   .expand-panel-row--thumb-left .expand-panel-row__thumb,
   .expand-panel-row--thumb-right .expand-panel-row__thumb {
-    width: clamp(8rem, 20vw, 11rem);
+    width: var(--expand-cover-art-w);
   }
 }
 
 .band-section--light .tour-dates .headline-caps {
   color: #111;
+}
+
+/* Tour dates: cover-art-4 height matches the event-list column (350:467); list uses remaining width */
+#tour-panel .expand-panel-row__content {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 639px) {
+  #tour-panel .expand-panel-row__thumb {
+    align-self: center;
+  }
+
+  #tour-panel .expand-panel-row__thumb img {
+    width: min(100%, 11rem);
+    height: auto;
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: 640px) {
+  #tour-panel .expand-panel-row--thumb-left {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: stretch;
+    gap: 1rem 1.25rem;
+    min-height: 0;
+  }
+
+  #tour-panel .expand-panel-row--thumb-left .expand-panel-row__thumb {
+    width: auto;
+    max-width: none;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  #tour-panel .expand-panel-row--thumb-left .expand-panel-row__thumb img {
+    width: auto;
+    height: 100%;
+    max-width: none;
+    aspect-ratio: 350 / 467;
+    object-fit: contain;
+    object-position: left center;
+  }
 }
 
 .kicker--center {
@@ -1048,30 +1097,50 @@ img.musical-divider__img {
   margin: 0 auto;
 }
 
-/* Up to 5 small thumbnails in one row; fewer columns on narrow viewports */
+/* Mobile: 2 columns (e.g. 6 videos → 3 rows). Desktop: 3 columns (6 videos → 2 rows). */
 .video-thumbs {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.4rem 0.35rem;
   align-items: start;
   justify-items: center;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 768px) {
   .video-thumbs {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-}
 
-@media (min-width: 720px) {
-  .video-thumbs {
-    grid-template-columns: repeat(4, 1fr);
+  /* Total height of the 2 thumbnail rows + row gap = cover-art-2 column height (350×467) */
+  #video-links .video-thumbs {
+    --live-cover-h: calc(var(--expand-cover-art-w, clamp(8rem, 20vw, 11rem)) * 467 / 350);
+    height: var(--live-cover-h);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    justify-items: stretch;
   }
-}
 
-@media (min-width: 900px) {
-  .video-thumbs {
-    grid-template-columns: repeat(5, 1fr);
+  #video-links .video-item {
+    height: 100%;
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  #video-links .video-thumb {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
+    max-width: none;
+  }
+
+  #video-links .video-item__comment {
+    flex-shrink: 0;
+    max-height: 3.6em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-height: 1.2;
   }
 }
 
@@ -1651,10 +1720,6 @@ img.musical-divider__img {
 
   .audio-list__track {
     font-size: 0.95rem;
-  }
-
-  .video-thumbs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .video-item__comment {
