@@ -581,6 +581,15 @@ img.musical-divider__img {
   margin-top: 0;
 }
 
+@media (max-width: 639px) {
+
+  .headline-with-thumb__fig,
+  .expand-panel-row__thumb,
+  .cover-art .gallery__item {
+    display: none !important;
+  }
+}
+
 @media (min-width: 640px) {
 
   .expand-panel-row--thumb-left,
@@ -605,18 +614,6 @@ img.musical-divider__img {
 #tour-panel .expand-panel-row__content {
   flex: 1 1 0;
   min-width: 0;
-}
-
-@media (max-width: 639px) {
-  #tour-panel .expand-panel-row__thumb {
-    align-self: center;
-  }
-
-  #tour-panel .expand-panel-row__thumb img {
-    width: min(100%, 11rem);
-    height: auto;
-    margin-inline: auto;
-  }
 }
 
 @media (min-width: 640px) {
