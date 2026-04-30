@@ -392,7 +392,7 @@ img.musical-divider__img {
   padding: 0;
   width: 80%;
   max-width: 100%;
-  height: 60px;
+  height: 25px;
   min-width: 0;
   flex: 0 0 auto;
   position: relative;
@@ -494,6 +494,109 @@ img.musical-divider__img {
   padding: 0 0.25rem;
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+/* Hero headline row + alternating cover thumbnails in expandable panels */
+.headline-with-thumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 1.35rem;
+}
+
+.headline-with-thumb--thumb-right {
+  flex-direction: row;
+}
+
+.headline-with-thumb--thumb-right .headline-ornate {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.headline-with-thumb__fig {
+  margin: 0;
+  flex: 0 1 clamp(7.5rem, 26vw, 12rem);
+  max-width: 100%;
+  line-height: 0;
+}
+
+.headline-with-thumb__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 3px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 520px) {
+  .headline-with-thumb--thumb-right {
+    flex-direction: column;
+  }
+
+  .headline-with-thumb--thumb-right .headline-ornate {
+    flex-basis: auto;
+    text-align: center;
+  }
+}
+
+.expand-panel-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem 1.25rem;
+}
+
+.expand-panel-row__thumb {
+  margin: 0;
+  flex-shrink: 0;
+  align-self: center;
+  width: clamp(7.25rem, 42vw, 11rem);
+  max-width: 100%;
+  line-height: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.band-section--light .expand-panel-row__thumb {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.expand-panel-row__thumb img {
+  width: 100%;
+  height: auto;
+  display: block;
+  vertical-align: top;
+  aspect-ratio: 350 / 467;
+  object-fit: cover;
+}
+
+.expand-panel-row__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.expand-panel-row__content>.show-list {
+  margin-top: 0;
+}
+
+@media (min-width: 640px) {
+
+  .expand-panel-row--thumb-left,
+  .expand-panel-row--thumb-right {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .expand-panel-row--thumb-left .expand-panel-row__thumb,
+  .expand-panel-row--thumb-right .expand-panel-row__thumb {
+    width: clamp(8rem, 20vw, 11rem);
+  }
+}
+
+.band-section--light .tour-dates .headline-caps {
+  color: #111;
 }
 
 .kicker--center {
@@ -922,6 +1025,10 @@ img.musical-divider__img {
 }
 
 #audio-samples-panel[hidden] {
+  display: none !important;
+}
+
+#tour-panel[hidden] {
   display: none !important;
 }
 
@@ -1496,7 +1603,7 @@ img.musical-divider__img {
     gap: 0.2rem;
   }
 
-  .show-list__details > span {
+  .show-list__details>span {
     display: block;
   }
 }

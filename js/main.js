@@ -615,6 +615,26 @@
     })();
   })();
 
+  (function initTourDatesCollapsible() {
+    const btn = document.getElementById("tour-toggle");
+    const panel = document.getElementById("tour-panel");
+    if (!btn || !panel) return;
+    function sync() {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      if (open) {
+        panel.removeAttribute("hidden");
+      } else {
+        panel.setAttribute("hidden", "");
+      }
+    }
+    btn.addEventListener("click", function () {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      sync();
+    });
+    sync();
+  })();
+
   /* Hero banner: moves slower than the page (parallax), disabled when reduced motion is preferred */
   const heroImg = document.querySelector(".page-hero__img");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");

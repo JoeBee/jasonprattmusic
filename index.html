@@ -64,7 +64,8 @@
       </picture>
       <div class="page-hero__copy-wrap">
         <input class="page-hero__copy-toggle" type="checkbox" id="hero-copy-toggle" aria-label="Expand artist bio" />
-        <p class="page-hero__copy page-hero__copy--collapsible">** Jason Pratt is an accomplished acoustic guitarist,
+        <p class="page-hero__copy page-hero__copy--collapsible">+99+** Jason Pratt is an accomplished acoustic
+          guitarist,
           vocalist, and songwriter whose
           music blends heartfelt authenticity with decades of stage experience. A proud Berklee College of Music
           alumnus, Jason has spent over 30 years performing across a wide variety of venues, connecting with audiences
@@ -83,12 +84,18 @@
   <main>
     <section class="band-section band-section--on-photo" aria-labelledby="headline-1">
       <div class="site-wrap site-wrap--narrow">
-        <h2 class="headline-ornate" id="headline-1">♪ High-Energy Live Soul & Groove for Festivals, Clubs, and Private
-          Events. ♫</h2>
+        <div class="headline-with-thumb headline-with-thumb--thumb-right">
+          <h2 class="headline-ornate" id="headline-1">♪ High-Energy Live Soul & Groove for Festivals, Clubs, and Private
+            Events. ♫</h2>
+          <figure class="headline-with-thumb__fig" aria-hidden="true">
+            <img class="headline-with-thumb__img" src="assets/cover-art-1.png" width="350" height="467" alt=""
+              loading="lazy" />
+          </figure>
+        </div>
       </div>
       <br>
 
-      <section class="cover-art" id="cover-art" aria-labelledby="cover-art-heading">
+      <!-- <section class="cover-art" id="cover-art" aria-labelledby="cover-art-heading">
         <h2 class="headline-caps headline-caps--collapsible" id="cover-art-heading">
           <button type="button" class="headline-caps__toggle" id="cover-art-toggle" aria-expanded="false"
             aria-controls="cover-art-panel">
@@ -113,7 +120,7 @@
             </a>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <div class="musical-divider-wrap">
         <div class="musical-divider" role="presentation" aria-hidden="true">
@@ -136,8 +143,15 @@
           </h2>
           <div class="video-layout" id="video-links" role="region" aria-labelledby="live-videos-heading"
             aria-live="polite" hidden>
-            <div class="video-focus" id="video-focus" hidden></div>
-            <div class="video-thumbs" id="video-thumbs"></div>
+            <div class="expand-panel-row expand-panel-row--thumb-left">
+              <figure class="expand-panel-row__thumb" aria-hidden="true">
+                <img src="assets/cover-art-2.png" width="350" height="467" alt="" loading="lazy" />
+              </figure>
+              <div class="expand-panel-row__content">
+                <div class="video-focus" id="video-focus" hidden></div>
+                <div class="video-thumbs" id="video-thumbs"></div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -151,20 +165,45 @@
           </h2>
           <div class="audio-samples__panel" id="audio-samples-panel" role="region"
             aria-labelledby="audio-samples-heading" aria-live="polite" hidden>
-            <p class="body-text audio-list__intro">Select a track to play.</p>
-            <ul class="audio-list" id="audio-list" aria-label="Track list">
-            </ul>
-            <p class="audio-list__err body-text" id="audio-list-err" hidden></p>
+            <div class="expand-panel-row expand-panel-row--thumb-right">
+              <div class="expand-panel-row__content">
+                <p class="body-text audio-list__intro">Select a track to play.</p>
+                <ul class="audio-list" id="audio-list" aria-label="Track list">
+                </ul>
+                <p class="audio-list__err body-text" id="audio-list-err" hidden></p>
+              </div>
+              <figure class="expand-panel-row__thumb" aria-hidden="true">
+                <img src="assets/cover-art-3.png" width="350" height="467" alt="" loading="lazy" />
+              </figure>
+            </div>
           </div>
         </section>
 
       </div>
     </section>
 
-    <section class="band-section band-section--light" aria-labelledby="tour">
+    <section class="band-section band-section--light" id="tour" aria-labelledby="tour-heading">
       <div class="site-wrap">
-        <h2 class="section-heading section-heading--dark" id="tour">Upcoming live dates</h2>
-        <ul class="show-list" id="show-list" aria-live="polite"></ul>
+        <div class="tour-dates">
+          <h2 class="headline-caps headline-caps--collapsible" id="tour-heading">
+            <button type="button" class="headline-caps__toggle" id="tour-toggle" aria-expanded="false"
+              aria-controls="tour-panel">
+              <span class="headline-caps__text">Upcoming live dates</span>
+              <span class="headline-caps__icon" aria-hidden="true">▼</span>
+            </button>
+          </h2>
+          <div class="tour-dates__panel" id="tour-panel" role="region" aria-labelledby="tour-heading" aria-live="polite"
+            hidden>
+            <div class="expand-panel-row expand-panel-row--thumb-left">
+              <figure class="expand-panel-row__thumb" aria-hidden="true">
+                <img src="assets/cover-art-4.png" width="350" height="467" alt="" loading="lazy" />
+              </figure>
+              <div class="expand-panel-row__content">
+                <ul class="show-list" id="show-list" aria-live="polite"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
