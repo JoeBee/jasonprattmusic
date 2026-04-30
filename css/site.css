@@ -1392,7 +1392,7 @@ img.musical-divider__img {
 
   .page-hero {
     aspect-ratio: auto;
-    min-height: clamp(24rem, 82vh, 34rem);
+    min-height: 0;
     max-height: none;
   }
 
