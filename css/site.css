@@ -572,6 +572,57 @@ img.musical-divider__img {
   object-fit: cover;
 }
 
+/* Stacked thumb variant: two cover images aligned to the top of the row,
+   separated by a visible gap, with each image carrying its own border. */
+.expand-panel-row__thumb--stacked {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  border: none;
+  background: transparent;
+}
+
+.expand-panel-row__thumb:has(> img[src*="cover-art-"]) {
+  border: none;
+  background: transparent;
+}
+
+/* Portrait cover-art assets: gilt mat + beveled inner frame */
+img[src$="cover-art-1.png"],
+img[src$="cover-art-2.png"],
+img[src$="cover-art-3.png"],
+img[src$="cover-art-4.png"] {
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 220, 0.28),
+    inset 0 0 0 1px rgba(210, 175, 95, 0.4),
+    inset 0 0 0 5px rgba(18, 15, 12, 0.98),
+    0 0 0 1px rgba(0, 0, 0, 0.72),
+    0 0 0 2px rgba(184, 145, 70, 0.28),
+    0 16px 40px rgba(0, 0, 0, 0.52);
+}
+
+.band-section--light img[src$="cover-art-1.png"],
+.band-section--light img[src$="cover-art-2.png"],
+.band-section--light img[src$="cover-art-3.png"],
+.band-section--light img[src$="cover-art-4.png"] {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 0 0 1px rgba(100, 80, 48, 0.22),
+    inset 0 0 0 5px rgba(252, 250, 246, 0.96),
+    0 0 0 1px rgba(72, 58, 36, 0.18),
+    0 0 0 2px rgba(201, 165, 90, 0.38),
+    0 14px 36px rgba(0, 0, 0, 0.16);
+}
+
+.gallery--portrait .gallery__item:has(img[src*="cover-art-"]) {
+  border: none;
+  background: transparent;
+  overflow: visible;
+  padding: 0.35rem;
+}
+
 .expand-panel-row__content {
   flex: 1;
   min-width: 0;
@@ -608,6 +659,11 @@ img.musical-divider__img {
   .expand-panel-row--thumb-left .expand-panel-row__thumb,
   .expand-panel-row--thumb-right .expand-panel-row__thumb {
     width: var(--expand-cover-art-w);
+  }
+
+  .expand-panel-row--thumb-left .expand-panel-row__thumb--stacked,
+  .expand-panel-row--thumb-right .expand-panel-row__thumb--stacked {
+    width: clamp(11rem, 28vw, 14rem);
   }
 }
 
