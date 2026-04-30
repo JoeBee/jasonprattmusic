@@ -581,8 +581,13 @@ img.musical-divider__img {
   margin-top: 0;
 }
 
-@media (max-width: 639px) {
+/* Hide cover-art-1..4 on mobile (everything below tablet portrait) */
+@media (max-width: 767px) {
 
+  img[src$="cover-art-1.png"],
+  img[src$="cover-art-2.png"],
+  img[src$="cover-art-3.png"],
+  img[src$="cover-art-4.png"],
   .headline-with-thumb__fig,
   .expand-panel-row__thumb,
   .cover-art .gallery__item {
