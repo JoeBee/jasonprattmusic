@@ -123,14 +123,38 @@ video {
 }
 
 .social-bar__link {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
   color: #fff;
   opacity: 0.9;
   text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
 }
 
 .social-bar__link:hover {
   opacity: 1;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+.social-bar__link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Bottom-of-page variant: centered, in-flow under the footer line */
+.social-bar--footer {
+  position: static;
+  transform: none;
+  justify-content: center;
+  margin: 0 auto 1.1rem;
 }
 
 .icon-s {
