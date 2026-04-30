@@ -1375,12 +1375,12 @@ img.musical-divider__img {
 
   .page-hero {
     aspect-ratio: auto;
-    min-height: 0;
+    min-height: clamp(24rem, 82vh, 34rem);
     max-height: none;
   }
 
   .page-hero picture {
-    height: auto;
+    height: 100%;
   }
 
   .page-hero__copy-wrap {
@@ -1423,7 +1423,6 @@ img.musical-divider__img {
   }
 
   .page-hero__copy-less {
-    display: none;
     margin: 0.35rem 0.35rem 0.05rem;
     color: #fff;
     font-size: 0.82rem;
@@ -1438,9 +1437,9 @@ img.musical-divider__img {
   }
 
   .page-hero__img {
-    height: auto;
-    min-height: 0;
-    object-fit: contain;
+    height: 100%;
+    min-height: 100%;
+    object-fit: cover;
     transform: none !important;
     will-change: auto;
   }
@@ -1479,12 +1478,6 @@ img.musical-divider__img {
 
   .show-list__details > span {
     display: block;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .nav-toggle {
-    display: none !important;
   }
 }
 
