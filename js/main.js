@@ -757,12 +757,17 @@
     sync();
   })();
 
-  /* Hero banner: moves slower than the page (parallax), disabled when reduced motion is preferred */
+  /* Hero banner: moves much slower than the page (parallax), disabled when reduced motion is preferred.
+     The text overlay (.page-hero__copy-wrap) is NOT translated, so it scrolls with the page while the
+     banner image lags far behind. Rate is the fraction of scrollY translated *down* on the image:
+       effective image scroll speed in viewport = (1 - rate) * page speed
+       0.0  -> image scrolls with page (no parallax)
+       0.85 -> image scrolls at 15% of page speed (much slower than overlay text) */
   const heroImg = document.querySelector(".page-hero__img");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (heroImg) {
     let heroParallaxTicking = false;
-    const heroParallaxRate = 0.52;
+    const heroParallaxRate = 0.85;
 
     function updateHeroParallax() {
       heroParallaxTicking = false;

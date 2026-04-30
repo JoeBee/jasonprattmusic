@@ -184,7 +184,7 @@ video {
   padding: clamp(1rem, 2.6vw, 1.75rem) clamp(0.75rem, 2.4vw, 1.4rem) clamp(0.85rem, 2.2vw, 1.4rem);
   line-height: 1.55;
   background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.7) 55%, rgba(0, 0, 0, 0) 100%);
+    linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0) 100%);
 }
 
 /* Editorial bio panel: warm cream copy on a darkened card with a thin gilt border
@@ -203,7 +203,7 @@ video {
   hyphens: auto;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
   background:
-    linear-gradient(180deg, rgba(20, 14, 6, 0.55), rgba(8, 5, 2, 0.7));
+    linear-gradient(180deg, rgba(20, 14, 6, 0.28), rgba(8, 5, 2, 0.4));
   border: 1px solid rgba(201, 165, 90, 0.42);
   border-radius: 0.4rem;
   padding: clamp(1rem, 2.2vw, 1.6rem) clamp(1.1rem, 2.6vw, 2rem);
@@ -1726,7 +1726,7 @@ img[src$="cover-art-4.png"] {
     font-size: clamp(0.82rem, 3.2vw, 0.95rem);
     line-height: 1.55;
     padding: 0.85rem 0.9rem 0.9rem 1rem;
-    background: linear-gradient(180deg, rgba(20, 14, 6, 0.7), rgba(8, 5, 2, 0.78));
+    background: linear-gradient(180deg, rgba(20, 14, 6, 0.4), rgba(8, 5, 2, 0.48));
     border: 1px solid rgba(201, 165, 90, 0.28);
     border-left: 3px solid rgba(201, 165, 90, 0.7);
     border-radius: 0.3rem;
