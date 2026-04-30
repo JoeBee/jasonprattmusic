@@ -325,6 +325,13 @@ video {
   }
 }
 
+/* Hide nav entirely on touch-first devices (phones/tablets), even in landscape. */
+@media (hover: none) and (pointer: coarse) {
+  .nav-bar {
+    display: none !important;
+  }
+}
+
 /* --- Band sections: on top of full-page background --- */
 .band-section {
   padding: 2.5rem 0 3rem;
