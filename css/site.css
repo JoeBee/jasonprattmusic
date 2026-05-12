@@ -783,10 +783,7 @@ img[src$="cover-art-4.png"] {
   margin-bottom: 0.5rem;
 }
 
-/* Tour dates: cover-art-4 height tracks the show-list height dynamically.
-   --list-h is set by js/main.js via a ResizeObserver on #show-list.
-   The thumb width is derived from that height using the 350:467 aspect ratio,
-   so the image's rendered height (via aspect-ratio on the <img>) equals --list-h. */
+/* Tour dates: calendar and event list share one visual row on wider screens. */
 #tour-panel .expand-panel-row__content {
   flex: 1 1 0;
   min-width: 0;
@@ -798,22 +795,6 @@ img[src$="cover-art-4.png"] {
     flex-direction: row;
     align-items: flex-start;
     gap: 1rem 1.25rem;
-  }
-
-  #tour-panel .expand-panel-row--thumb-left .expand-panel-row__thumb {
-    flex: 0 0 auto;
-    align-self: flex-start;
-    width: calc(var(--list-h, 28rem) * 350 / 467);
-    max-width: 45%;
-    height: auto;
-  }
-
-  #tour-panel .expand-panel-row--thumb-left .expand-panel-row__thumb img {
-    width: 100%;
-    height: auto;
-    max-width: none;
-    aspect-ratio: 350 / 467;
-    object-fit: cover;
   }
 }
 
@@ -1527,6 +1508,144 @@ img[src$="cover-art-4.png"] {
 }
 
 /* --- Show list (light section) --- */
+.show-calendar {
+  width: 100%;
+  color: #111;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.76));
+  border: 1px solid rgba(90, 55, 80, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .show-calendar {
+    flex: 0 0 clamp(17rem, 32vw, 22rem);
+    position: sticky;
+    top: 0.75rem;
+  }
+}
+
+.show-calendar__header {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr 2.5rem;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.65rem;
+}
+
+.show-calendar__title {
+  margin: 0;
+  color: #111;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.show-calendar__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  color: #4f2345;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(90, 55, 80, 0.22);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.show-calendar__nav:hover,
+.show-calendar__nav:focus-visible {
+  background: #fff;
+  border-color: rgba(90, 55, 80, 0.45);
+  outline: 2px solid rgba(107, 45, 92, 0.28);
+  outline-offset: 2px;
+}
+
+.show-calendar__weekdays,
+.show-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.28rem;
+}
+
+.show-calendar__weekdays {
+  margin-bottom: 0.35rem;
+  color: #555;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.show-calendar__day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 2.15rem;
+  padding: 0.2rem;
+  color: #444;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0.35rem;
+  font: inherit;
+  font-size: 0.88rem;
+  line-height: 1;
+}
+
+.show-calendar__day--empty {
+  visibility: hidden;
+}
+
+.show-calendar__day--event {
+  color: #fff;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(231, 200, 138, 0.28), transparent 45%),
+    #6b2d5c;
+  border-color: rgba(74, 28, 62, 0.5);
+  box-shadow: 0 2px 8px rgba(74, 28, 62, 0.25);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.show-calendar__day--event:hover,
+.show-calendar__day--event:focus-visible {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(231, 200, 138, 0.38), transparent 45%),
+    #4f2345;
+  outline: 2px solid rgba(79, 35, 69, 0.35);
+  outline-offset: 2px;
+}
+
+.show-calendar__day--today {
+  border-color: rgba(184, 145, 70, 0.8);
+  box-shadow: inset 0 0 0 1px rgba(184, 145, 70, 0.35);
+}
+
+.show-calendar__day.is-selected {
+  outline: 3px solid rgba(17, 17, 17, 0.28);
+  outline-offset: 1px;
+}
+
+.show-calendar__hint {
+  margin: 0.75rem 0 0;
+  color: #555;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .band-section--light .show-list {
   background: rgba(255, 255, 255, 0.75);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -1557,6 +1676,31 @@ img[src$="cover-art-4.png"] {
 
 .show-list__row:last-child {
   border-bottom: none;
+}
+
+.show-list__row--filter {
+  display: block;
+  padding: 0.65rem 0.8rem;
+  text-align: right;
+}
+
+.show-list__clear-filter {
+  min-height: 2.4rem;
+  padding: 0.45rem 0.8rem;
+  color: #111;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(90, 55, 80, 0.25);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.show-list__clear-filter:hover,
+.show-list__clear-filter:focus-visible {
+  background: #fff;
+  outline: 2px solid rgba(107, 45, 92, 0.28);
+  outline-offset: 2px;
 }
 
 .show-list__date {

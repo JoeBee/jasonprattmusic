@@ -152,16 +152,36 @@
   onHashOrLoadNav();
 
   /**
-   * Populate upcoming shows from a JSON file.
-   * Events are rendered in the same order they appear in data/shows.json.
+   * Populate upcoming shows from a JSON file and mirror them into a small month calendar.
+   * Events are rendered chronologically, with the calendar acting as a visual filter.
    */
   async function loadShows() {
     const showList = document.getElementById("show-list");
+    const showCalendar = document.getElementById("show-calendar");
     if (!showList) return;
 
-    function getShowDateValue(show) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    function parseShowDate(show) {
+      const iso = String(show.date || "").trim();
+      const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+      if (isoMatch) {
+        const isoYear = Number(isoMatch[1]);
+        const isoMonth = Number(isoMatch[2]);
+        const isoDay = Number(isoMatch[3]);
+        const isoDate = new Date(isoYear, isoMonth - 1, isoDay);
+        if (
+          isoDate.getFullYear() === isoYear &&
+          isoDate.getMonth() === isoMonth - 1 &&
+          isoDate.getDate() === isoDay
+        ) {
+          return isoDate;
+        }
+      }
+
       const parts = String(show.displayDate || "").split("/");
-      if (parts.length !== 3) return Number.MAX_SAFE_INTEGER;
+      if (parts.length !== 3) return null;
 
       const month = Number(parts[0]);
       const day = Number(parts[1]);
@@ -176,42 +196,71 @@
         date.getMonth() !== month - 1 ||
         date.getDate() !== day
       ) {
-        return Number.MAX_SAFE_INTEGER;
+        return null;
       }
 
-      return date.getTime();
+      return date;
     }
 
-    try {
-      const response = await fetch("data/shows.json", { cache: "no-store" });
-      if (!response.ok) throw new Error("Failed to load show data.");
-      const shows = await response.json();
+    function getDateKey(date) {
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return date.getFullYear() + "-" + month + "-" + day;
+    }
 
-      if (!Array.isArray(shows) || shows.length === 0) {
-        showList.innerHTML = '<li class="show-list__row">No upcoming shows posted yet.</li>';
-        return;
-      }
+    function getMonthKey(date) {
+      return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0");
+    }
 
-      const visibleShows = shows.filter(function (show) {
-        return String(show.visible || "").toLowerCase() === "true";
-      }).sort(function (a, b) {
-        return getShowDateValue(a) - getShowDateValue(b);
+    function formatMonthLabel(year, monthIndex) {
+      return new Date(year, monthIndex, 1).toLocaleDateString(undefined, {
+        month: "long",
+        year: "numeric",
       });
+    }
 
-      if (visibleShows.length === 0) {
-        showList.innerHTML = '<li class="show-list__row">No upcoming shows posted yet.</li>';
-        return;
-      }
+    function formatCalendarLabel(show) {
+      const place = show.city ? show.venue + ", " + show.city : show.venue;
+      return place || "Show details";
+    }
 
+    function startOfMonth(date) {
+      return new Date(date.getFullYear(), date.getMonth(), 1);
+    }
+
+    function renderShowList(showsToRender, selectedDateKey) {
       showList.innerHTML = "";
 
-      visibleShows.forEach(function (show) {
+      if (selectedDateKey) {
+        const clearRow = document.createElement("li");
+        clearRow.className = "show-list__row show-list__row--filter";
+        const clearButton = document.createElement("button");
+        clearButton.className = "show-list__clear-filter";
+        clearButton.type = "button";
+        clearButton.textContent = "Show all dates";
+        clearButton.addEventListener("click", function () {
+          selectedCalendarDateKey = "";
+          renderShowList(visibleShows, "");
+          renderCalendar(currentCalendarMonth);
+        });
+        clearRow.appendChild(clearButton);
+        showList.appendChild(clearRow);
+      }
+
+      if (showsToRender.length === 0) {
+        showList.innerHTML = '<li class="show-list__row">No shows posted for this date.</li>';
+        return;
+      }
+
+      showsToRender.forEach(function (show) {
         const row = document.createElement("li");
         row.className = "show-list__row";
+        if (show.dateKey) row.setAttribute("data-show-date", show.dateKey);
 
         const date = document.createElement("time");
         date.className = "show-list__date";
-        date.textContent = show.displayDate || "TBD";
+        date.textContent = show.displayDate || (show.date ? show.date.toLocaleDateString() : "TBD");
+        if (show.dateKey) date.setAttribute("datetime", show.dateKey);
 
         const details = document.createElement("div");
         details.className = "show-list__details";
@@ -238,44 +287,187 @@
         row.appendChild(details);
         showList.appendChild(row);
       });
+    }
+
+    function renderCalendar(monthDate) {
+      if (!showCalendar) return;
+
+      const year = monthDate.getFullYear();
+      const month = monthDate.getMonth();
+      const monthKey = getMonthKey(monthDate);
+      const firstDay = new Date(year, month, 1);
+      const startOffset = firstDay.getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const eventsThisMonth = visibleShows.filter(function (show) {
+        return show.date && getMonthKey(show.date) === monthKey;
+      });
+      const eventsByDate = eventsThisMonth.reduce(function (map, show) {
+        if (!map[show.dateKey]) map[show.dateKey] = [];
+        map[show.dateKey].push(show);
+        return map;
+      }, {});
+
+      showCalendar.innerHTML = "";
+
+      const header = document.createElement("div");
+      header.className = "show-calendar__header";
+
+      const prev = document.createElement("button");
+      prev.className = "show-calendar__nav";
+      prev.type = "button";
+      prev.setAttribute("aria-label", "Previous month");
+      prev.textContent = "<";
+
+      const title = document.createElement("h3");
+      title.className = "show-calendar__title";
+      title.textContent = formatMonthLabel(year, month);
+
+      const next = document.createElement("button");
+      next.className = "show-calendar__nav";
+      next.type = "button";
+      next.setAttribute("aria-label", "Next month");
+      next.textContent = ">";
+
+      prev.addEventListener("click", function () {
+        selectedCalendarDateKey = "";
+        currentCalendarMonth = startOfMonth(new Date(year, month - 1, 1));
+        renderShowList(visibleShows, "");
+        renderCalendar(currentCalendarMonth);
+      });
+      next.addEventListener("click", function () {
+        selectedCalendarDateKey = "";
+        currentCalendarMonth = startOfMonth(new Date(year, month + 1, 1));
+        renderShowList(visibleShows, "");
+        renderCalendar(currentCalendarMonth);
+      });
+
+      header.appendChild(prev);
+      header.appendChild(title);
+      header.appendChild(next);
+      showCalendar.appendChild(header);
+
+      const weekdays = document.createElement("div");
+      weekdays.className = "show-calendar__weekdays";
+      ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(function (dayName) {
+        const weekday = document.createElement("span");
+        weekday.textContent = dayName;
+        weekdays.appendChild(weekday);
+      });
+      showCalendar.appendChild(weekdays);
+
+      const grid = document.createElement("div");
+      grid.className = "show-calendar__grid";
+
+      for (let i = 0; i < startOffset; i += 1) {
+        const empty = document.createElement("span");
+        empty.className = "show-calendar__day show-calendar__day--empty";
+        empty.setAttribute("aria-hidden", "true");
+        grid.appendChild(empty);
+      }
+
+      for (let day = 1; day <= daysInMonth; day += 1) {
+        const date = new Date(year, month, day);
+        const dateKey = getDateKey(date);
+        const dayEvents = eventsByDate[dateKey] || [];
+        const dayHasEvents = dayEvents.length > 0;
+        const isToday = dateKey === getDateKey(today);
+        const isSelected = dateKey === selectedCalendarDateKey;
+        const dayEl = document.createElement(dayHasEvents ? "button" : "span");
+        dayEl.className = "show-calendar__day";
+        if (dayHasEvents) dayEl.className += " show-calendar__day--event";
+        if (isToday) dayEl.className += " show-calendar__day--today";
+        if (isSelected) dayEl.className += " is-selected";
+        dayEl.textContent = String(day);
+
+        if (dayHasEvents) {
+          dayEl.type = "button";
+          dayEl.setAttribute(
+            "aria-label",
+            date.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" }) +
+              ": " +
+              dayEvents.map(formatCalendarLabel).join("; ")
+          );
+          dayEl.addEventListener("click", function () {
+            selectedCalendarDateKey = dateKey;
+            renderShowList(dayEvents, selectedCalendarDateKey);
+            renderCalendar(currentCalendarMonth);
+            showList.scrollIntoView({
+              block: "nearest",
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            });
+          });
+        } else {
+          dayEl.setAttribute("aria-label", "No shows on " + date.toLocaleDateString());
+        }
+
+        grid.appendChild(dayEl);
+      }
+
+      showCalendar.appendChild(grid);
+
+      const hint = document.createElement("p");
+      hint.className = "show-calendar__hint";
+      hint.textContent =
+        eventsThisMonth.length > 0 ? "Tap a highlighted date to focus the list." : "No posted shows this month.";
+      showCalendar.appendChild(hint);
+    }
+
+    let visibleShows = [];
+    let currentCalendarMonth = startOfMonth(today);
+    let selectedCalendarDateKey = "";
+
+    try {
+      const response = await fetch("data/shows.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Failed to load show data.");
+      const shows = await response.json();
+
+      if (!Array.isArray(shows) || shows.length === 0) {
+        showList.innerHTML = '<li class="show-list__row">No upcoming shows posted yet.</li>';
+        if (showCalendar) showCalendar.innerHTML = '<p class="show-calendar__hint">No upcoming shows posted yet.</p>';
+        return;
+      }
+
+      visibleShows = shows
+        .filter(function (show) {
+          return String(show.visible || "").toLowerCase() === "true";
+        })
+        .map(function (show) {
+          const parsedDate = parseShowDate(show);
+          const normalized = Object.assign({}, show, {
+            date: parsedDate,
+            dateKey: parsedDate ? getDateKey(parsedDate) : "",
+          });
+          return normalized;
+        })
+        .filter(function (show) {
+          return !show.date || show.date.getTime() >= today.getTime();
+        })
+        .sort(function (a, b) {
+          const aTime = a.date ? a.date.getTime() : Number.MAX_SAFE_INTEGER;
+          const bTime = b.date ? b.date.getTime() : Number.MAX_SAFE_INTEGER;
+          return aTime - bTime;
+        });
+
+      if (visibleShows.length === 0) {
+        showList.innerHTML = '<li class="show-list__row">No upcoming shows posted yet.</li>';
+        if (showCalendar) showCalendar.innerHTML = '<p class="show-calendar__hint">No upcoming shows posted yet.</p>';
+        return;
+      }
+
+      const firstDatedShow = visibleShows.find(function (show) {
+        return show.date;
+      });
+      if (firstDatedShow) currentCalendarMonth = startOfMonth(firstDatedShow.date);
+
+      renderShowList(visibleShows, "");
+      renderCalendar(currentCalendarMonth);
     } catch (_) {
       showList.innerHTML = '<li class="show-list__row">Could not load shows right now.</li>';
+      if (showCalendar) showCalendar.innerHTML = '<p class="show-calendar__hint">Could not load shows right now.</p>';
     }
   }
 
-  /**
-   * Keep the tour-dates cover art the same height as the show-list column.
-   * Writes the measured list height to --list-h on the row container; the
-   * matching CSS derives the thumb's width from that height (350:467 ratio),
-   * so the image's rendered height tracks the list dynamically.
-   */
-  function initTourCoverHeightSync() {
-    const list = document.getElementById("show-list");
-    const row = document.querySelector("#tour-panel .expand-panel-row--thumb-left");
-    if (!list || !row) return;
-
-    function apply() {
-      const h = list.getBoundingClientRect().height;
-      if (h > 0) row.style.setProperty("--list-h", h + "px");
-    }
-
-    apply();
-
-    if (typeof ResizeObserver !== "undefined") {
-      const ro = new ResizeObserver(apply);
-      ro.observe(list);
-    }
-    window.addEventListener("resize", apply);
-
-    const tourBtn = document.getElementById("tour-toggle");
-    if (tourBtn) {
-      tourBtn.addEventListener("click", function () {
-        requestAnimationFrame(apply);
-      });
-    }
-  }
-
-  loadShows().then(initTourCoverHeightSync);
+  loadShows();
 
   /** @returns {string|null} */
   function getYoutubeEmbedUrl(urlString) {
