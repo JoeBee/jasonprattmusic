@@ -581,9 +581,6 @@
           })
           .map(function (f) {
             return f.trim();
-          })
-          .sort(function (a, b) {
-            return titleFromFilename(a).localeCompare(titleFromFilename(b), undefined, { sensitivity: "base" });
           });
         listEl.innerHTML = "";
         files.forEach(function (name) {
