@@ -1,26 +1,296 @@
 [
   {
-    "displayDate": "Aug 12, 2026",
-    "venue": "Venue name",
-    "city": "City",
-    "comments": "All ages, doors 7 p."
+    "displayDate": "4/19/2025",
+    "venue": "Good Pickin Farms",
+    "city": "Westford, MA",
+    "comments": ""
   },
   {
-    "displayDate": "Sep 3, 2026",
-    "venue": "Festival or hall",
-    "city": "City",
-    "comments": "Festival set — time TBA"
+    "displayDate": "10/21/2025",
+    "venue": "GoodNight Johnny's",
+    "city": "Burlington, MA",
+    "comments": ""
   },
   {
-    "displayDate": "Oct 3, 2026",
-    "venue": "TEST Festival or hall",
-    "city": "City",
-    "comments": "comments here 333"
+    "displayDate": "11/3/2025",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
   },
   {
-    "displayDate": "Dec 25, 2029",
-    "venue": "TEST 222 Festival or hall",
-    "city": "City",
-    "comments": "Internal note: confirm load-in time"
+    "displayDate": "11/10/2025",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "11/24/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "12/8/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "12/9/2026",
+    "venue": "Chelmsford Family Practice",
+    "city": "North Chelmsford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "12/10/2026",
+    "venue": "GoodNight Johnny's",
+    "city": "Burlington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "12/22/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "1/2/2026",
+    "venue": "GoodNight Johnny's",
+    "city": "Burlington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "1/5/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "1/12/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "1/19/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "1/26/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "1/30/2026",
+    "venue": "GoodNight Johnny's",
+    "city": "Burlington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "2/2/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "2/18/2026",
+    "venue": "GoodNight Johnny's",
+    "city": "Burlington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "2/23/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "3/2/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "3/9/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "3/16/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "3/23/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "3/30/2026",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "4/3/2026",
+    "venue": "Navigation Brewery",
+    "city": "Chelmsford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "4/4/2026",
+    "venue": "Good Pickin Farms",
+    "city": "Westford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "4/10/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "4/25/2026",
+    "venue": "PRIVATE PARTY GJ",
+    "city": "",
+    "comments": ""
+  },
+  {
+    "displayDate": "5/1/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "5/15/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "5/24/2026",
+    "venue": "GoodNight Johnny's",
+    "city": "Burlington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "5/30/2026",
+    "venue": "Navigation Brewery",
+    "city": "Chelmsford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "5/31/2026",
+    "venue": "BOSTON CONCERT NETWORK",
+    "city": "",
+    "comments": ""
+  },
+  {
+    "displayDate": "6/6/2026",
+    "venue": "Navigation Brewery",
+    "city": "Chelmsford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "6/11/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "6/13/2026",
+    "venue": "Navigation Brewery",
+    "city": "Chelmsford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "6/18/2026",
+    "venue": "Coldwell Banker Annual Party",
+    "city": "",
+    "comments": ""
+  },
+  {
+    "displayDate": "6/25/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "6/27/2026",
+    "venue": "Navigation Brewery",
+    "city": "Chelmsford, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "7/8/2026",
+    "venue": "OPEN MIC GOODNIGHT",
+    "city": "",
+    "comments": ""
+  },
+  {
+    "displayDate": "7/9/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "7/15/2026",
+    "venue": "OPEN MIC GOODNIGHT",
+    "city": "",
+    "comments": ""
+  },
+  {
+    "displayDate": "7/17/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "7/19/2026",
+    "venue": "Post 1917 Reading",
+    "city": "Reading, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "7/24/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "7/30/2026",
+    "venue": "Post 1917 Lexington",
+    "city": "Lexington, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "8/2/2026",
+    "venue": "Post 1917 Reading",
+    "city": "Reading, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "8/9/2026",
+    "venue": "Owen & Ollie's",
+    "city": "Dracut, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "8/20/2026",
+    "venue": "Reception Ledger",
+    "city": "Salem, MA",
+    "comments": ""
+  },
+  {
+    "displayDate": "12/11/2026",
+    "venue": "GoodNight Johnny's",
+    "city": "Burlington, MA",
+    "comments": "Locals"
   }
 ]
