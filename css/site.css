@@ -592,6 +592,63 @@ img.musical-divider__img {
   hyphens: auto;
 }
 
+.headline-ornate--rainbow {
+  font-family: "Aclonica", cursive, sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.12rem, 4.35vw, 1.52rem);
+  letter-spacing: 0.04em;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.55px rgba(0, 0, 0, 0.72);
+  background-image: linear-gradient(
+    92deg,
+    #ff1a5e 0%,
+    #ff8c00 14%,
+    #ffe600 28%,
+    #00ff6a 42%,
+    #00d4ff 57%,
+    #7c4dff 71%,
+    #ff2bd6 85%,
+    #ff1a5e 100%
+  );
+  background-size: 240% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  paint-order: stroke fill;
+  filter:
+    drop-shadow(0 0 1px rgba(0, 0, 0, 0.95))
+    drop-shadow(0 1px 0 rgba(0, 0, 0, 0.88))
+    drop-shadow(0 2px 8px rgba(0, 0, 0, 0.65));
+  animation: headline-ornate-rainbow 12s linear infinite;
+}
+
+@keyframes headline-ornate-rainbow {
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 100% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headline-ornate--rainbow {
+    animation: none;
+    background-size: 100% 100%;
+    background-image: linear-gradient(
+      105deg,
+      #ff1a5e,
+      #ff8c00,
+      #ffe600,
+      #00ff6a,
+      #00d4ff,
+      #7c4dff,
+      #ff2bd6
+    );
+  }
+}
+
 /* Hero headline row + alternating cover thumbnails in expandable panels */
 .headline-with-thumb {
   display: flex;
