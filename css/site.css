@@ -1580,7 +1580,13 @@ img[src$="cover-art-4.png"] {
 }
 
 .show-list__details {
+  display: grid;
+  gap: 0.2rem;
   min-width: 0;
+}
+
+.show-list__details>span {
+  display: block;
 }
 
 .show-list__comments {

@@ -159,6 +159,29 @@
     const showList = document.getElementById("show-list");
     if (!showList) return;
 
+    function getShowDateValue(show) {
+      const parts = String(show.displayDate || "").split("/");
+      if (parts.length !== 3) return Number.MAX_SAFE_INTEGER;
+
+      const month = Number(parts[0]);
+      const day = Number(parts[1]);
+      const year = Number(parts[2]);
+      const date = new Date(year, month - 1, day);
+
+      if (
+        !month ||
+        !day ||
+        !year ||
+        date.getFullYear() !== year ||
+        date.getMonth() !== month - 1 ||
+        date.getDate() !== day
+      ) {
+        return Number.MAX_SAFE_INTEGER;
+      }
+
+      return date.getTime();
+    }
+
     try {
       const response = await fetch("data/shows.json", { cache: "no-store" });
       if (!response.ok) throw new Error("Failed to load show data.");
@@ -169,9 +192,20 @@
         return;
       }
 
+      const visibleShows = shows.filter(function (show) {
+        return String(show.visible || "").toLowerCase() === "true";
+      }).sort(function (a, b) {
+        return getShowDateValue(a) - getShowDateValue(b);
+      });
+
+      if (visibleShows.length === 0) {
+        showList.innerHTML = '<li class="show-list__row">No upcoming shows posted yet.</li>';
+        return;
+      }
+
       showList.innerHTML = "";
 
-      shows.forEach(function (show) {
+      visibleShows.forEach(function (show) {
         const row = document.createElement("li");
         row.className = "show-list__row";
 
