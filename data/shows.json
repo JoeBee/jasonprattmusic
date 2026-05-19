@@ -3,161 +3,230 @@
     "displayDate": "5/15/2026",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
-    "comments": "",
-    "visible": "TRUE"
+    "comments": "Fun for the kids!",
+    "visible": "TRUE",
+    "address": "27 Waltham St, Lexington, MA 02421",
+    "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+    "website": "https://www.post1917.com/"
   },
   {
     "displayDate": "5/24/2026",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
-    "comments": "",
-    "visible": "TRUE"
+    "comments": "Plenty of parking",
+    "visible": "TRUE",
+    "address": "154 Cambridge St, Burlington, MA 01803",
+    "map": "https://www.google.com/maps/place/Goodnight+Johnny's+American+Music+Bar/data=!4m2!3m1!1s0x0:0x197d9862ebd240d5?sa=X&ved=1t:2428&ictx=111",
+    "website": "https://www.goodnightjohnnys.com/"
   },
   {
     "displayDate": "5/30/2026",
     "venue": "Navigation Brewery",
     "city": "Chelmsford, MA",
-    "comments": "",
-    "visible": "TRUE"
+    "comments": "Across the street from the local park!",
+    "visible": "TRUE",
+    "address": "15 Central Square, Chelmsford, MA 01824",
+    "map": "https://www.google.com/maps/place/navigation+brewery/data=!4m2!3m1!1s0x89e3a3431141e361:0x7ab11f1b907ee841?sa=X&ved=1t:242&ictx=111",
+    "website": "https://www.navigationbrewing.com/"
   },
   {
     "displayDate": "5/31/2026",
     "venue": "Boston Concert Network",
     "city": "",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "",
+    "map": "",
+    "website": ""
   },
   {
     "displayDate": "6/6/2026",
     "venue": "Navigation Brewery",
     "city": "Chelmsford, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "15 Central Square, Chelmsford, MA 01824",
+    "map": "https://www.google.com/maps/place/navigation+brewery/data=!4m2!3m1!1s0x89e3a3431141e361:0x7ab11f1b907ee841?sa=X&ved=1t:242&ictx=111",
+    "website": "https://www.navigationbrewing.com/"
   },
   {
     "displayDate": "6/11/2026",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "27 Waltham St, Lexington, MA 02421",
+    "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+    "website": "https://www.post1917.com/"
   },
   {
     "displayDate": "6/13/2026",
     "venue": "Navigation Brewery",
     "city": "Chelmsford, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "15 Central Square, Chelmsford, MA 01824",
+    "map": "https://www.google.com/maps/place/navigation+brewery/data=!4m2!3m1!1s0x89e3a3431141e361:0x7ab11f1b907ee841?sa=X&ved=1t:242&ictx=111",
+    "website": "https://www.navigationbrewing.com/"
   },
   {
     "displayDate": "6/18/2026",
     "venue": "Coldwell Banker Annual Party",
     "city": "",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "",
+    "map": "",
+    "website": ""
   },
   {
     "displayDate": "6/25/2026",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "27 Waltham St, Lexington, MA 02421",
+    "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+    "website": "https://www.post1917.com/"
   },
   {
     "displayDate": "6/27/2026",
     "venue": "Navigation Brewery",
     "city": "Chelmsford, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "15 Central Square, Chelmsford, MA 01824",
+    "map": "https://www.google.com/maps/place/navigation+brewery/data=!4m2!3m1!1s0x89e3a3431141e361:0x7ab11f1b907ee841?sa=X&ved=1t:242&ictx=111",
+    "website": "https://www.navigationbrewing.com/"
   },
   {
     "displayDate": "7/8/2026",
     "venue": "OPEN MIC GOODNIGHT",
     "city": "",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "",
+    "map": "",
+    "website": ""
   },
   {
     "displayDate": "7/9/2026",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "27 Waltham St, Lexington, MA 02421",
+    "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+    "website": "https://www.post1917.com/"
   },
   {
     "displayDate": "7/15/2026",
     "venue": "OPEN MIC GOODNIGHT",
     "city": "",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "",
+    "map": "",
+    "website": ""
   },
   {
     "displayDate": "7/17/2026",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "27 Waltham St, Lexington, MA 02421",
+    "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+    "website": "https://www.post1917.com/"
   },
   {
     "displayDate": "7/19/2026",
     "venue": "Post 1917 Reading",
     "city": "Reading, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "136 Haven St, Reading, MA 01867",
+    "map": "https://www.google.com/maps/place/Post+1917+Reading/data=!4m2!3m1!1s0x89e30b11eb9e5f0d:0x8bc40f0d0b32b88f?sa=X&ved=1t:242&ictx=111",
+    "website": "https://post1917.com/"
   },
   {
     "displayDate": "7/24/2026",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "27 Waltham St, Lexington, MA 02421",
+    "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+    "website": "https://www.post1917.com/"
   },
   {
     "displayDate": "7/24/2026",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "27 Waltham St, Lexington, MA 02421",
+    "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+    "website": "https://www.post1917.com/"
   },
   {
     "displayDate": "7/30/2026",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "27 Waltham St, Lexington, MA 02421",
+    "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
+    "website": "https://www.post1917.com/"
   },
   {
     "displayDate": "8/2/2026",
     "venue": "Post 1917 Reading",
     "city": "Reading, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "136 Haven St, Reading, MA 01867",
+    "map": "https://www.google.com/maps/place/Post+1917+Reading/data=!4m2!3m1!1s0x89e30b11eb9e5f0d:0x8bc40f0d0b32b88f?sa=X&ved=1t:242&ictx=111",
+    "website": "https://post1917.com/"
   },
   {
     "displayDate": "8/9/2026",
     "venue": "Owen & Ollie's",
     "city": "Dracut, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "91 Mill St, Dracut, MA 01826",
+    "map": "https://www.google.com/maps/place/Owen+%26+Ollie's/data=!4m2!3m1!1s0x89e3a513c6e295d9:0xb9f57166f01be1eb?sa=X&ved=1t:242&ictx=111",
+    "website": "http://www.owenandollies.com/"
   },
   {
     "displayDate": "8/20/2026",
     "venue": "Reception Ledger",
     "city": "Salem, MA",
     "comments": "",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "125 Washington St, Salem, MA 01970",
+    "map": "https://www.google.com/maps/place/Ledger+Restaurant/data=!4m2!3m1!1s0x0:0xce1dd0fa4dc7021e?sa=X&ved=1t:2428&ictx=111",
+    "website": "http://ledgersalem.com/"
   },
   {
     "displayDate": "12/11/2026",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
     "comments": "Locals",
-    "visible": "TRUE"
+    "visible": "TRUE",
+    "address": "154 Cambridge St, Burlington, MA 01803",
+    "map": "https://www.google.com/maps/place/Goodnight+Johnny's+American+Music+Bar/data=!4m2!3m1!1s0x0:0x197d9862ebd240d5?sa=X&ved=1t:2428&ictx=111",
+    "website": "https://www.goodnightjohnnys.com/"
   },
   {
     "displayDate": "9/21/1980",
     "venue": "",
     "city": "",
     "comments": "",
-    "visible": "FALSE"
+    "visible": "FALSE",
+    "address": "",
+    "map": "",
+    "website": ""
   }
 ]

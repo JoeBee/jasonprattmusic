@@ -11,9 +11,10 @@
   --muted-on-light: #444;
   --accent-link: #fff;
   --site-max: 90%;
-  --font-display: "Megrim", cursive, sans-serif;
-  --font-title: "Aclonica", sans-serif;
-  --font-body: "Urbanist", "Segoe UI", system-ui, sans-serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-title: var(--font-sans);
+  --font-body: var(--font-sans);
   --nav-pad: 0.6rem 1rem;
 }
 
@@ -35,25 +36,12 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.05rem;
   line-height: 1.6;
   color: #e6e6e6;
-  background-color: var(--page-black);
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.06) 100%),
-    url("../assets/page-bg.png");
-  background-size: auto, 100% auto;
-  background-repeat: repeat, repeat-y;
-  background-attachment: fixed;
-  background-position: center;
+  background-color: #000;
   overflow-x: hidden;
-}
-
-/* Fixed backgrounds are janky on many phones and can break overflow; scroll is reliable */
-@media (max-width: 900px) {
-  body {
-    background-attachment: scroll;
-  }
 }
 
 a {
@@ -220,7 +208,7 @@ video {
   color: #f3ead4;
   font-family: var(--font-body);
   font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
   letter-spacing: 0.012em;
   text-align: justify;
@@ -254,9 +242,10 @@ video {
   pointer-events: none;
 }
 
-/* Ornate gilt drop-cap "J" — uses Aclonica to give it a hand-crafted poster feel. */
+/* Gilt drop-cap "J" */
 .page-hero__copy::first-letter {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
+  font-weight: 700;
   float: left;
   font-size: 3.4em;
   line-height: 0.92;
@@ -271,9 +260,9 @@ video {
 
 /* Artist-name signature (the "ason Pratt" after the drop-cap "J") */
 .page-hero__copy-name {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   color: #e7c88a;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.015em;
   white-space: nowrap;
 }
@@ -289,10 +278,9 @@ video {
   padding: 0 0.06em;
 }
 
-/* Closing tagline gets an italic display-font flourish */
 .page-hero__copy-tagline {
-  font-family: var(--font-display);
-  font-style: normal;
+  font-family: var(--font-body);
+  font-style: italic;
   color: #f0d99c;
   font-size: 1.05em;
   letter-spacing: 0.04em;
@@ -340,8 +328,9 @@ video {
   background: #212121;
   border: 1px solid #444;
   color: #fff;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 0.85rem;
+  font-weight: 600;
   padding: 0.5rem 0.9rem;
   min-height: 2.75rem;
   min-width: 2.75rem;
@@ -361,9 +350,10 @@ video {
 }
 
 .main-nav__link {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.05rem;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   color: #fff;
   text-decoration: none;
   padding: var(--nav-pad);
@@ -448,7 +438,7 @@ video {
   color: hsl(0, 0%, 90%);
   margin: 0.75rem 0 0;
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .musical-divider-wrap {
@@ -519,9 +509,8 @@ img.musical-divider__img {
   padding-top: 2.5rem;
 }
 
-/* Light scrim so page-bg color stays visible; text uses shadow for contrast on busy art */
 .band-section--dark {
-  background: rgba(8, 4, 18, 0.38);
+  background: var(--section-dark);
   color: var(--section-dark-text);
   margin-top: 0;
   padding: 2.5rem 0 3.5rem;
@@ -580,9 +569,9 @@ img.musical-divider__img {
 
 /* --- Typography --- */
 .headline-ornate {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: clamp(1.05rem, 4.2vw, 1.4rem);
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.3;
   margin: 0.5rem 0 0.25rem;
   color: #fff;
@@ -593,8 +582,8 @@ img.musical-divider__img {
 }
 
 .headline-ornate--rainbow {
-  font-family: "Aclonica", cursive, sans-serif;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-weight: 700;
   font-size: clamp(1.12rem, 4.35vw, 1.52rem);
   letter-spacing: 0.04em;
   color: transparent;
@@ -823,35 +812,9 @@ img[src$="cover-art-4.png"] {
   }
 }
 
-.band-section--light .tour-dates .headline-caps {
-  color: #111;
-}
-
-/* Collapsed "Upcoming live dates": halve the vertical whitespace around the heading.
-   Has no effect on the expanded layout — only applies while #tour-toggle is collapsed. */
-#tour:has(#tour-toggle[aria-expanded="false"]) {
-  padding-top: 1.25rem;
-  padding-bottom: 1.5rem;
-}
-
-#tour:has(#tour-toggle[aria-expanded="false"]) .headline-caps {
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Tour dates: calendar and event list share one visual row on wider screens. */
-#tour-panel .expand-panel-row__content {
-  flex: 1 1 0;
-  min-width: 0;
-}
-
-@media (min-width: 640px) {
-  #tour-panel .expand-panel-row--thumb-left {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 1rem 1.25rem;
-  }
+#tour-panel .show-list {
+  width: 100%;
+  margin-top: 0;
 }
 
 .kicker--center {
@@ -861,7 +824,7 @@ img[src$="cover-art-4.png"] {
 .headline-caps {
   font-family: var(--font-body);
   font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-  font-weight: 400;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   text-align: center;
@@ -921,9 +884,9 @@ img[src$="cover-art-4.png"] {
 }
 
 .section-heading {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 400;
+  font-weight: 700;
   margin: 0 0 0.75rem;
 }
 
@@ -931,7 +894,6 @@ img[src$="cover-art-4.png"] {
   color: #212121;
 }
 
-/* High contrast on the semi‑transparent + blurred light band (busy page-bg shows through) */
 .band-section--light .section-heading--dark {
   color: #111;
   display: inline-block;
@@ -968,7 +930,7 @@ img[src$="cover-art-4.png"] {
   color: var(--muted);
   max-width: 65ch;
   margin: 0 0 1rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .band-section--light .body-text--on-light {
@@ -984,7 +946,7 @@ img[src$="cover-art-4.png"] {
 .quote-block p {
   font-size: clamp(0.98rem, 2.8vw, 1.05rem);
   font-style: italic;
-  font-weight: 100;
+  font-weight: 400;
   line-height: 1.65;
   color: #f0f0f0;
   margin: 0;
@@ -993,7 +955,7 @@ img[src$="cover-art-4.png"] {
 .band-section--light .quote-block p {
   color: #333;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .quote-mark {
@@ -1050,7 +1012,7 @@ img[src$="cover-art-4.png"] {
   padding: 0.65rem 0.9rem;
   font: inherit;
   font-size: 0.98rem;
-  font-weight: 300;
+  font-weight: 400;
   color: #f0f0f0;
   background: transparent;
   border: none;
@@ -1092,13 +1054,13 @@ img[src$="cover-art-4.png"] {
 }
 
 .audio-list__track--only {
-  font-weight: 300;
+  font-weight: 400;
   color: #f0f0f0;
 }
 
 .audio-list__artist {
   font-size: 0.85em;
-  font-weight: 300;
+  font-weight: 400;
   color: rgba(230, 220, 255, 0.75);
   word-wrap: break-word;
   max-width: 100%;
@@ -1216,7 +1178,7 @@ img[src$="cover-art-4.png"] {
   max-width: 100%;
   padding: 0.6rem 0.8rem;
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1rem;
   border: 1px solid #555;
   background: #181818;
@@ -1424,7 +1386,7 @@ img[src$="cover-art-4.png"] {
   line-height: 1.35;
   text-align: center;
   color: #c8c4c0;
-  font-weight: 300;
+  font-weight: 400;
   max-width: 100%;
 }
 
@@ -1452,7 +1414,7 @@ img[src$="cover-art-4.png"] {
   text-align: center;
   font-size: 0.9rem;
   color: var(--muted);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* --- Gallery --- */
@@ -1534,7 +1496,7 @@ img[src$="cover-art-4.png"] {
   font-size: 0.95rem;
   margin: 0.5rem 0 0;
   line-height: 1.5;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* --- Contact section --- */
@@ -1612,144 +1574,6 @@ img[src$="cover-art-4.png"] {
 }
 
 /* --- Show list (light section) --- */
-.show-calendar {
-  width: 100%;
-  color: #111;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.76));
-  border: 1px solid rgba(90, 55, 80, 0.22);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 8px 24px rgba(0, 0, 0, 0.12);
-  padding: 0.85rem;
-}
-
-@media (min-width: 640px) {
-  .show-calendar {
-    flex: 0 0 clamp(17rem, 32vw, 22rem);
-    position: sticky;
-    top: 0.75rem;
-  }
-}
-
-.show-calendar__header {
-  display: grid;
-  grid-template-columns: 2.5rem 1fr 2.5rem;
-  align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 0.65rem;
-}
-
-.show-calendar__title {
-  margin: 0;
-  color: #111;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.show-calendar__nav {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.5rem;
-  min-width: 2.5rem;
-  color: #4f2345;
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(90, 55, 80, 0.22);
-  border-radius: 999px;
-  font: inherit;
-  font-size: 1.45rem;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.show-calendar__nav:hover,
-.show-calendar__nav:focus-visible {
-  background: #fff;
-  border-color: rgba(90, 55, 80, 0.45);
-  outline: 2px solid rgba(107, 45, 92, 0.28);
-  outline-offset: 2px;
-}
-
-.show-calendar__weekdays,
-.show-calendar__grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.28rem;
-}
-
-.show-calendar__weekdays {
-  margin-bottom: 0.35rem;
-  color: #555;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.show-calendar__day {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-  min-height: 2.15rem;
-  padding: 0.2rem;
-  color: #444;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 0.35rem;
-  font: inherit;
-  font-size: 0.88rem;
-  line-height: 1;
-}
-
-.show-calendar__day--empty {
-  visibility: hidden;
-}
-
-.show-calendar__day--event {
-  color: #fff;
-  background:
-    radial-gradient(circle at 50% 20%, rgba(231, 200, 138, 0.28), transparent 45%),
-    #6b2d5c;
-  border-color: rgba(74, 28, 62, 0.5);
-  box-shadow: 0 2px 8px rgba(74, 28, 62, 0.25);
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.show-calendar__day--event:hover,
-.show-calendar__day--event:focus-visible {
-  background:
-    radial-gradient(circle at 50% 20%, rgba(231, 200, 138, 0.38), transparent 45%),
-    #4f2345;
-  outline: 2px solid rgba(79, 35, 69, 0.35);
-  outline-offset: 2px;
-}
-
-.show-calendar__day--today {
-  border-color: rgba(184, 145, 70, 0.8);
-  box-shadow: inset 0 0 0 1px rgba(184, 145, 70, 0.35);
-}
-
-.show-calendar__day.is-selected {
-  outline: 3px solid rgba(17, 17, 17, 0.28);
-  outline-offset: 1px;
-}
-
-.show-calendar__hint {
-  margin: 0.75rem 0 0;
-  color: #555;
-  font-size: 0.88rem;
-  line-height: 1.4;
-  text-align: center;
-}
-
 .band-section--light .show-list {
   background: rgba(255, 255, 255, 0.75);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -1780,31 +1604,6 @@ img[src$="cover-art-4.png"] {
 
 .show-list__row:last-child {
   border-bottom: none;
-}
-
-.show-list__row--filter {
-  display: block;
-  padding: 0.65rem 0.8rem;
-  text-align: right;
-}
-
-.show-list__clear-filter {
-  min-height: 2.4rem;
-  padding: 0.45rem 0.8rem;
-  color: #111;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(90, 55, 80, 0.25);
-  border-radius: 999px;
-  font: inherit;
-  font-size: 0.88rem;
-  cursor: pointer;
-}
-
-.show-list__clear-filter:hover,
-.show-list__clear-filter:focus-visible {
-  background: #fff;
-  outline: 2px solid rgba(107, 45, 92, 0.28);
-  outline-offset: 2px;
 }
 
 .show-list__date {
@@ -1842,7 +1641,37 @@ img[src$="cover-art-4.png"] {
   font-size: 0.9rem;
   line-height: 1.45;
   color: #444;
-  font-weight: 300;
+  font-weight: 400;
+}
+
+.show-list__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.show-list__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: #6b2d5c;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.show-list__action:hover,
+.show-list__action:focus-visible {
+  color: #111;
+  background: rgba(107, 45, 92, 0.12);
+}
+
+.show-list__action-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: currentColor;
 }
 
 /* --- Buttons --- */
@@ -1925,7 +1754,7 @@ img[src$="cover-art-4.png"] {
   padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
   color: #c8c8c8;
   font-size: 0.9rem;
-  font-weight: 300;
+  font-weight: 400;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.28);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
@@ -2057,7 +1886,7 @@ img[src$="cover-art-4.png"] {
     mask-image: none;
   }
 
-  /* Pill-style "more / less" buttons in the display font, gilt-outlined to match the card. */
+  /* Pill-style "more / less" buttons, gilt-outlined to match the card. */
   .page-hero__copy-more,
   .page-hero__copy-less {
     margin: 0.55rem auto 0.1rem;
@@ -2066,9 +1895,10 @@ img[src$="cover-art-4.png"] {
     background: rgba(20, 14, 6, 0.7);
     border: 1px solid rgba(201, 165, 90, 0.55);
     border-radius: 999px;
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     font-size: 0.78rem;
-    letter-spacing: 0.1em;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
@@ -2187,17 +2017,5 @@ img[src$="cover-art-4.png"] {
 
   .site-footer__notes {
     display: none;
-  }
-}
-
-/* Background image repeats can look harsh on phones; use one anchored layer plus a soft fade. */
-@media (max-width: 700px) {
-  body {
-    background-image:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.42) 100%),
-      url("../assets/page-bg.png");
-    background-size: auto, cover;
-    background-repeat: repeat, no-repeat;
-    background-position: center, center top;
   }
 }

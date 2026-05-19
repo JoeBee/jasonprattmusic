@@ -151,13 +151,9 @@
   window.addEventListener("load", onHashOrLoadNav);
   onHashOrLoadNav();
 
-  /**
-   * Populate upcoming shows from a JSON file and mirror them into a small month calendar.
-   * Events are rendered chronologically, with the calendar acting as a visual filter.
-   */
+  /** Populate upcoming shows from a JSON file, rendered chronologically. */
   async function loadShows() {
     const showList = document.getElementById("show-list");
-    const showCalendar = document.getElementById("show-calendar");
     if (!showList) return;
 
     const today = new Date();
@@ -208,47 +204,52 @@
       return date.getFullYear() + "-" + month + "-" + day;
     }
 
-    function getMonthKey(date) {
-      return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0");
+    function normalizeExternalUrl(value) {
+      const url = String(value || "").trim();
+      if (!url) return null;
+      try {
+        const parsed = new URL(url);
+        if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+          return parsed.href;
+        }
+      } catch (_) {}
+      return null;
     }
 
-    function formatMonthLabel(year, monthIndex) {
-      return new Date(year, monthIndex, 1).toLocaleDateString(undefined, {
-        month: "long",
-        year: "numeric",
-      });
+    function createShowActionIcon(pathD) {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("class", "show-list__action-icon");
+      svg.setAttribute("viewBox", "0 0 24 24");
+      svg.setAttribute("aria-hidden", "true");
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", pathD);
+      path.setAttribute("fill", "currentColor");
+      svg.appendChild(path);
+      return svg;
     }
 
-    function formatCalendarLabel(show) {
-      const place = show.city ? show.venue + ", " + show.city : show.venue;
-      return place || "Show details";
+    function createShowActionLink(href, label, iconPath) {
+      const link = document.createElement("a");
+      link.className = "show-list__action";
+      link.href = href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.title = label;
+      link.setAttribute("aria-label", label);
+      link.appendChild(createShowActionIcon(iconPath));
+      return link;
     }
 
-    function startOfMonth(date) {
-      return new Date(date.getFullYear(), date.getMonth(), 1);
-    }
+    const SHOW_ICON_MAP =
+      "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z";
+    const SHOW_ICON_WEBSITE =
+      "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm8 10a7.94 7.94 0 0 1-.46 2.68H15.9a16.2 16.2 0 0 0 1.1-5.32h3.04A7.94 7.94 0 0 1 20 12zM12 4c.86 0 1.69.12 2.46.34A16.2 16.2 0 0 1 15.16 11H8.84a16.2 16.2 0 0 1 1.26-6.66A7.9 7.9 0 0 1 12 4zM6.84 15h3.04a16.2 16.2 0 0 0-1.1 5.32H6.46A7.94 7.94 0 0 1 6 12c0 .34.02.67.06 1h.78zm1.26 5.32A16.2 16.2 0 0 0 9.1 15h5.8a16.2 16.2 0 0 0 1.11 5.32A7.9 7.9 0 0 1 12 20a7.9 7.9 0 0 1-3.9-1.68zM4.44 11h3.04c.2 1.84.68 3.58 1.38 5.12H4.46A7.94 7.94 0 0 1 4 12c0-.34.02-.67.06-1h.38zm.02-2h3.4a16.2 16.2 0 0 0 1.11-5.32H4.46A7.94 7.94 0 0 0 4 12h.46z";
 
-    function renderShowList(showsToRender, selectedDateKey) {
+    function renderShowList(showsToRender) {
       showList.innerHTML = "";
 
-      if (selectedDateKey) {
-        const clearRow = document.createElement("li");
-        clearRow.className = "show-list__row show-list__row--filter";
-        const clearButton = document.createElement("button");
-        clearButton.className = "show-list__clear-filter";
-        clearButton.type = "button";
-        clearButton.textContent = "Show all dates";
-        clearButton.addEventListener("click", function () {
-          selectedCalendarDateKey = "";
-          renderShowList(visibleShows, "");
-          renderCalendar(currentCalendarMonth);
-        });
-        clearRow.appendChild(clearButton);
-        showList.appendChild(clearRow);
-      }
-
       if (showsToRender.length === 0) {
-        showList.innerHTML = '<li class="show-list__row">No shows posted for this date.</li>';
+        showList.innerHTML = '<li class="show-list__row">No upcoming shows posted yet.</li>';
         return;
       }
 
@@ -275,6 +276,22 @@
         details.appendChild(venue);
         details.appendChild(meta);
 
+        const mapUrl = normalizeExternalUrl(show.map);
+        const websiteUrl = normalizeExternalUrl(show.website);
+        if (mapUrl || websiteUrl) {
+          const actions = document.createElement("div");
+          actions.className = "show-list__actions";
+          if (mapUrl) {
+            actions.appendChild(createShowActionLink(mapUrl, "Open in Google Maps", SHOW_ICON_MAP));
+          }
+          if (websiteUrl) {
+            actions.appendChild(
+              createShowActionLink(websiteUrl, "Visit venue website", SHOW_ICON_WEBSITE)
+            );
+          }
+          details.appendChild(actions);
+        }
+
         const commentsText = (show.comments && String(show.comments).trim()) || "";
         if (commentsText) {
           const comments = document.createElement("p");
@@ -289,145 +306,17 @@
       });
     }
 
-    function renderCalendar(monthDate) {
-      if (!showCalendar) return;
-
-      const year = monthDate.getFullYear();
-      const month = monthDate.getMonth();
-      const monthKey = getMonthKey(monthDate);
-      const firstDay = new Date(year, month, 1);
-      const startOffset = firstDay.getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const eventsThisMonth = visibleShows.filter(function (show) {
-        return show.date && getMonthKey(show.date) === monthKey;
-      });
-      const eventsByDate = eventsThisMonth.reduce(function (map, show) {
-        if (!map[show.dateKey]) map[show.dateKey] = [];
-        map[show.dateKey].push(show);
-        return map;
-      }, {});
-
-      showCalendar.innerHTML = "";
-
-      const header = document.createElement("div");
-      header.className = "show-calendar__header";
-
-      const prev = document.createElement("button");
-      prev.className = "show-calendar__nav";
-      prev.type = "button";
-      prev.setAttribute("aria-label", "Previous month");
-      prev.textContent = "<";
-
-      const title = document.createElement("h3");
-      title.className = "show-calendar__title";
-      title.textContent = formatMonthLabel(year, month);
-
-      const next = document.createElement("button");
-      next.className = "show-calendar__nav";
-      next.type = "button";
-      next.setAttribute("aria-label", "Next month");
-      next.textContent = ">";
-
-      prev.addEventListener("click", function () {
-        selectedCalendarDateKey = "";
-        currentCalendarMonth = startOfMonth(new Date(year, month - 1, 1));
-        renderShowList(visibleShows, "");
-        renderCalendar(currentCalendarMonth);
-      });
-      next.addEventListener("click", function () {
-        selectedCalendarDateKey = "";
-        currentCalendarMonth = startOfMonth(new Date(year, month + 1, 1));
-        renderShowList(visibleShows, "");
-        renderCalendar(currentCalendarMonth);
-      });
-
-      header.appendChild(prev);
-      header.appendChild(title);
-      header.appendChild(next);
-      showCalendar.appendChild(header);
-
-      const weekdays = document.createElement("div");
-      weekdays.className = "show-calendar__weekdays";
-      ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(function (dayName) {
-        const weekday = document.createElement("span");
-        weekday.textContent = dayName;
-        weekdays.appendChild(weekday);
-      });
-      showCalendar.appendChild(weekdays);
-
-      const grid = document.createElement("div");
-      grid.className = "show-calendar__grid";
-
-      for (let i = 0; i < startOffset; i += 1) {
-        const empty = document.createElement("span");
-        empty.className = "show-calendar__day show-calendar__day--empty";
-        empty.setAttribute("aria-hidden", "true");
-        grid.appendChild(empty);
-      }
-
-      for (let day = 1; day <= daysInMonth; day += 1) {
-        const date = new Date(year, month, day);
-        const dateKey = getDateKey(date);
-        const dayEvents = eventsByDate[dateKey] || [];
-        const dayHasEvents = dayEvents.length > 0;
-        const isToday = dateKey === getDateKey(today);
-        const isSelected = dateKey === selectedCalendarDateKey;
-        const dayEl = document.createElement(dayHasEvents ? "button" : "span");
-        dayEl.className = "show-calendar__day";
-        if (dayHasEvents) dayEl.className += " show-calendar__day--event";
-        if (isToday) dayEl.className += " show-calendar__day--today";
-        if (isSelected) dayEl.className += " is-selected";
-        dayEl.textContent = String(day);
-
-        if (dayHasEvents) {
-          dayEl.type = "button";
-          dayEl.setAttribute(
-            "aria-label",
-            date.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" }) +
-              ": " +
-              dayEvents.map(formatCalendarLabel).join("; ")
-          );
-          dayEl.addEventListener("click", function () {
-            selectedCalendarDateKey = dateKey;
-            renderShowList(dayEvents, selectedCalendarDateKey);
-            renderCalendar(currentCalendarMonth);
-            showList.scrollIntoView({
-              block: "nearest",
-              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-            });
-          });
-        } else {
-          dayEl.setAttribute("aria-label", "No shows on " + date.toLocaleDateString());
-        }
-
-        grid.appendChild(dayEl);
-      }
-
-      showCalendar.appendChild(grid);
-
-      const hint = document.createElement("p");
-      hint.className = "show-calendar__hint";
-      hint.textContent =
-        eventsThisMonth.length > 0 ? "Tap a highlighted date to focus the list." : "No posted shows this month.";
-      showCalendar.appendChild(hint);
-    }
-
-    let visibleShows = [];
-    let currentCalendarMonth = startOfMonth(today);
-    let selectedCalendarDateKey = "";
-
     try {
       const response = await fetch("data/shows.json", { cache: "no-store" });
       if (!response.ok) throw new Error("Failed to load show data.");
       const shows = await response.json();
 
       if (!Array.isArray(shows) || shows.length === 0) {
-        showList.innerHTML = '<li class="show-list__row">No upcoming shows posted yet.</li>';
-        if (showCalendar) showCalendar.innerHTML = '<p class="show-calendar__hint">No upcoming shows posted yet.</p>';
+        renderShowList([]);
         return;
       }
 
-      visibleShows = shows
+      const visibleShows = shows
         .filter(function (show) {
           return String(show.visible || "").toLowerCase() === "true";
         })
@@ -448,22 +337,9 @@
           return aTime - bTime;
         });
 
-      if (visibleShows.length === 0) {
-        showList.innerHTML = '<li class="show-list__row">No upcoming shows posted yet.</li>';
-        if (showCalendar) showCalendar.innerHTML = '<p class="show-calendar__hint">No upcoming shows posted yet.</p>';
-        return;
-      }
-
-      const firstDatedShow = visibleShows.find(function (show) {
-        return show.date;
-      });
-      if (firstDatedShow) currentCalendarMonth = startOfMonth(firstDatedShow.date);
-
-      renderShowList(visibleShows, "");
-      renderCalendar(currentCalendarMonth);
+      renderShowList(visibleShows);
     } catch (_) {
       showList.innerHTML = '<li class="show-list__row">Could not load shows right now.</li>';
-      if (showCalendar) showCalendar.innerHTML = '<p class="show-calendar__hint">Could not load shows right now.</p>';
     }
   }
 
