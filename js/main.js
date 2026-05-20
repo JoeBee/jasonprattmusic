@@ -44,41 +44,44 @@
     });
   }
 
-  /** Main content accordions: only one open at a time; closers assigned in each init. */
+  /** Main content collapsibles; closers assigned in each init. */
   const mainAccordionClose = {
     live: null,
     "audio-samples": null,
     tour: null,
   };
 
-  function collapseMainAccordionsExcept(keep) {
-    if (mainAccordionClose.live && keep !== "live") mainAccordionClose.live();
-    if (mainAccordionClose["audio-samples"] && keep !== "audio-samples") {
-      mainAccordionClose["audio-samples"]();
-    }
-    if (mainAccordionClose.tour && keep !== "tour") mainAccordionClose.tour();
+  function collapseAllMainAccordions() {
+    if (mainAccordionClose.live) mainAccordionClose.live();
+    if (mainAccordionClose["audio-samples"]) mainAccordionClose["audio-samples"]();
+    if (mainAccordionClose.tour) mainAccordionClose.tour();
   }
 
   /** Open collapsible content when navigating via main nav hashes (in-page anchors). */
-  function openCollapsiblePanel(keepKey, toggleId, panelId) {
+  function openCollapsiblePanel(toggleId, panelId) {
     const btn = document.getElementById(toggleId);
     const panel = document.getElementById(panelId);
     if (!btn || !panel) return;
-    collapseMainAccordionsExcept(keepKey);
     btn.setAttribute("aria-expanded", "true");
     panel.removeAttribute("hidden");
+  }
+
+  function openAllMainSections() {
+    openCollapsiblePanel("tour-toggle", "tour-panel");
+    openCollapsiblePanel("live-videos-toggle", "video-links");
+    openCollapsiblePanel("audio-samples-toggle", "audio-samples-panel");
   }
 
   function openSectionForNavFragment(fragment) {
     if (!fragment || onPitch) return;
     if (fragment === "live") {
-      openCollapsiblePanel("live", "live-videos-toggle", "video-links");
+      openCollapsiblePanel("live-videos-toggle", "video-links");
     } else if (fragment === "audio-samples") {
-      openCollapsiblePanel("audio-samples", "audio-samples-toggle", "audio-samples-panel");
+      openCollapsiblePanel("audio-samples-toggle", "audio-samples-panel");
     } else if (fragment === "tour") {
-      openCollapsiblePanel("tour", "tour-toggle", "tour-panel");
+      openCollapsiblePanel("tour-toggle", "tour-panel");
     } else if (fragment === "contact" || fragment === "main-content") {
-      collapseMainAccordionsExcept("contact");
+      collapseAllMainAccordions();
     }
   }
 
@@ -619,12 +622,7 @@
     }
     btn.addEventListener("click", function () {
       const wasOpen = btn.getAttribute("aria-expanded") === "true";
-      if (!wasOpen) {
-        collapseMainAccordionsExcept("live");
-        btn.setAttribute("aria-expanded", "true");
-      } else {
-        btn.setAttribute("aria-expanded", "false");
-      }
+      btn.setAttribute("aria-expanded", wasOpen ? "false" : "true");
       sync();
     });
     sync();
@@ -858,12 +856,7 @@
       }
       btn.addEventListener("click", function () {
         const wasOpen = btn.getAttribute("aria-expanded") === "true";
-        if (!wasOpen) {
-          collapseMainAccordionsExcept("audio-samples");
-          btn.setAttribute("aria-expanded", "true");
-        } else {
-          btn.setAttribute("aria-expanded", "false");
-        }
+        btn.setAttribute("aria-expanded", wasOpen ? "false" : "true");
         sync();
       });
       sync();
@@ -891,12 +884,7 @@
     }
     btn.addEventListener("click", function () {
       const wasOpen = btn.getAttribute("aria-expanded") === "true";
-      if (!wasOpen) {
-        collapseMainAccordionsExcept("tour");
-        btn.setAttribute("aria-expanded", "true");
-      } else {
-        btn.setAttribute("aria-expanded", "false");
-      }
+      btn.setAttribute("aria-expanded", wasOpen ? "false" : "true");
       sync();
     });
     sync();
@@ -904,9 +892,7 @@
     if (hash) {
       syncHashCollapsibles();
     } else {
-      collapseMainAccordionsExcept("tour");
-      btn.setAttribute("aria-expanded", "true");
-      sync();
+      openAllMainSections();
     }
   })();
 
