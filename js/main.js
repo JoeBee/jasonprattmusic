@@ -212,7 +212,7 @@
         if (parsed.protocol === "http:" || parsed.protocol === "https:") {
           return parsed.href;
         }
-      } catch (_) {}
+      } catch (_) { }
       return null;
     }
 
@@ -240,10 +240,8 @@
       return link;
     }
 
-    const SHOW_ICON_MAP =
-      "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z";
     const SHOW_ICON_WEBSITE =
-      "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm8 10a7.94 7.94 0 0 1-.46 2.68H15.9a16.2 16.2 0 0 0 1.1-5.32h3.04A7.94 7.94 0 0 1 20 12zM12 4c.86 0 1.69.12 2.46.34A16.2 16.2 0 0 1 15.16 11H8.84a16.2 16.2 0 0 1 1.26-6.66A7.9 7.9 0 0 1 12 4zM6.84 15h3.04a16.2 16.2 0 0 0-1.1 5.32H6.46A7.94 7.94 0 0 1 6 12c0 .34.02.67.06 1h.78zm1.26 5.32A16.2 16.2 0 0 0 9.1 15h5.8a16.2 16.2 0 0 0 1.11 5.32A7.9 7.9 0 0 1 12 20a7.9 7.9 0 0 1-3.9-1.68zM4.44 11h3.04c.2 1.84.68 3.58 1.38 5.12H4.46A7.94 7.94 0 0 1 4 12c0-.34.02-.67.06-1h.38zm.02-2h3.4a16.2 16.2 0 0 0 1.11-5.32H4.46A7.94 7.94 0 0 0 4 12h.46z";
+      "M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z";
 
     function renderShowList(showsToRender) {
       showList.innerHTML = "";
@@ -265,30 +263,40 @@
 
         const details = document.createElement("div");
         details.className = "show-list__details";
-        const venue = document.createElement("span");
-        venue.className = "show-list__venue";
-        venue.textContent = show.venue || "Venue TBA";
+
+        const info = document.createElement("div");
+        info.className = "show-list__info";
+
+        const websiteUrl = normalizeExternalUrl(show.website);
+        const venueLabel = show.venue || "Venue TBA";
+        let venue;
+        if (websiteUrl) {
+          venue = document.createElement("a");
+          venue.className = "show-list__venue show-list__venue--link";
+          venue.href = websiteUrl;
+          venue.target = "_blank";
+          venue.rel = "noopener noreferrer";
+          venue.textContent = venueLabel;
+        } else {
+          venue = document.createElement("span");
+          venue.className = "show-list__venue";
+          venue.textContent = venueLabel;
+        }
 
         const meta = document.createElement("span");
         meta.className = "show-list__meta";
-        meta.textContent = show.city || "Location TBA";
+        meta.textContent = show.city || "";
 
-        details.appendChild(venue);
-        details.appendChild(meta);
+        info.appendChild(venue);
+        info.appendChild(meta);
+        details.appendChild(info);
 
-        const mapUrl = normalizeExternalUrl(show.map);
-        const websiteUrl = normalizeExternalUrl(show.website);
-        if (mapUrl || websiteUrl) {
+        if (websiteUrl) {
           const actions = document.createElement("div");
           actions.className = "show-list__actions";
-          if (mapUrl) {
-            actions.appendChild(createShowActionLink(mapUrl, "Open in Google Maps", SHOW_ICON_MAP));
-          }
-          if (websiteUrl) {
-            actions.appendChild(
-              createShowActionLink(websiteUrl, "Visit venue website", SHOW_ICON_WEBSITE)
-            );
-          }
+          actions.appendChild(
+            createShowActionLink(websiteUrl, "Visit venue website", SHOW_ICON_WEBSITE)
+          );
           details.appendChild(actions);
         }
 
@@ -386,7 +394,7 @@
   }
 
   /** Stops in-page audio samples when video playback starts. Set by initAudioSamples. */
-  let audioSamplesStopPlayback = function () {};
+  let audioSamplesStopPlayback = function () { };
 
   /** Stops the large YouTube player and clears any selected thumb. Default until loadVideoLinks sets the real handler. */
   let liveVideosStopPlayback = function () {
@@ -770,7 +778,7 @@
                 activeBtn = null;
                 try {
                   player.removeAttribute("src");
-                } catch (_) {}
+                } catch (_) { }
               });
           });
           li.appendChild(btn);

@@ -227,21 +227,6 @@ video {
     0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
-/* Floating musical-note ornament above the panel */
-.page-hero__copy::before {
-  content: "\266B";
-  position: absolute;
-  top: -1.55em;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(231, 200, 138, 0.95);
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  line-height: 1;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
-  pointer-events: none;
-}
-
 /* Gilt drop-cap "J" */
 .page-hero__copy::first-letter {
   font-family: var(--font-body);
@@ -441,6 +426,38 @@ video {
   font-weight: 400;
 }
 
+.band-intro {
+  margin: 0.5rem 0 0.25rem;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+
+.band-intro__name {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 4.5vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 0.35rem;
+  color: #fff;
+}
+
+.band-intro__role,
+.band-intro__tagline,
+.band-intro__contact {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 3.8vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.35;
+  margin: 0.15rem 0;
+  color: #fff;
+}
+
+.band-intro__contact a {
+  color: #fff;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
 .musical-divider-wrap {
   box-sizing: border-box;
   width: 100%;
@@ -548,6 +565,11 @@ img.musical-divider__img {
   .band-section--light {
     padding-top: 1.75rem;
     padding-bottom: 2.25rem;
+  }
+
+  .tour-dates__body.band-section--light {
+    padding-top: 0.35rem;
+    padding-bottom: 1rem;
   }
 }
 
@@ -812,6 +834,15 @@ img[src$="cover-art-4.png"] {
   }
 }
 
+.tour-dates__body.band-section--light {
+  padding-top: 0.35rem;
+  padding-bottom: 1.25rem;
+}
+
+#tour .headline-caps {
+  margin-bottom: 0.35rem;
+}
+
 #tour-panel .show-list {
   width: 100%;
   margin-top: 0;
@@ -980,6 +1011,20 @@ img[src$="cover-art-4.png"] {
   text-align: center;
   max-width: 100%;
   margin-bottom: 0.5rem;
+}
+
+.audio-list__intro--tap {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .audio-list__intro--click {
+    display: none;
+  }
+
+  .audio-list__intro--tap {
+    display: inline;
+  }
 }
 
 .audio-list {
@@ -1265,25 +1310,21 @@ img[src$="cover-art-4.png"] {
   margin: 0 auto;
 }
 
-/* Mobile: 2 columns (e.g. 6 videos → 3 rows). Desktop: 3 columns (6 videos → 2 rows). */
+/* Four videos in one row; narrow viewports keep the same row with smaller cells. */
 .video-thumbs {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.4rem 0.35rem;
   align-items: start;
   justify-items: center;
 }
 
 @media (min-width: 768px) {
-  .video-thumbs {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  /* Desktop only: thumbnail rows are twice as tall as the matching cover-art column (350×467 baseline). */
+  /* Desktop: single row height matches cover-art column proportions (350×467 baseline). */
   #video-links .video-thumbs {
-    --live-cover-h: calc(var(--expand-cover-art-w, clamp(8rem, 20vw, 11rem)) * 467 / 350 * 2);
+    --live-cover-h: calc(var(--expand-cover-art-w, clamp(8rem, 20vw, 11rem)) * 467 / 350);
     height: var(--live-cover-h);
-    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
     align-items: stretch;
     justify-items: stretch;
   }
@@ -1589,16 +1630,16 @@ img[src$="cover-art-4.png"] {
 .show-list__row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.4rem;
-  padding: 1rem 1.1rem;
+  gap: 0.15rem;
+  padding: 0.5rem 0.85rem;
   border-bottom: 1px solid #e0e0e0;
-  align-items: start;
+  align-items: center;
 }
 
 @media (min-width: 600px) {
   .show-list__row {
-    grid-template-columns: 7.5rem 1fr;
-    align-items: start;
+    grid-template-columns: 7rem 1fr;
+    align-items: center;
   }
 }
 
@@ -1608,55 +1649,77 @@ img[src$="cover-art-4.png"] {
 
 .show-list__date {
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #6b2d5c;
+  line-height: 1.2;
 }
 
 .show-list__venue {
   font-weight: 500;
   color: #111;
   overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+
+.show-list__venue--link {
+  text-decoration: none;
+}
+
+.show-list__venue--link:hover,
+.show-list__venue--link:focus-visible {
+  color: #6b2d5c;
+  text-decoration: underline;
 }
 
 .show-list__meta {
   color: #555;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   overflow-wrap: anywhere;
+  line-height: 1.25;
 }
 
 .show-list__details {
   display: grid;
-  gap: 0.2rem;
+  grid-template-columns: 1fr auto;
+  gap: 0.1rem 0.65rem;
+  align-items: center;
   min-width: 0;
 }
 
-.show-list__details>span {
+.show-list__info {
+  min-width: 0;
+  grid-column: 1;
+}
+
+.show-list__info > span {
   display: block;
 }
 
-.show-list__comments {
-  margin: 0.35rem 0 0;
-  font-size: 0.9rem;
-  line-height: 1.45;
-  color: #444;
-  font-weight: 400;
+.show-list__actions {
+  grid-column: 2;
+  grid-row: 1;
+  flex-shrink: 0;
+  margin: 0;
 }
 
-.show-list__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.35rem;
+.show-list__comments {
+  grid-column: 1;
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: #444;
+  font-weight: 400;
+  text-align: center;
 }
 
 .show-list__action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   color: #6b2d5c;
   border-radius: 4px;
   transition: color 0.15s ease, background 0.15s ease;
@@ -1669,8 +1732,8 @@ img[src$="cover-art-4.png"] {
 }
 
 .show-list__action-icon {
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.55rem;
+  height: 1.55rem;
   fill: currentColor;
 }
 
@@ -1767,34 +1830,11 @@ img[src$="cover-art-4.png"] {
 
 .site-footer__line {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 0.4rem 0.65rem;
+  gap: 0.35rem;
   margin: 0;
   overflow-wrap: anywhere;
-}
-
-.site-footer__notes {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.2em;
-  color: #b8a0b4;
-  font-size: 1.15em;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  user-select: none;
-}
-
-.site-footer__notes span {
-  opacity: 0.88;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-}
-
-.site-footer__sep {
-  color: #888;
-  font-weight: 400;
-  user-select: none;
 }
 
 /* --- Links in dark section --- */
@@ -1850,12 +1890,6 @@ img[src$="cover-art-4.png"] {
     border-left: 3px solid rgba(201, 165, 90, 0.7);
     border-radius: 0.3rem;
     hyphens: none;
-  }
-
-  /* The desktop floating note is too large for the slim mobile card; nudge it down and shrink. */
-  .page-hero__copy::before {
-    font-size: 1.05rem;
-    top: -0.7em;
   }
 
   .page-hero__copy::first-letter {
@@ -1949,16 +1983,7 @@ img[src$="cover-art-4.png"] {
   }
 
   .show-list__row {
-    padding: 0.85rem 0.85rem;
-  }
-
-  .show-list__details {
-    display: grid;
-    gap: 0.2rem;
-  }
-
-  .show-list__details>span {
-    display: block;
+    padding: 0.45rem 0.7rem;
   }
 }
 
@@ -2013,9 +2038,5 @@ img[src$="cover-art-4.png"] {
 
   .site-footer {
     padding-top: 1.5rem;
-  }
-
-  .site-footer__notes {
-    display: none;
   }
 }

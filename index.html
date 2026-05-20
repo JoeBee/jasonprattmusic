@@ -48,11 +48,10 @@
         <nav class="main-nav" id="site-nav" aria-label="Main">
           <ul>
             <li><a class="main-nav__link" href="#home" aria-current="true">Home</a></li>
-            <li><a class="main-nav__link" href="#live">LIVE</a></li>
+            <li><a class="main-nav__link" href="#live">Live</a></li>
             <li><a class="main-nav__link" href="#audio-samples">Audio</a></li>
             <li><a class="main-nav__link" href="#tour" title="Upcoming live dates">Dates</a></li>
             <li><a class="main-nav__link" href="#contact">Contact</a></li>
-            <!-- <li><a class="main-nav__link" href="pitch.html">Pitch Deck</a></li> -->
           </ul>
         </nav>
       </div>
@@ -81,10 +80,13 @@
   <main>
     <section class="band-section band-section--on-photo" aria-labelledby="headline-1">
       <div class="site-wrap site-wrap--narrow">
-        <div class="headline-with-thumb headline-with-thumb--thumb-right">
-          <h2 class="headline-ornate headline-ornate--rainbow" id="headline-1">♪ High-Energy Live Soul & Groove for
-            Festivals, Clubs, and Private Events. ♫</h2>
-        </div>
+        <header class="band-intro">
+          <h2 class="band-intro__name" id="headline-1">Jason Pratt</h2>
+          <p class="band-intro__role">Live Musician</p>
+          <p class="band-intro__tagline">Available for Festival, Clubs &amp; Private Events</p>
+          <p class="band-intro__contact" id="contact">Contact: <a
+              href="mailto:jaypratt@gmail.com">jaypratt@gmail.com</a></p>
+        </header>
       </div>
       <br>
 
@@ -135,7 +137,10 @@
           </h2>
           <div class="audio-samples__panel" id="audio-samples-panel" role="region"
             aria-labelledby="audio-samples-heading" aria-live="polite" hidden>
-            <p class="body-text audio-list__intro">Select a track to play.</p>
+            <p class="body-text audio-list__intro">
+              <span class="audio-list__intro--click">Click a track to play</span>
+              <span class="audio-list__intro--tap">Tap a track to play</span>
+            </p>
             <div class="expand-panel-row expand-panel-row--thumb-right">
               <div class="expand-panel-row__content">
                 <ul class="audio-list" id="audio-list" aria-label="Track list">
@@ -144,46 +149,11 @@
               </div>
               <figure class="expand-panel-row__thumb expand-panel-row__thumb--stacked" aria-hidden="true">
                 <img src="assets/cover-art-1.png" width="350" height="467" alt="" loading="lazy" />
-                <img src="assets/cover-art-3.png" width="350" height="467" alt="" loading="lazy" />
-                <img src="assets/cover-art-2.png" width="350" height="467" alt="" loading="lazy" />
               </figure>
             </div>
           </div>
         </section>
 
-      </div>
-    </section>
-
-
-
-    <section class="band-section band-section--dark" id="contact" aria-labelledby="contact-heading">
-      <!-- <div class="musical-divider-wrap">
-        <div class="musical-divider" role="presentation" aria-hidden="true">
-          <img class="musical-divider__img" src="assets/musical-divider.png" alt="" />
-        </div>
-      </div>
-      <br> -->
-
-      <div class="site-wrap contact-block-wrap">
-        <figure class="contact-block__figure">
-          <img class="contact-block__photo" src="assets/cover-art-4.png" width="350" height="467"
-            alt="Jason Pratt with an acoustic guitar" loading="lazy" />
-        </figure>
-        <div class="contact-block">
-          <h2 class="headline-caps" id="contact-heading">Contact</h2>
-          <p class="body-text contact-block__intro">
-            Booking, collaborations, and press inquiries are welcome.
-          </p>
-          <p class="contact-line">
-            Booking: <a href="mailto:jaypratt1@gmail.com">jaypratt1@gmail.com</a>
-          </p>
-          <p class="contact-line">
-            Press: <a href="mailto:jaypratt1@gmail.com">jaypratt1@gmail.com</a>
-          </p>
-          <p class="contact-line">
-            Management: <a href="mailto:jaypratt1@gmail.com">jaypratt1@gmail.com</a>
-          </p>
-        </div>
       </div>
     </section>
   </main>
@@ -213,10 +183,7 @@
       </li>
     </ul>
     <p class="site-footer__line">
-      <span class="site-footer__notes" aria-hidden="true"><span>♩</span><span>♪</span><span>♫</span></span>
       <span>© <span id="year"></span> Jason Pratt Music</span>
-      <span class="site-footer__notes" aria-hidden="true"><span>♪</span><span>♬</span><span>♩</span></span>
-      <span class="site-footer__sep" aria-hidden="true">·</span>
       <a href="#home">Back to top</a>
     </p>
   </footer>
