@@ -872,37 +872,40 @@
     }
   })();
 
-  /* Hero banner: moves much slower than the page (parallax), disabled when reduced motion is preferred.
-     The text overlay (.page-hero__copy-wrap) is NOT translated, so it scrolls with the page while the
-     banner image lags far behind. Rate is the fraction of scrollY translated *down* on the image:
-       effective image scroll speed in viewport = (1 - rate) * page speed
-       0.0  -> image scrolls with page (no parallax)
-       0.85 -> image scrolls at 15% of page speed (much slower than overlay text) */
-  const heroImg = document.querySelector(".page-hero__img");
+  /* Hero banner: fixed at top; negative translateY rises slowly as user scrolls down.
+     lagRate 0.78 → banner moves up at (1 - lagRate) ≈ 22% of scroll speed, then off screen. */
+  const heroBlock = document.querySelector(".page-hero");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (heroImg) {
-    let heroParallaxTicking = false;
-    const heroParallaxRate = 0.85;
+  if (heroBlock) {
+    const heroParallaxLag = 0.78;
+    let lastScrollY = -1;
 
     function updateHeroParallax() {
-      heroParallaxTicking = false;
       if (reduceMotion.matches) {
-        heroImg.style.removeProperty("--hero-parallax-y");
+        heroBlock.style.transform = "";
+        lastScrollY = -1;
         return;
       }
-      const y = Math.max(0, window.scrollY) * heroParallaxRate;
-      heroImg.style.setProperty("--hero-parallax-y", y + "px");
-    }
-
-    function onHeroParallaxScroll() {
-      if (!heroParallaxTicking) {
-        heroParallaxTicking = true;
-        requestAnimationFrame(updateHeroParallax);
+      const scrollY = Math.max(0, window.scrollY);
+      if (scrollY === lastScrollY) {
+        return;
       }
+      lastScrollY = scrollY;
+      const rise = scrollY * (1 - heroParallaxLag);
+      heroBlock.style.transform = "translate3d(0,-" + rise + "px,0)";
     }
 
-    window.addEventListener("scroll", onHeroParallaxScroll, { passive: true });
+    function heroParallaxFrame() {
+      updateHeroParallax();
+      requestAnimationFrame(heroParallaxFrame);
+    }
+
     reduceMotion.addEventListener("change", updateHeroParallax);
-    updateHeroParallax();
+    window.addEventListener("resize", updateHeroParallax, { passive: true });
+    if (!reduceMotion.matches) {
+      requestAnimationFrame(heroParallaxFrame);
+    } else {
+      updateHeroParallax();
+    }
   }
 })();
