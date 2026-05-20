@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <a class="sr-only" href="#home">Skip to main content</a>
+  <a class="sr-only" href="#main-content">Skip to main content</a>
 
   <header class="page-header" id="home">
     <div class="site-wrap site-wrap--header">
@@ -66,14 +66,14 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <section class="band-section band-section--on-photo" aria-labelledby="headline-1">
       <div class="site-wrap site-wrap--narrow">
-        <header class="band-intro">
+        <header class="band-intro" id="contact">
           <h2 class="band-intro__name" id="headline-1">Jason Pratt</h2>
           <p class="band-intro__role">Live Musician</p>
           <p class="band-intro__tagline">Available for Festival, Clubs &amp; Private Events</p>
-          <p class="band-intro__contact" id="contact">Contact: <a
+          <p class="band-intro__contact">Contact: <a
               href="mailto:jaypratt@gmail.com">jaypratt@gmail.com</a></p>
         </header>
       </div>
@@ -81,30 +81,30 @@
 
       <div class="site-wrap">
 
-        <section class="tour-dates" id="tour" aria-labelledby="tour-heading">
-          <h2 class="headline-caps headline-caps--collapsible" id="tour-heading">
+        <section class="tour-dates" aria-labelledby="tour">
+          <h2 class="headline-caps headline-caps--collapsible" id="tour">
             <button type="button" class="headline-caps__toggle" id="tour-toggle" aria-expanded="true"
               aria-controls="tour-panel">
               <span class="headline-caps__text">Upcoming live dates</span>
               <span class="headline-caps__icon" aria-hidden="true">▼</span>
             </button>
           </h2>
-          <div class="tour-dates__panel" id="tour-panel" role="region" aria-labelledby="tour-heading" aria-live="polite">
+          <div class="tour-dates__panel" id="tour-panel" role="region" aria-labelledby="tour" aria-live="polite">
             <div class="band-section band-section--light tour-dates__body">
               <ul class="show-list" id="show-list" aria-live="polite"></ul>
             </div>
           </div>
         </section>
 
-        <section class="live-videos" id="live" aria-labelledby="live-videos-heading">
-          <h2 class="headline-caps headline-caps--collapsible" id="live-videos-heading">
+        <section class="live-videos" aria-labelledby="live">
+          <h2 class="headline-caps headline-caps--collapsible" id="live">
             <button type="button" class="headline-caps__toggle" id="live-videos-toggle" aria-expanded="false"
               aria-controls="video-links">
               <span class="headline-caps__text">Live performance videos</span>
               <span class="headline-caps__icon" aria-hidden="true">▼</span>
             </button>
           </h2>
-          <div class="video-layout" id="video-links" role="region" aria-labelledby="live-videos-heading"
+          <div class="video-layout" id="video-links" role="region" aria-labelledby="live"
             aria-live="polite" hidden>
             <div class="expand-panel-row expand-panel-row--thumb-left">
               <div class="expand-panel-row__content">
@@ -115,8 +115,8 @@
           </div>
         </section>
 
-        <section class="audio-samples" id="audio-samples" aria-labelledby="audio-samples-heading">
-          <h2 class="headline-caps headline-caps--collapsible" id="audio-samples-heading">
+        <section class="audio-samples" aria-labelledby="audio-samples">
+          <h2 class="headline-caps headline-caps--collapsible" id="audio-samples">
             <button type="button" class="headline-caps__toggle" id="audio-samples-toggle" aria-expanded="false"
               aria-controls="audio-samples-panel">
               <span class="headline-caps__text">Audio samples</span>
@@ -124,7 +124,7 @@
             </button>
           </h2>
           <div class="audio-samples__panel" id="audio-samples-panel" role="region"
-            aria-labelledby="audio-samples-heading" aria-live="polite" hidden>
+            aria-labelledby="audio-samples" aria-live="polite" hidden>
             <p class="body-text audio-list__intro">
               <span class="audio-list__intro--click">Click a track to play</span>
               <span class="audio-list__intro--tap">Tap a track to play</span>

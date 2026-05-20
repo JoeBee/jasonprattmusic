@@ -77,12 +77,39 @@
       openCollapsiblePanel("audio-samples", "audio-samples-toggle", "audio-samples-panel");
     } else if (fragment === "tour") {
       openCollapsiblePanel("tour", "tour-toggle", "tour-panel");
+    } else if (fragment === "contact" || fragment === "main-content") {
+      collapseMainAccordionsExcept("contact");
     }
+  }
+
+  function scheduleScrollToNavFragment(fragment) {
+    if (!fragment) return;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        scrollToNavFragment(fragment);
+        window.setTimeout(function () {
+          scrollToNavFragment(fragment);
+        }, 0);
+      });
+    });
+  }
+
+  function scrollToNavFragment(fragment) {
+    if (!fragment || onPitch) return;
+    const el = document.getElementById(fragment);
+    if (!el) return;
+    const margin =
+      parseFloat(window.getComputedStyle(el).scrollMarginTop) || 0;
+    const top = el.getBoundingClientRect().top + window.scrollY - margin;
+    window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
   }
 
   function syncHashCollapsibles() {
     const h = window.location.hash.replace(/^#/, "");
     openSectionForNavFragment(h);
+    if (h) {
+      scheduleScrollToNavFragment(h);
+    }
   }
 
   /** Off-site http(s) links open in a new browsing context with safe rel defaults */
@@ -124,7 +151,9 @@
     a.addEventListener("click", function () {
       const href = a.getAttribute("href") || "";
       if (href.charAt(0) === "#") {
-        openSectionForNavFragment(href.slice(1));
+        const fragment = href.slice(1);
+        openSectionForNavFragment(fragment);
+        scheduleScrollToNavFragment(fragment);
       }
       if (nav && nav.classList.contains("is-open") && navToggle) {
         nav.classList.remove("is-open");
@@ -149,7 +178,6 @@
 
   window.addEventListener("hashchange", onHashOrLoadNav);
   window.addEventListener("load", onHashOrLoadNav);
-  onHashOrLoadNav();
 
   /** Populate upcoming shows from a JSON file, rendered chronologically. */
   async function loadShows() {
@@ -348,6 +376,11 @@
       renderShowList(visibleShows);
     } catch (_) {
       showList.innerHTML = '<li class="show-list__row">Could not load shows right now.</li>';
+    } finally {
+      const h = window.location.hash.replace(/^#/, "");
+      if (h) {
+        scheduleScrollToNavFragment(h);
+      }
     }
   }
 
@@ -553,6 +586,11 @@
       focus.setAttribute("hidden", "");
       focus.innerHTML = "";
       thumbs.innerHTML = '<p class="video-row--message">Could not load videos right now.</p>';
+    } finally {
+      const h = window.location.hash.replace(/^#/, "");
+      if (h) {
+        scheduleScrollToNavFragment(h);
+      }
     }
   }
 
@@ -863,7 +901,7 @@
     });
     sync();
     const hash = window.location.hash.replace(/^#/, "");
-    if (hash === "live" || hash === "audio-samples") {
+    if (hash) {
       syncHashCollapsibles();
     } else {
       collapseMainAccordionsExcept("tour");
@@ -872,17 +910,27 @@
     }
   })();
 
+  onHashOrLoadNav();
+
   /* Hero banner: fixed at top; negative translateY rises slowly as user scrolls down.
-     lagRate 0.78 → banner moves up at (1 - lagRate) ≈ 22% of scroll speed, then off screen. */
+     lagRate 0.78 → banner moves up at (1 - lagRate) ≈ 22% of scroll speed, then off screen.
+     Opacity eases from 1 → 0 over several banner heights so it stays visible longer. */
   const heroBlock = document.querySelector(".page-hero");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (heroBlock) {
+    // 0–1: how much the banner lags behind scroll (higher = slower upward drift).
+    // 0.78 → banner rises at ~22% of scroll speed (1 - lag).
     const heroParallaxLag = 0.78;
+    // Multiplier on banner height for fade length; higher = stays visible longer.
+    // Also capped by at least 2× viewport height in fadeDistance below.
+    const heroFadeScrollFactor = 1;
+    // Cached scrollY; skip work when unchanged between animation frames.
     let lastScrollY = -1;
 
     function updateHeroParallax() {
       if (reduceMotion.matches) {
         heroBlock.style.transform = "";
+        heroBlock.style.opacity = "";
         lastScrollY = -1;
         return;
       }
@@ -893,6 +941,13 @@
       lastScrollY = scrollY;
       const rise = scrollY * (1 - heroParallaxLag);
       heroBlock.style.transform = "translate3d(0,-" + rise + "px,0)";
+      const fadeDistance = Math.max(
+        heroBlock.offsetHeight * heroFadeScrollFactor,
+        window.innerHeight * 2,
+        1
+      );
+      const opacity = Math.max(0, 1 - scrollY / fadeDistance);
+      heroBlock.style.opacity = String(opacity);
     }
 
     function heroParallaxFrame() {
