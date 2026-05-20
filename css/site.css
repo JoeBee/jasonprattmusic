@@ -1631,9 +1631,12 @@ img[src$="cover-art-4.png"] {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.15rem;
-  padding: 0.5rem 0.85rem;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 0.65rem 0.85rem;
   align-items: center;
+}
+
+.show-list__row + .show-list__row {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 @media (min-width: 600px) {
@@ -1641,10 +1644,6 @@ img[src$="cover-art-4.png"] {
     grid-template-columns: 7rem 1fr;
     align-items: center;
   }
-}
-
-.show-list__row:last-child {
-  border-bottom: none;
 }
 
 .show-list__date {
@@ -1983,7 +1982,7 @@ img[src$="cover-art-4.png"] {
   }
 
   .show-list__row {
-    padding: 0.45rem 0.7rem;
+    padding: 0.55rem 0.7rem;
   }
 }
 

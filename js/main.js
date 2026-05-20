@@ -862,6 +862,14 @@
       sync();
     });
     sync();
+    const hash = window.location.hash.replace(/^#/, "");
+    if (hash === "live" || hash === "audio-samples") {
+      syncHashCollapsibles();
+    } else {
+      collapseMainAccordionsExcept("tour");
+      btn.setAttribute("aria-expanded", "true");
+      sync();
+    }
   })();
 
   /* Hero banner: moves much slower than the page (parallax), disabled when reduced motion is preferred.
