@@ -271,8 +271,55 @@
       return link;
     }
 
-    const SHOW_ICON_WEBSITE =
-      "M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z";
+    const SHOW_ICON_MAP =
+      "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z";
+
+    function formatShowDateLabel(show) {
+      if (show.date) {
+        return show.date.toLocaleDateString("en-US", {
+          weekday: "short",
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+      const fallback = String(show.displayDate || "").trim();
+      return fallback || "TBD";
+    }
+
+    function getShowMonthKey(show) {
+      if (!show.date) return "";
+      const month = String(show.date.getMonth() + 1).padStart(2, "0");
+      return show.date.getFullYear() + "-" + month;
+    }
+
+    function formatShowMonthLabel(show) {
+      if (!show.date) return "";
+      return show.date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    }
+
+    function appendShowListHeader() {
+      const header = document.createElement("li");
+      header.className = "show-list__header";
+      header.setAttribute("aria-hidden", "true");
+
+      const dateHeading = document.createElement("span");
+      dateHeading.className = "show-list__header-date";
+      dateHeading.textContent = "Date";
+
+      const detailsHeading = document.createElement("span");
+      detailsHeading.className = "show-list__header-details";
+      detailsHeading.textContent = "Show";
+
+      const linksHeading = document.createElement("span");
+      linksHeading.className = "show-list__header-links";
+      linksHeading.textContent = "Links";
+
+      header.appendChild(dateHeading);
+      header.appendChild(detailsHeading);
+      header.appendChild(linksHeading);
+      showList.appendChild(header);
+    }
 
     function renderShowList(showsToRender) {
       showList.innerHTML = "";
@@ -282,14 +329,27 @@
         return;
       }
 
+      appendShowListHeader();
+
+      let lastMonthKey = "";
+
       showsToRender.forEach(function (show) {
+        const monthKey = getShowMonthKey(show);
+        if (monthKey && monthKey !== lastMonthKey) {
+          const monthRow = document.createElement("li");
+          monthRow.className = "show-list__month";
+          monthRow.textContent = formatShowMonthLabel(show);
+          showList.appendChild(monthRow);
+          lastMonthKey = monthKey;
+        }
+
         const row = document.createElement("li");
         row.className = "show-list__row";
         if (show.dateKey) row.setAttribute("data-show-date", show.dateKey);
 
         const date = document.createElement("time");
         date.className = "show-list__date";
-        date.textContent = show.displayDate || (show.date ? show.date.toLocaleDateString() : "TBD");
+        date.textContent = formatShowDateLabel(show);
         if (show.dateKey) date.setAttribute("datetime", show.dateKey);
 
         const details = document.createElement("div");
@@ -299,6 +359,7 @@
         info.className = "show-list__info";
 
         const websiteUrl = normalizeExternalUrl(show.website);
+        const mapUrl = normalizeExternalUrl(show.map);
         const venueLabel = show.venue || "Venue TBA";
         let venue;
         if (websiteUrl) {
@@ -319,14 +380,22 @@
         meta.textContent = show.city || "";
 
         info.appendChild(venue);
-        info.appendChild(meta);
+        if (show.city) {
+          info.appendChild(meta);
+        }
+        if (!websiteUrl && !mapUrl) {
+          const status = document.createElement("span");
+          status.className = "show-list__status";
+          status.textContent = "Details TBA";
+          info.appendChild(status);
+        }
         details.appendChild(info);
 
-        if (websiteUrl) {
+        if (mapUrl) {
           const actions = document.createElement("div");
           actions.className = "show-list__actions";
           actions.appendChild(
-            createShowActionLink(websiteUrl, "Visit venue website", SHOW_ICON_WEBSITE)
+            createShowActionLink(mapUrl, "Get directions on Google Maps", SHOW_ICON_MAP)
           );
           details.appendChild(actions);
         }

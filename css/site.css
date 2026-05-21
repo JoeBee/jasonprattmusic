@@ -299,20 +299,6 @@ main {
   white-space: normal;
 }
 
-.page-hero__copy-toggle {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.page-hero__copy-more {
-  display: none;
-}
-
-.page-hero__copy-less {
-  display: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .page-header::after {
     display: none;
@@ -1671,7 +1657,7 @@ img[src$="cover-art-4.png"] {
 
 /* --- Show list (light section) --- */
 .band-section--light .show-list {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.82);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
@@ -1682,6 +1668,25 @@ img[src$="cover-art-4.png"] {
   border: 1px solid #e0e0e0;
 }
 
+.show-list__header {
+  display: none;
+}
+
+.show-list__month {
+  padding: 0.55rem 0.85rem 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #444;
+  background: rgba(0, 0, 0, 0.04);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.show-list__header + .show-list__month {
+  border-top: none;
+}
+
 .show-list__row {
   display: grid;
   grid-template-columns: 1fr;
@@ -1690,24 +1695,52 @@ img[src$="cover-art-4.png"] {
   align-items: center;
 }
 
-.show-list__row + .show-list__row {
+.show-list__row + .show-list__row,
+.show-list__month + .show-list__row {
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 @media (min-width: 600px) {
-  .show-list__row {
-    grid-template-columns: 7rem 1fr;
+  .show-list__header {
+    display: grid;
+    grid-template-columns: 10.5rem 1fr 3.25rem;
+    gap: 0.65rem;
+    padding: 0.45rem 0.85rem;
     align-items: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #555;
+    background: rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .show-list__header-date {
+    grid-column: 1;
+  }
+
+  .show-list__header-details {
+    grid-column: 2;
+  }
+
+  .show-list__header-links {
+    grid-column: 3;
+    text-align: center;
+  }
+
+  .show-list__row {
+    grid-template-columns: 10.5rem 1fr;
+    align-items: start;
   }
 }
 
 .show-list__date {
   font-family: var(--font-body);
-  font-size: 0.88rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #6b2d5c;
-  line-height: 1.2;
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  color: #4d1f42;
+  line-height: 1.3;
 }
 
 .show-list__venue {
@@ -1734,11 +1767,20 @@ img[src$="cover-art-4.png"] {
   line-height: 1.25;
 }
 
+.show-list__status {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: #666;
+  line-height: 1.25;
+}
+
 .show-list__details {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.1rem 0.65rem;
-  align-items: center;
+  align-items: start;
   min-width: 0;
 }
 
@@ -1752,20 +1794,23 @@ img[src$="cover-art-4.png"] {
 }
 
 .show-list__actions {
+  display: flex;
+  gap: 0.1rem;
   grid-column: 2;
   grid-row: 1;
   flex-shrink: 0;
   margin: 0;
+  align-self: start;
 }
 
 .show-list__comments {
-  grid-column: 1;
-  margin: 0.15rem 0 0;
+  grid-column: 1 / -1;
+  margin: 0.2rem 0 0;
   font-size: 0.85rem;
   line-height: 1.35;
   color: #444;
   font-weight: 400;
-  text-align: center;
+  text-align: left;
 }
 
 .show-list__action {
@@ -1958,54 +2003,6 @@ img[src$="cover-art-4.png"] {
   .page-hero__copy-tagline {
     font-size: 1em;
     letter-spacing: 0.03em;
-  }
-
-  /* Collapsed preview ~4 lines, with a gentle fade so users sense there's more. */
-  .page-hero__copy--collapsible {
-    display: block;
-    max-height: calc(1.55em * 4);
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, #000 65%, rgba(0, 0, 0, 0.2) 100%);
-    mask-image: linear-gradient(to bottom, #000 65%, rgba(0, 0, 0, 0.2) 100%);
-  }
-
-  .page-hero__copy-toggle:checked+.page-hero__copy--collapsible {
-    display: block;
-    max-height: none;
-    overflow: visible;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  /* Pill-style "more / less" buttons, gilt-outlined to match the card. */
-  .page-hero__copy-more,
-  .page-hero__copy-less {
-    margin: 0.55rem auto 0.1rem;
-    padding: 0.32rem 0.95rem;
-    color: #f3ead4;
-    background: rgba(20, 14, 6, 0.7);
-    border: 1px solid rgba(201, 165, 90, 0.55);
-    border-radius: 999px;
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .page-hero__copy-more {
-    display: inline-block;
-  }
-
-  .page-hero__copy-toggle:checked~.page-hero__copy-more {
-    display: none;
-  }
-
-  .page-hero__copy-toggle:checked~.page-hero__copy-less {
-    display: inline-block;
   }
 
   .page-hero__img {
