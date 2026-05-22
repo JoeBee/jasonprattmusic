@@ -844,6 +844,10 @@ img[src$="cover-art-4.png"] {
   margin-top: 0;
 }
 
+.audio-samples .expand-panel-row__content > .audio-list {
+  margin-top: 0;
+}
+
 /* Hide cover-art-1..4 on mobile (everything below tablet portrait) */
 @media (max-width: 767px) {
 
