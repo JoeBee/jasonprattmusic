@@ -2,42 +2,35 @@
   const nav = document.getElementById("site-nav");
   const navToggle = document.getElementById("nav-toggle");
   const navLinks = nav ? Array.from(nav.querySelectorAll("a")) : [];
-  const onPitch = /pitch\.html$/i.test(window.location.pathname);
+  const NAV_HREF_BY_FRAGMENT = {
+    live: "#live",
+    "audio-samples": "#audio-samples",
+    contact: "#contact",
+    tour: "#tour",
+    home: "#home",
+  };
+
+  const yearEl = document.getElementById("year");
+  if (yearEl) {
+    yearEl.textContent = String(new Date().getFullYear());
+  }
+
+  /** @param {string} path */
+  async function fetchJson(path) {
+    const response = await fetch(path, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("Failed to load " + path);
+    }
+    return response.json();
+  }
 
   function setCurrentNav() {
-    if (onPitch) {
-      navLinks.forEach(function (a) {
-        if (/pitch\.html/i.test(a.getAttribute("href") || "")) {
-          a.setAttribute("aria-current", "true");
-        } else {
-          a.removeAttribute("aria-current");
-        }
-      });
-      return;
-    }
-    const h = window.location.hash.replace(/^#/, "");
-    const id =
-      h === "live"
-        ? "live"
-        : h === "audio-samples"
-          ? "audio-samples"
-          : h === "contact"
-            ? "contact"
-            : h === "tour"
-              ? "tour"
-              : "home";
+    const fragment = window.location.hash.replace(/^#/, "");
+    const activeHref =
+      NAV_HREF_BY_FRAGMENT[fragment in NAV_HREF_BY_FRAGMENT ? fragment : "home"];
     navLinks.forEach(function (a) {
-      const href = a.getAttribute("href") || "";
-      if (id === "live" && href === "#live") {
-        a.setAttribute("aria-current", "true");
-      } else if (id === "audio-samples" && href === "#audio-samples") {
-        a.setAttribute("aria-current", "true");
-      } else if (id === "contact" && href === "#contact") {
-        a.setAttribute("aria-current", "true");
-      } else if (id === "tour" && href === "#tour") {
-        a.setAttribute("aria-current", "true");
-      } else if (id === "home" && href === "#home") {
-        a.setAttribute("aria-current", "true");
+      if ((a.getAttribute("href") || "") === activeHref) {
+        a.setAttribute("aria-current", "page");
       } else {
         a.removeAttribute("aria-current");
       }
@@ -73,7 +66,7 @@
   }
 
   function openSectionForNavFragment(fragment) {
-    if (!fragment || onPitch) return;
+    if (!fragment) return;
     if (fragment === "live") {
       openCollapsiblePanel("live-videos-toggle", "video-links");
     } else if (fragment === "audio-samples") {
@@ -98,7 +91,7 @@
   }
 
   function scrollToNavFragment(fragment) {
-    if (!fragment || onPitch) return;
+    if (!fragment) return;
     const el = document.getElementById(fragment);
     if (!el) return;
     const margin =
@@ -182,6 +175,68 @@
   window.addEventListener("hashchange", onHashOrLoadNav);
   window.addEventListener("load", onHashOrLoadNav);
 
+  const MUSICIAN_SCHEMA_ID = "https://jasonprattmusic.com/#musician";
+  const SITE_SCHEMA_URL = "https://jasonprattmusic.com/";
+
+  /** Inject MusicEvent JSON-LD from upcoming shows for local concert discovery. */
+  function updateLocalEventSchema(shows) {
+    let el = document.getElementById("event-schema");
+    if (!el) {
+      el = document.createElement("script");
+      el.type = "application/ld+json";
+      el.id = "event-schema";
+      document.body.appendChild(el);
+    }
+
+    const events = shows
+      .filter(function (show) {
+        return show.dateKey;
+      })
+      .map(function (show) {
+        const city = String(show.city || "").trim();
+        const locality = city.replace(/,?\s*MA$/i, "").trim();
+        const location = {
+          "@type": "Place",
+          name: show.venue || "Venue TBA",
+        };
+        const address = {
+          "@type": "PostalAddress",
+          addressCountry: "US",
+          addressRegion: "MA",
+        };
+        if (locality) {
+          address.addressLocality = locality;
+        }
+        if (show.address) {
+          address.streetAddress = String(show.address).trim();
+        }
+        if (locality || show.address) {
+          location.address = address;
+        }
+
+        const eventUrl = show.website
+          ? String(show.website).trim()
+          : SITE_SCHEMA_URL + "#tour";
+
+        return {
+          "@type": "MusicEvent",
+          name: (show.venue || "Live music") + " — Jason Pratt",
+          startDate: show.dateKey,
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          location: location,
+          performer: { "@id": MUSICIAN_SCHEMA_ID },
+          organizer: { "@id": MUSICIAN_SCHEMA_ID },
+          url: eventUrl,
+        };
+      });
+
+    el.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": events,
+    });
+  }
+
   /** Populate upcoming shows from a JSON file, rendered chronologically. */
   async function loadShows() {
     const showList = document.getElementById("show-list");
@@ -191,22 +246,6 @@
     today.setHours(0, 0, 0, 0);
 
     function parseShowDate(show) {
-      const iso = String(show.date || "").trim();
-      const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
-      if (isoMatch) {
-        const isoYear = Number(isoMatch[1]);
-        const isoMonth = Number(isoMatch[2]);
-        const isoDay = Number(isoMatch[3]);
-        const isoDate = new Date(isoYear, isoMonth - 1, isoDay);
-        if (
-          isoDate.getFullYear() === isoYear &&
-          isoDate.getMonth() === isoMonth - 1 &&
-          isoDate.getDate() === isoDay
-        ) {
-          return isoDate;
-        }
-      }
-
       const parts = String(show.displayDate || "").split("/");
       if (parts.length !== 3) return null;
 
@@ -313,7 +352,7 @@
 
       const linksHeading = document.createElement("span");
       linksHeading.className = "show-list__header-links";
-      linksHeading.textContent = "Links";
+      linksHeading.textContent = "Map";
 
       header.appendChild(dateHeading);
       header.appendChild(detailsHeading);
@@ -389,6 +428,15 @@
           status.textContent = "Details TBA";
           info.appendChild(status);
         }
+
+        const commentsText = (show.comments && String(show.comments).trim()) || "";
+        if (commentsText) {
+          const comments = document.createElement("p");
+          comments.className = "show-list__comments";
+          comments.textContent = commentsText;
+          info.appendChild(comments);
+        }
+
         details.appendChild(info);
 
         if (mapUrl) {
@@ -400,14 +448,6 @@
           details.appendChild(actions);
         }
 
-        const commentsText = (show.comments && String(show.comments).trim()) || "";
-        if (commentsText) {
-          const comments = document.createElement("p");
-          comments.className = "show-list__comments";
-          comments.textContent = commentsText;
-          details.appendChild(comments);
-        }
-
         row.appendChild(date);
         row.appendChild(details);
         showList.appendChild(row);
@@ -415,9 +455,7 @@
     }
 
     try {
-      const response = await fetch("data/shows.json", { cache: "no-store" });
-      if (!response.ok) throw new Error("Failed to load show data.");
-      const shows = await response.json();
+      const shows = await fetchJson("data/shows.json");
 
       if (!Array.isArray(shows) || shows.length === 0) {
         renderShowList([]);
@@ -445,7 +483,23 @@
           return aTime - bTime;
         });
 
-      renderShowList(visibleShows);
+      const seenShowKeys = new Set();
+      const dedupedShows = visibleShows.filter(function (show) {
+        const key =
+          (show.dateKey || "nodate") +
+          "|" +
+          String(show.venue || "")
+            .trim()
+            .toLowerCase();
+        if (seenShowKeys.has(key)) {
+          return false;
+        }
+        seenShowKeys.add(key);
+        return true;
+      });
+
+      renderShowList(dedupedShows);
+      updateLocalEventSchema(dedupedShows);
     } catch (_) {
       showList.innerHTML = '<li class="show-list__row">Could not load shows right now.</li>';
     } finally {
@@ -526,9 +580,7 @@
     if (!layout || !focus || !thumbs) return;
 
     try {
-      const response = await fetch("data/links.json", { cache: "no-store" });
-      if (!response.ok) throw new Error("Failed to load video links.");
-      const items = await response.json();
+      const items = await fetchJson("data/links.json");
 
       if (!Array.isArray(items) || items.length === 0) {
         focus.setAttribute("hidden", "");
@@ -571,6 +623,7 @@
         );
         iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
         iframe.setAttribute("allowfullscreen", "");
+        iframe.setAttribute("loading", "lazy");
         wrap.appendChild(iframe);
         focus.innerHTML = "";
         focus.appendChild(wrap);
@@ -697,26 +750,6 @@
     sync();
   })();
 
-  (function initCoverArtCollapsible() {
-    const btn = document.getElementById("cover-art-toggle");
-    const panel = document.getElementById("cover-art-panel");
-    if (!btn || !panel) return;
-    function sync() {
-      const open = btn.getAttribute("aria-expanded") === "true";
-      if (open) {
-        panel.removeAttribute("hidden");
-      } else {
-        panel.setAttribute("hidden", "");
-      }
-    }
-    btn.addEventListener("click", function () {
-      const open = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", open ? "false" : "true");
-      sync();
-    });
-    sync();
-  })();
-
   /** Audio sample list (data/audio-files.json); in-page play with dancing notes to the right when playing. */
   (function initAudioSamples() {
     const listEl = document.getElementById("audio-list");
@@ -782,9 +815,7 @@
         errEl.textContent = "";
       }
       try {
-        const res = await fetch("data/audio-files.json", { cache: "no-store" });
-        if (!res.ok) throw new Error("load failed");
-        const raw = await res.json();
+        const raw = await fetchJson("data/audio-files.json");
         if (!Array.isArray(raw) || raw.length === 0) {
           listEl.innerHTML =
             '<li class="audio-list__item audio-list__item--message" role="presentation"><p class="body-text audio-list__empty-text">No audio files listed.</p></li>';
@@ -1005,17 +1036,22 @@
       heroBlock.style.opacity = String(opacity);
     }
 
-    function heroParallaxFrame() {
-      updateHeroParallax();
-      requestAnimationFrame(heroParallaxFrame);
+    let parallaxTicking = false;
+
+    function scheduleHeroParallax() {
+      if (parallaxTicking) {
+        return;
+      }
+      parallaxTicking = true;
+      requestAnimationFrame(function () {
+        updateHeroParallax();
+        parallaxTicking = false;
+      });
     }
 
     reduceMotion.addEventListener("change", updateHeroParallax);
+    window.addEventListener("scroll", scheduleHeroParallax, { passive: true });
     window.addEventListener("resize", updateHeroParallax, { passive: true });
-    if (!reduceMotion.matches) {
-      requestAnimationFrame(heroParallaxFrame);
-    } else {
-      updateHeroParallax();
-    }
+    updateHeroParallax();
   }
 })();

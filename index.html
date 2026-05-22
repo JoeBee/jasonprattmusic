@@ -5,9 +5,30 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Jason Pratt — live shows, music, and booking." />
-  <title>Jason Pratt Music — Official Site</title>
+  <meta name="description"
+    content="Jason Pratt — acoustic guitarist and live musician in the Boston &amp; Chelmsford, MA area. See upcoming shows, hear samples, and book for clubs, festivals, and private events." />
+  <meta name="keywords"
+    content="Jason Pratt, Boston musician, Chelmsford live music, Massachusetts acoustic guitarist, Lexington Burlington Reading live music, local musician Boston area, Berklee guitarist, book live music MA" />
+  <meta name="robots" content="index, follow" />
+  <meta name="geo.region" content="US-MA" />
+  <meta name="geo.placename" content="Chelmsford, Boston, Lexington, Burlington, Massachusetts" />
+  <title>Jason Pratt | Live Musician — Boston &amp; Chelmsford, MA Area</title>
+  <link rel="canonical" href="https://jasonprattmusic.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Jason Pratt Music" />
+  <meta property="og:url" content="https://jasonprattmusic.com/" />
+  <meta property="og:title" content="Jason Pratt | Live Musician — Boston &amp; Chelmsford, MA" />
+  <meta property="og:description"
+    content="Acoustic live music in the greater Boston and Chelmsford area. Upcoming Massachusetts dates, audio samples, and booking." />
+  <meta property="og:image" content="https://jasonprattmusic.com/assets/top-banner.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jason Pratt | Live Musician — Boston &amp; Chelmsford, MA" />
+  <meta name="twitter:description"
+    content="Acoustic live music in the greater Boston and Chelmsford area. Shows, samples, and booking." />
+  <meta name="twitter:image" content="https://jasonprattmusic.com/assets/top-banner.png" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preload" href="assets/top-banner.png" as="image" type="image/png" />
   <link rel="stylesheet" href="css/site.css" />
 </head>
 
@@ -47,7 +68,7 @@
         </button>
         <nav class="main-nav" id="site-nav" aria-label="Main">
           <ul>
-            <li><a class="main-nav__link" href="#home" aria-current="true">Home</a></li>
+            <li><a class="main-nav__link" href="#home" aria-current="page">Home</a></li>
             <li><a class="main-nav__link" href="#live">Live</a></li>
             <li><a class="main-nav__link" href="#audio-samples">Audio</a></li>
             <li><a class="main-nav__link" href="#tour" title="Upcoming live dates">Dates</a></li>
@@ -60,26 +81,24 @@
     <div class="page-hero">
       <picture>
         <img class="page-hero__img" src="assets/top-banner.png" width="2400" height="900"
-          alt="Decorative header artwork: sunset palette and stage silhouettes (replace with your art)"
-          fetchpriority="high" />
+          alt="Jason Pratt Music header artwork" decoding="async" fetchpriority="high" />
       </picture>
     </div>
   </header>
 
   <main id="main-content" tabindex="-1">
-    <section class="band-section band-section--on-photo" aria-labelledby="headline-1">
+    <section class="band-section band-section--on-photo" aria-labelledby="artist-name">
       <div class="site-wrap site-wrap--narrow">
         <header class="band-intro" id="contact">
-          <h2 class="band-intro__name" id="headline-1">Jason Pratt</h2>
+          <h1 class="band-intro__name" id="artist-name">Jason Pratt</h1>
           <p class="band-intro__role">Live Musician</p>
           <p class="band-intro__tagline">Available for Festival, Clubs &amp; Private Events</p>
           <p class="band-intro__contact">Contact: <a
               href="mailto:jaypratt@gmail.com">jaypratt@gmail.com</a></p>
         </header>
       </div>
-      <br>
 
-      <div class="site-wrap">
+      <div class="site-wrap band-section__content">
 
         <section class="tour-dates" aria-labelledby="tour">
           <h2 class="headline-caps headline-caps--collapsible" id="tour">
@@ -185,10 +204,52 @@
     </p>
   </footer>
 
-  <script src="js/main.js" defer></script>
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://jasonprattmusic.com/#website",
+          "url": "https://jasonprattmusic.com/",
+          "name": "Jason Pratt Music",
+          "description": "Official site for Jason Pratt — live acoustic music in the Boston and Chelmsford, Massachusetts area.",
+          "inLanguage": "en-US",
+          "about": { "@id": "https://jasonprattmusic.com/#musician" }
+        },
+        {
+          "@type": "MusicGroup",
+          "@id": "https://jasonprattmusic.com/#musician",
+          "name": "Jason Pratt",
+          "url": "https://jasonprattmusic.com/",
+          "email": "jaypratt@gmail.com",
+          "description": "Acoustic guitarist, vocalist, and songwriter performing live music in the greater Boston and Chelmsford, MA area. Available for clubs, festivals, breweries, and private events.",
+          "genre": ["Acoustic", "Folk", "Singer-Songwriter", "Live Music"],
+          "knowsAbout": [
+            "Live acoustic music",
+            "Boston area musicians",
+            "Chelmsford Massachusetts live music",
+            "Private event entertainment",
+            "Club and festival performances"
+          ],
+          "areaServed": [
+            { "@type": "City", "name": "Chelmsford", "containedInPlace": { "@type": "State", "name": "Massachusetts", "addressCountry": "US" } },
+            { "@type": "City", "name": "Boston", "containedInPlace": { "@type": "State", "name": "Massachusetts", "addressCountry": "US" } },
+            { "@type": "City", "name": "Lexington", "containedInPlace": { "@type": "State", "name": "Massachusetts", "addressCountry": "US" } },
+            { "@type": "City", "name": "Burlington", "containedInPlace": { "@type": "State", "name": "Massachusetts", "addressCountry": "US" } },
+            { "@type": "City", "name": "Reading", "containedInPlace": { "@type": "State", "name": "Massachusetts", "addressCountry": "US" } },
+            { "@type": "AdministrativeArea", "name": "Greater Boston" }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/jasonprattmusic/",
+            "https://www.instagram.com/jaypratt1/",
+            "https://www.youtube.com/@jaypratt1"
+          ]
+        }
+      ]
+    }
   </script>
+  <script src="js/main.js" defer></script>
 </body>
 
 </html>
