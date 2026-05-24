@@ -21,7 +21,9 @@
     if (!response.ok) {
       throw new Error("Failed to load " + path);
     }
-    return response.json();
+    const text = await response.text();
+    const json = text.replace(/^\s*\/\/.*$/gm, "");
+    return JSON.parse(json);
   }
 
   function setCurrentNav() {
@@ -274,6 +276,12 @@
       return date.getFullYear() + "-" + month + "-" + day;
     }
 
+    function decodeHtmlEntities(value) {
+      const el = document.createElement("textarea");
+      el.innerHTML = String(value || "");
+      return el.value;
+    }
+
     function normalizeExternalUrl(value) {
       const url = String(value || "").trim();
       if (!url) return null;
@@ -386,13 +394,14 @@
         row.className = "show-list__row";
         if (show.dateKey) row.setAttribute("data-show-date", show.dateKey);
 
+        const dateCell = document.createElement("div");
+        dateCell.className = "show-list__date-cell";
+
         const date = document.createElement("time");
         date.className = "show-list__date";
         date.textContent = formatShowDateLabel(show);
         if (show.dateKey) date.setAttribute("datetime", show.dateKey);
-
-        const details = document.createElement("div");
-        details.className = "show-list__details";
+        dateCell.appendChild(date);
 
         const info = document.createElement("div");
         info.className = "show-list__info";
@@ -422,22 +431,8 @@
         if (show.city) {
           info.appendChild(meta);
         }
-        if (!websiteUrl && !mapUrl) {
-          const status = document.createElement("span");
-          status.className = "show-list__status";
-          status.textContent = "Details TBA";
-          info.appendChild(status);
-        }
-
-        const commentsText = (show.comments && String(show.comments).trim()) || "";
-        if (commentsText) {
-          const comments = document.createElement("p");
-          comments.className = "show-list__comments";
-          comments.textContent = commentsText;
-          info.appendChild(comments);
-        }
-
-        details.appendChild(info);
+        row.appendChild(dateCell);
+        row.appendChild(info);
 
         if (mapUrl) {
           const actions = document.createElement("div");
@@ -445,11 +440,18 @@
           actions.appendChild(
             createShowActionLink(mapUrl, "Get directions on Google Maps", SHOW_ICON_MAP)
           );
-          details.appendChild(actions);
+          row.appendChild(actions);
         }
 
-        row.appendChild(date);
-        row.appendChild(details);
+        const commentsText = (show.comments && String(show.comments).trim()) || "";
+        if (commentsText) {
+          row.classList.add("show-list__row--has-note");
+          const comments = document.createElement("p");
+          comments.className = "show-list__note";
+          comments.textContent = decodeHtmlEntities(commentsText);
+          row.appendChild(comments);
+        }
+
         showList.appendChild(row);
       });
     }
