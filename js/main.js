@@ -403,6 +403,14 @@
         if (show.dateKey) date.setAttribute("datetime", show.dateKey);
         dateCell.appendChild(date);
 
+        const commentsText = (show.comments && String(show.comments).trim()) || "";
+        if (commentsText) {
+          const comments = document.createElement("p");
+          comments.className = "show-list__note";
+          comments.textContent = decodeHtmlEntities(commentsText);
+          dateCell.appendChild(comments);
+        }
+
         const info = document.createElement("div");
         info.className = "show-list__info";
 
@@ -441,15 +449,6 @@
             createShowActionLink(mapUrl, "Get directions on Google Maps", SHOW_ICON_MAP)
           );
           row.appendChild(actions);
-        }
-
-        const commentsText = (show.comments && String(show.comments).trim()) || "";
-        if (commentsText) {
-          row.classList.add("show-list__row--has-note");
-          const comments = document.createElement("p");
-          comments.className = "show-list__note";
-          comments.textContent = decodeHtmlEntities(commentsText);
-          row.appendChild(comments);
         }
 
         showList.appendChild(row);
