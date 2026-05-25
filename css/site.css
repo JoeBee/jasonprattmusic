@@ -1115,7 +1115,7 @@ img[src$="cover-art-1.png"] {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto auto;
-  row-gap: 0;
+  row-gap: 8px;
   column-gap: 0.4rem;
   padding: 0.65rem 0.85rem;
   align-items: start;
