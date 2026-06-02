@@ -1,16 +1,18 @@
 [
   {
     "displayDate": "5/24/2026",
+    "time": "",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
     "comments": "Sunday Brunch",
-    "visible": "TRUE",
+    "visible": "FALSE",
     "address": "154 Cambridge St, Burlington, MA 01803",
     "map": "https://www.google.com/maps/place/Goodnight+Johnny's+American+Music+Bar/data=!4m2!3m1!1s0x0:0x197d9862ebd240d5?sa=X&ved=1t:2428&ictx=111",
     "website": "https://www.goodnightjohnnys.com/"
   },
   {
     "displayDate": "5/30/2026",
+    "time": "",
     "venue": "Navigation Brewery",
     "city": "Chelmsford, MA",
     "comments": "",
@@ -21,6 +23,7 @@
   },
   {
     "displayDate": "5/31/2026",
+    "time": "1-4 PM",
     "venue": "Private Taping",
     "city": "",
     "comments": "",
@@ -31,6 +34,7 @@
   },
   {
     "displayDate": "6/6/2026",
+    "time": "6-9 PM",
     "venue": "Navigation Brewery",
     "city": "Chelmsford, MA",
     "comments": "",
@@ -41,6 +45,7 @@
   },
   {
     "displayDate": "6/11/2026",
+    "time": "8-11 PM",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
@@ -51,6 +56,7 @@
   },
   {
     "displayDate": "6/13/2026",
+    "time": "6-9 PM",
     "venue": "Navigation Brewery",
     "city": "Chelmsford, MA",
     "comments": "",
@@ -61,6 +67,7 @@
   },
   {
     "displayDate": "6/18/2026",
+    "time": "4-7 PM",
     "venue": "Private Event",
     "city": "",
     "comments": "",
@@ -71,6 +78,7 @@
   },
   {
     "displayDate": "6/25/2026",
+    "time": "7:30-10:30 PM",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
@@ -81,6 +89,7 @@
   },
   {
     "displayDate": "6/27/2026",
+    "time": "6-9 PM",
     "venue": "Navigation Brewery",
     "city": "Chelmsford, MA",
     "comments": "",
@@ -91,6 +100,7 @@
   },
   {
     "displayDate": "7/8/2026",
+    "time": "5-8 PM",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
     "comments": "Hosting Open Mic &mdash; 5-8 PM",
@@ -101,6 +111,7 @@
   },
   {
     "displayDate": "7/9/2026",
+    "time": "7:30-10:30 PM",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
@@ -111,6 +122,7 @@
   },
   {
     "displayDate": "7/15/2026",
+    "time": "5-8 PM",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
     "comments": "Hosting Open Mic &mdash; 5-8 PM",
@@ -121,6 +133,7 @@
   },
   {
     "displayDate": "7/17/2026",
+    "time": "7:30-10:30 PM",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
@@ -131,6 +144,7 @@
   },
   {
     "displayDate": "7/19/2026",
+    "time": "2-5 PM",
     "venue": "Post 1917 Reading",
     "city": "Reading, MA",
     "comments": "",
@@ -141,6 +155,7 @@
   },
   {
     "displayDate": "7/24/2026",
+    "time": "7:30-10:30 PM",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
@@ -151,6 +166,7 @@
   },
   {
     "displayDate": "7/29/2026",
+    "time": "5-8 PM",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
     "comments": "Hosting Open Mic &mdash; 5-8 PM",
@@ -161,6 +177,7 @@
   },
   {
     "displayDate": "7/30/2026",
+    "time": "7:30-10:30 PM",
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
@@ -171,6 +188,7 @@
   },
   {
     "displayDate": "8/2/2026",
+    "time": "2-5 PM",
     "venue": "Post 1917 Reading",
     "city": "Reading, MA",
     "comments": "",
@@ -181,6 +199,7 @@
   },
   {
     "displayDate": "8/5/2026",
+    "time": "5-8 PM",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
     "comments": "Hosting Open Mic &mdash; 5-8 PM",
@@ -191,6 +210,7 @@
   },
   {
     "displayDate": "8/9/2026",
+    "time": "5-8 PM",
     "venue": "Owen & Ollie's",
     "city": "Dracut, MA",
     "comments": "",
@@ -201,6 +221,7 @@
   },
   {
     "displayDate": "8/12/2026",
+    "time": "5-8 PM",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
     "comments": "Hosting Open Mic &mdash; 5-8 PM",
@@ -211,6 +232,7 @@
   },
   {
     "displayDate": "8/20/2026",
+    "time": "8:30-11:30",
     "venue": "Private Event",
     "city": "",
     "comments": "",
@@ -221,6 +243,7 @@
   },
   {
     "displayDate": "9/8/2026",
+    "time": "8-11 PM",
     "venue": "GoodNight Johnny's",
     "city": "Burlington, MA",
     "comments": "Appearing with The Locals &mdash; 8PM FREE!",
@@ -231,6 +254,7 @@
   },
   {
     "displayDate": "12/11/2026",
+    "time": "6-10 PM",
     "venue": "Private Event",
     "city": "",
     "comments": "",
@@ -240,17 +264,8 @@
     "website": ""
   },
   {
-    "displayDate": "8/20/2026",
-    "venue": "Reception Ledger",
-    "city": "Salem, MA",
-    "comments": "",
-    "visible": "FALSE",
-    "address": "125 Washington St, Salem, MA 01970",
-    "map": "https://www.google.com/maps/place/Ledger+Restaurant/data=!4m2!3m1!1s0x0:0xce1dd0fa4dc7021e?sa=X&ved=1t:2428&ictx=111",
-    "website": "http://ledgersalem.com/"
-  },
-  {
     "displayDate": "9/21/1980",
+    "time": "",
     "venue": "",
     "city": "",
     "comments": "",

@@ -322,16 +322,23 @@
       "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z";
 
     function formatShowDateLabel(show) {
+      let label;
       if (show.date) {
-        return show.date.toLocaleDateString("en-US", {
+        label = show.date.toLocaleDateString("en-US", {
           weekday: "short",
           month: "short",
           day: "numeric",
           year: "numeric",
         });
+      } else {
+        const fallback = String(show.displayDate || "").trim();
+        label = fallback || "TBD";
       }
-      const fallback = String(show.displayDate || "").trim();
-      return fallback || "TBD";
+      const time = String(show.time || "").trim();
+      if (time) {
+        return label + " · " + time;
+      }
+      return label;
     }
 
     function getShowMonthKey(show) {
