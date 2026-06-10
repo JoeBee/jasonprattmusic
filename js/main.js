@@ -483,7 +483,7 @@
           return normalized;
         })
         .filter(function (show) {
-          return !show.date || show.date.getTime() >= today.getTime();
+          return show.date && show.date.getTime() >= today.getTime();
         })
         .sort(function (a, b) {
           const aTime = a.date ? a.date.getTime() : Number.MAX_SAFE_INTEGER;
