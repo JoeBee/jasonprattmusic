@@ -321,6 +321,15 @@
     const SHOW_ICON_MAP =
       "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z";
 
+    function isAppearingWithTheLocals(show) {
+      const needle = "appearing with the locals";
+      const fields = [show.comments, show.venue, show.city, show.time, show.displayDate];
+      return fields.some(function (value) {
+        const text = decodeHtmlEntities(String(value || "")).toLowerCase();
+        return text.indexOf(needle) !== -1;
+      });
+    }
+
     function formatShowDateLabel(show) {
       let label;
       if (show.date) {
@@ -399,6 +408,9 @@
 
         const row = document.createElement("li");
         row.className = "show-list__row";
+        if (isAppearingWithTheLocals(show)) {
+          row.classList.add("show-list__row--locals");
+        }
         if (show.dateKey) row.setAttribute("data-show-date", show.dateKey);
 
         const dateCell = document.createElement("div");

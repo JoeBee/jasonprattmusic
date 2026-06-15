@@ -1216,6 +1216,11 @@ img[src$="cover-art-1.png"] {
   color: #5a3d52;
 }
 
+.show-list__row--locals .show-list__date,
+.show-list__row--locals .show-list__note {
+  color: #c41e3a;
+}
+
 .show-list__venue {
   display: block;
   font-weight: 500;

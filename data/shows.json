@@ -264,36 +264,36 @@
     "website": ""
   },
   {
-    "displayDate": "6/9/2026",
-    "time": "",
-    "venue": "",
-    "city": "TEST 1",
-    "comments": "",
-    "visible": "FALSE",
-    "address": "",
-    "map": "",
-    "website": ""
+    "displayDate": "8/29/2026",
+    "time": "12-4 PM",
+    "venue": "Manchester Harley Davidson",
+    "city": "Manchester, NH",
+    "comments": "Appearing with The Locals",
+    "visible": "TRUE",
+    "address": "1000 Hooksett Rd, Manchester, NH 03104",
+    "map": "https://www.google.com/maps/place/Manchester+Harley-Davidson/data=!4m2!3m1!1s0x0:0x20154b5813218881?sa=X&ved=1t:2428&ictx=111",
+    "website": "https://www.manchesterharley.com/"
   },
   {
-    "displayDate": "6/10/2026",
-    "time": "",
-    "venue": "",
-    "city": "",
-    "comments": "TEST 2",
-    "visible": "FALSE",
-    "address": "",
-    "map": "",
-    "website": ""
+    "displayDate": "10/30/2026",
+    "time": "5-8 PM",
+    "venue": "Manchester Harley Davidson",
+    "city": "Manchester, NH",
+    "comments": "Solo Acoustic Rock Set 5-8 PM",
+    "visible": "TRUE",
+    "address": "1000 Hooksett Rd, Manchester, NH 03104",
+    "map": "https://www.google.com/maps/place/Manchester+Harley-Davidson/data=!4m2!3m1!1s0x0:0x20154b5813218881?sa=X&ved=1t:2428&ictx=111",
+    "website": "https://www.manchesterharley.com/"
   },
   {
-    "displayDate": "6/11/2026",
-    "time": "",
-    "venue": "",
-    "city": "",
-    "comments": "TEST 3",
-    "visible": "FALSE",
-    "address": "",
-    "map": "",
-    "website": ""
+    "displayDate": "7/18/2026",
+    "time": "11 AM-2 PM",
+    "venue": "Manchester Harley Davidson",
+    "city": "Manchester, NH",
+    "comments": "Appearing with The Locals",
+    "visible": "TRUE",
+    "address": "1000 Hooksett Rd, Manchester, NH 03104",
+    "map": "https://www.google.com/maps/place/Manchester+Harley-Davidson/data=!4m2!3m1!1s0x0:0x20154b5813218881?sa=X&ved=1t:2428&ictx=111",
+    "website": "https://www.manchesterharley.com/"
   }
 ]
