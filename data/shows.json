@@ -295,5 +295,49 @@
     "address": "1000 Hooksett Rd, Manchester, NH 03104",
     "map": "https://www.google.com/maps/place/Manchester+Harley-Davidson/data=!4m2!3m1!1s0x0:0x20154b5813218881?sa=X&ved=1t:2428&ictx=111",
     "website": "https://www.manchesterharley.com/"
+  },
+  {
+    "displayDate": "7/27/2026",
+    "time": "6-9 PM",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": "",
+    "visible": "TRUE",
+    "address": "137 Littleton Rd, Westford, MA 01886",
+    "map": "https://share.google/wmb7EEviCaefP2sfp",
+    "website": "https://stirwestford.com/"
+  },
+  {
+    "displayDate": "8/4/2026",
+    "time": "6-9 PM",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": "",
+    "visible": "TRUE",
+    "address": "137 Littleton Rd, Westford, MA 01886",
+    "map": "https://share.google/wmb7EEviCaefP2sfp",
+    "website": "https://stirwestford.com/"
+  },
+  {
+    "displayDate": "8/17/2026",
+    "time": "6-9 PM",
+    "venue": "Stir Martini Bar",
+    "city": "Westford, MA",
+    "comments": "",
+    "visible": "TRUE",
+    "address": "137 Littleton Rd, Westford, MA 01886",
+    "map": "https://share.google/wmb7EEviCaefP2sfp",
+    "website": "https://stirwestford.com/"
+  },
+  {
+    "displayDate": "11/6/2026",
+    "time": "TBD",
+    "venue": "Dirigible Brewing Company",
+    "city": "Littleton, MA",
+    "comments": "",
+    "visible": "TRUE",
+    "address": "24 Porter Rd, Littleton, MA 01460",
+    "map": "https://maps.app.goo.gl/HexHg7eCCWXNub117",
+    "website": "https://dirigiblebrewing.com/"
   }
 ]
