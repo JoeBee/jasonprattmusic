@@ -49,7 +49,7 @@
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE",
+    "visible": "FALSE",
     "address": "27 Waltham St, Lexington, MA 02421",
     "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
     "website": "https://www.post1917.com/"
@@ -82,7 +82,7 @@
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE",
+    "visible": "FALSE",
     "address": "27 Waltham St, Lexington, MA 02421",
     "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
     "website": "https://www.post1917.com/"
@@ -115,7 +115,7 @@
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE",
+    "visible": "FALSE",
     "address": "27 Waltham St, Lexington, MA 02421",
     "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
     "website": "https://www.post1917.com/"
@@ -137,7 +137,7 @@
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE",
+    "visible": "FALSE",
     "address": "27 Waltham St, Lexington, MA 02421",
     "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
     "website": "https://www.post1917.com/"
@@ -159,7 +159,7 @@
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE",
+    "visible": "FALSE",
     "address": "27 Waltham St, Lexington, MA 02421",
     "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
     "website": "https://www.post1917.com/"
@@ -181,7 +181,7 @@
     "venue": "Post 1917 Lexington",
     "city": "Lexington, MA",
     "comments": "",
-    "visible": "TRUE",
+    "visible": "FALSE",
     "address": "27 Waltham St, Lexington, MA 02421",
     "map": "https://www.google.com/maps/place/Post+1917+Lexington/@42.4470305,-71.2278146,17z/data=!3m1!4b1!4m6!3m5!1s0x89e39d001f1eb4c9:0x6e5571815a9c105e!8m2!3d42.4470305!4d-71.2278146!16s%2Fg%2F11yfbm6q6l?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
     "website": "https://www.post1917.com/"
@@ -339,5 +339,16 @@
     "address": "24 Porter Rd, Littleton, MA 01460",
     "map": "https://maps.app.goo.gl/HexHg7eCCWXNub117",
     "website": "https://dirigiblebrewing.com/"
+  },
+  {
+    "displayDate": "8/9/2026",
+    "time": "6-9 PM",
+    "venue": "Landed Epigram Brewery",
+    "city": "Tyngsboro, MA",
+    "comments": "",
+    "visible": "TRUE",
+    "address": "394 Middlesex Rd, Tyngsborough, MA 01879",
+    "map": "https://maps.app.goo.gl/wspruSYxNZNMxqrs8",
+    "website": "https://www.epigrambrew.com/location/epigram-brew-company/"
   }
 ]
