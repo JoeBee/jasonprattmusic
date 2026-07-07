@@ -361,5 +361,16 @@
     "address": "",
     "map": "",
     "website": ""
+  },
+  {
+    "displayDate": "8/21/2026",
+    "time": "",
+    "venue": "GoodNight Johnny's",
+    "city": "Burlington, MA",
+    "comments": "Appearing with the Locals! Free!!!",
+    "visible": "TRUE",
+    "address": "154 Cambridge St, Burlington, MA 01803",
+    "map": "https://www.google.com/maps/place/Goodnight+Johnny's+American+Music+Bar/data=!4m2!3m1!1s0x0:0x197d9862ebd240d5?sa=X&ved=1t:2428&ictx=111",
+    "website": "https://www.goodnightjohnnys.com/"
   }
 ]
