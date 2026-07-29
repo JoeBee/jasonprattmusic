@@ -361,5 +361,16 @@
     "address": "154 Cambridge St, Burlington, MA 01803",
     "map": "https://www.google.com/maps/place/Goodnight+Johnny's+American+Music+Bar/data=!4m2!3m1!1s0x0:0x197d9862ebd240d5?sa=X&ved=1t:2428&ictx=111",
     "website": "https://www.goodnightjohnnys.com/"
+  },
+  {
+    "displayDate": "8/13/2026",
+    "time": "5:30-8:30 PM",
+    "venue": "Post 1917 Reading",
+    "city": "Reading, MA",
+    "comments": "",
+    "visible": "TRUE",
+    "address": "136 Haven St, Reading, MA 01867",
+    "map": "https://www.google.com/maps/place/Post+1917+Reading/data=!4m2!3m1!1s0x89e30b11eb9e5f0d:0x8bc40f0d0b32b88f?sa=X&ved=1t:242&ictx=111",
+    "website": "https://post1917.com/"
   }
 ]
